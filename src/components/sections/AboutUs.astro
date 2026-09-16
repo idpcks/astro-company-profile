@@ -1,0 +1,153 @@
+---
+/**
+ * AboutUs — dua kolom: narasi + panel visual berisi stats.
+ * I18N: teks dari kamus; angka stats tetap data lokal section
+ * (nilai bisnis, bukan UI — nanti bisa pindah ke data/ bila dinamis).
+ */
+import Button from '@/components/ui/Button.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { localePath, tFactory, type Lang } from '@/i18n';
+import { SITE } from '@/data/site';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+const stats = [
+	{ value: '2005', label: t('about.stat.founded') },
+	{ value: '40+', label: t('about.stat.doctors') },
+	{ value: '50rb+', label: t('about.stat.patients') },
+];
+
+const highlights = [
+	t('about.highlight.accreditation'),
+	t('about.highlight.records'),
+	t('about.highlight.insurance'),
+];
+---
+
+<section class="section section--alt">
+	<div class="container about">
+		<div class="about__content">
+			<SectionHeading align="start" eyebrow={t('about.eyebrow')} title={t('about.title')} />
+			<p class="about__text">{SITE.description[lang]}</p>
+			<ul class="about__highlights" role="list">
+				{
+					highlights.map((item) => (
+						<li>
+							<svg
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2.5"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M20 6 9 17l-5-5" />
+							</svg>
+							{item}
+						</li>
+					))
+				}
+			</ul>
+			<Button href={localePath('/about', lang)} variant="outline">{t('about.cta')}</Button>
+		</div>
+
+		<div class="about__visual" aria-hidden="true">
+			<svg viewBox="0 0 24 24" fill="currentColor">
+				<path d="M9 3h6a1 1 0 0 1 1 1v5h5a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-5v5a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-5H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h5V4a1 1 0 0 1 1-1Z" />
+			</svg>
+			<dl class="about__stats">
+				{
+					stats.map((stat) => (
+						<div class="about__stat">
+							<dt>{stat.label}</dt>
+							<dd>{stat.value}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</div>
+	</div>
+</section>
+
+<style>
+	.about {
+		display: grid;
+		grid-template-columns: 1.1fr 1fr;
+		gap: var(--space-12);
+		align-items: center;
+	}
+
+	.about__text {
+		color: var(--color-body);
+		margin-top: calc(var(--space-12) * -1 + var(--space-8)); /* imbangi margin heading */
+	}
+
+	.about__highlights {
+		list-style: none;
+		padding: 0;
+		margin: var(--space-6) 0 var(--space-8);
+		display: grid;
+		gap: var(--space-3);
+	}
+
+	.about__highlights li {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+	}
+
+	.about__highlights svg {
+		width: 1.125rem;
+		height: 1.125rem;
+		flex-shrink: 0;
+		color: var(--color-primary-text);
+	}
+
+	/* Panel visual: gradient teal + cross besar + stats.
+	   Gradient primary-dark→primary tetap dipakai di dua tema karena
+	   teks di atasnya selalu putih. */
+	.about__visual {
+		display: grid;
+		gap: var(--space-6);
+		padding: var(--space-8);
+		border-radius: var(--radius-lg);
+		background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+		color: #ffffff;
+	}
+
+	.about__visual > svg {
+		width: 4rem;
+		height: 4rem;
+		opacity: 0.9;
+	}
+
+	.about__stats {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-4);
+		margin: 0;
+	}
+
+	.about__stat dd {
+		font-size: var(--text-2xl);
+		font-weight: 700;
+		color: #ffffff;
+	}
+
+	.about__stat dt {
+		font-size: var(--text-xs);
+		opacity: 0.85;
+	}
+
+	@media (max-width: 900px) {
+		.about {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

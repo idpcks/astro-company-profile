@@ -1,0 +1,38 @@
+---
+/**
+ * /en/blog/[slug] — detail artikel versi Inggris.
+ *
+ * HANYA generate untuk slug yang BENAR-BENAR punya file .en.md —
+ * post yang isFallback (konten id dipakai) di-skip di getStaticPaths,
+ * sehingga tidak ada duplikat konten id di bawah /en (SEO).
+ *
+ * Static mode: params harus memuat SEMUA segmen dinamis rute ini
+ * (`lang` dari folder [lang], `slug` dari file).
+ */
+import BlogPostLayout from '@/layouts/BlogPostLayout.astro';
+import { render } from 'astro:content';
+import { getAllSlugs, getPostBySlug, type NormalizedPost } from '@/lib/blog';
+import type { Lang } from '@/i18n';
+
+export async function getStaticPaths() {
+	const slugs = await getAllSlugs();
+	const paths: {
+		params: { lang: string; slug: string };
+		props: { post: NormalizedPost; lang: Lang };
+	}[] = [];
+	for (const slug of slugs) {
+		const post = await getPostBySlug(slug, 'en');
+		// isFallback → versi en tidak ada → jangan buat halaman /en/...
+		if (!post || post.isFallback) continue;
+		paths.push({ params: { lang: 'en', slug }, props: { post, lang: 'en' } });
+	}
+	return paths;
+}
+
+const { post, lang } = Astro.props;
+const { Content } = await render(post.entry);
+---
+
+<BlogPostLayout post={post} lang={lang}>
+	<Content />
+</BlogPostLayout>

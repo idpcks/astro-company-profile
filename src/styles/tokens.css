@@ -1,0 +1,121 @@
+/* ============================================================
+   Design Tokens — single source of truth untuk tampilan.
+   Dipakai lewat var(--token) di <style> tiap komponen.
+   Diimport oleh styles/global.css.
+
+   TEMA GELAP/TERANG:
+   - Nilai terang = default di :root.
+   - Nilai gelap = blok :root[data-theme='dark'] (attribute dipasang
+     oleh script inline di BaseLayout SEBELUM paint pertama).
+   - Komponen TIDAK PERNAH menulis warna tema sendiri; cukup pakai
+     token, dan nilai yang menimpa otomatis mengikuti tema aktif.
+   ============================================================ */
+
+:root {
+	color-scheme: light;
+
+	/* ── Warna brand (biru-teal medis: kesan tenang & terpercaya) ──
+	   primary           : background tombol/aksen (tetap di dua tema)
+	   primary-dark      : ujung gelap gradient band (CTA/panel) — tetap
+	   primary-light     : tint tipis untuk badge/ikon/hover
+	   primary-text      : warna teks/ikon aksen DI ATAS background halaman
+	                       (di tema gelap harus lebih terang agar kontras) */
+	--color-primary: #0f766e; /* teal-700 */
+	--color-primary-dark: #115e59;
+	--color-primary-light: #ccfbf1;
+	--color-primary-text: #0f766e;
+
+	/* ── Warna darurat (banner IGD) ── */
+	--color-emergency: #dc2626;
+	--color-emergency-dark: #b91c1c; /* hover state tombol — tetap */
+	--color-emergency-light: #fee2e2;
+	--color-emergency-text: #b91c1c;
+
+	/* ── Warna teks & permukaan ── */
+	--color-background: #ffffff; /* background halaman */
+	--color-surface: #ffffff; /* kartu / header bar */
+	--color-surface-alt: #f1f5f9; /* section selang-seling */
+	--color-surface-inverse: #0f172a; /* permukaan yang SELALU gelap (footer, pre) */
+	--color-ink: #0f172a; /* heading */
+	--color-body: #334155; /* teks isi */
+	--color-muted: #64748b; /* teks sekunder / meta */
+	--color-border: #e2e8f0;
+
+	/* ── Tipografi ──
+	   Inter akan dipakai kalau nanti ditambahkan via @fontsource;
+	   kalau belum, browser jatuh ke system font. */
+	--font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+	--text-xs: 0.75rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-lg: 1.125rem;
+	--text-xl: 1.25rem;
+	--text-2xl: 1.5rem;
+	--text-3xl: 1.875rem;
+	--text-4xl: 2.25rem;
+	--text-5xl: 3rem;
+
+	--leading-tight: 1.2;
+	--leading-normal: 1.65;
+
+	/* ── Spasi (skala 4px) ── */
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-20: 5rem;
+
+	/* ── Layout ── */
+	--container-max: 80rem;
+	--section-y: 5rem; /* jarak vertikal antar-section */
+
+	/* ── Radius ── */
+	--radius-sm: 0.375rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 0.75rem;
+	--radius-full: 9999px;
+
+	/* ── Shadow ── */
+	--shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+	--shadow-md: 0 4px 12px rgb(15 23 42 / 0.08);
+	--shadow-lg: 0 12px 24px rgb(15 23 42 / 0.12);
+
+	/* ── Motion ── */
+	--transition-base: 200ms ease;
+}
+
+/* ============================================================
+   TEMA GELAP
+   HANYA nilai token yang ditimpa — struktur & skala tidak berubah.
+   Kontras sudah dicek: teks utama vs background ≥ 7:1, muted ≥ 4.5:1.
+   ============================================================ */
+:root[data-theme='dark'] {
+	color-scheme: dark;
+
+	--color-primary-light: rgb(45 212 191 / 0.12); /* tint teal di atas gelap */
+	--color-primary-text: #2dd4bf; /* teal-400 — teks/ikon aksen kontras */
+
+	--color-emergency-light: rgb(220 38 38 / 0.15);
+	--color-emergency-text: #fca5a5; /* red-300 */
+
+	--color-background: #0f172a; /* slate-900 */
+	--color-surface: #1e293b; /* slate-800 — kartu lebih terang dari bg */
+	--color-surface-alt: #152039; /* section selang-seling */
+	--color-surface-inverse: #020617; /* makin gelap dari background */
+
+	--color-ink: #f1f5f9;
+	--color-body: #cbd5e1;
+	--color-muted: #94a3b8;
+	--color-border: #2b3a52;
+
+	/* Shadow hitam pekat — di tema gelap shadow harus lebih kuat
+	   supaya elevasi kartu tetap terasa */
+	--shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+	--shadow-md: 0 4px 12px rgb(0 0 0 / 0.45);
+	--shadow-lg: 0 12px 24px rgb(0 0 0 / 0.5);
+}

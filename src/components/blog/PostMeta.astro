@@ -1,0 +1,44 @@
+---
+/**
+ * PostMeta — metadata artikel: tanggal + author.
+ * Satu komponen untuk dua konteks: ringkas di kartu (format "short"),
+ * lengkap di halaman artikel (format "long" menampilkan hari).
+ * I18N: format tanggal mengikuti locale (id-ID / en-US).
+ */
+import type { Lang } from '@/i18n';
+
+interface Props {
+	pubDate: Date;
+	author?: string;
+	lang?: Lang;
+	format?: 'short' | 'long';
+	class?: string;
+}
+
+const { pubDate, author, lang = 'id', format = 'short', class: className } = Astro.props;
+
+const locale = lang === 'en' ? 'en-US' : 'id-ID';
+const formatted = pubDate.toLocaleDateString(locale, {
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric',
+	...(format === 'long' ? { weekday: 'long' } : {}),
+});
+---
+
+<p class:list={['post-meta', className]}>
+	<time datetime={pubDate.toISOString()}>{formatted}</time>
+	{author && <span aria-hidden="true">·</span>}
+	{author && <span>{author}</span>}
+</p>
+
+<style>
+	.post-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2);
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+	}
+</style>

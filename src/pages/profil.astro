@@ -1,0 +1,19 @@
+---
+/**
+ * /profil — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProfilContent from '@/components/pages/ProfilContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.profil')}
+	description={t('page.description.profil')}
+>
+	<ProfilContent lang={lang} />
+</BaseLayout>

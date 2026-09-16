@@ -1,0 +1,64 @@
+---
+/**
+ * PostCard — kartu preview artikel untuk listing blog.
+ * I18N: menerima NormalizedPost dari lib/blog.ts — `url` sudah
+ * di-locale-kan di sana (termasuk fallback tanpa terjemahan), dan
+ * tanggal mengikuti locale. Seluruh kartu jadi link lewat href Card.
+ */
+import Badge from '@/components/ui/Badge.astro';
+import PostMeta from '@/components/blog/PostMeta.astro';
+import Card from '@/components/ui/Card.astro';
+import type { Lang } from '@/i18n';
+import type { NormalizedPost } from '@/lib/blog';
+
+interface Props {
+	post: NormalizedPost;
+	lang?: Lang;
+}
+
+const { post, lang = 'id' } = Astro.props;
+const { title, description, tags, pubDate, author, url } = post;
+---
+
+<Card href={url} class="post-card">
+	{
+		tags.length > 0 && (
+			<div class="post-card__tags">
+				{tags.slice(0, 2).map((tag) => (
+					<Badge variant="neutral">{tag}</Badge>
+				))}
+			</div>
+		)
+	}
+	<h3 class="post-card__title">{title}</h3>
+	<p class="post-card__description">{description}</p>
+	<PostMeta pubDate={pubDate} author={author} lang={lang} class="post-card__meta" />
+</Card>
+
+<style>
+	.post-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.post-card__tags {
+		display: flex;
+		gap: var(--space-2);
+	}
+
+	.post-card__title {
+		font-size: var(--text-xl);
+	}
+
+	.post-card__description {
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+		flex: 1; /* meta selalu di dasar kartu walau judul beda panjang */
+	}
+
+	.post-card__meta {
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-3);
+	}
+</style>

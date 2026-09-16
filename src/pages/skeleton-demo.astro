@@ -1,0 +1,138 @@
+---
+/**
+ * DEMO: skeleton loading pattern (tidak masuk menu nav) — locale id.
+ * Isi demo ada di sini (bukan content component) karena halaman
+ * internal; [lang]/skeleton-demo.astro adalah padanan en.
+ *
+ * String status JS dikirim lewat data-attributes (script client-side
+ * tidak bisa memanggil t() build-time).
+ */
+import PostCard from '@/components/blog/PostCard.astro';
+import SkeletonCard from '@/components/ui/SkeletonCard.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { tFactory, type Lang } from '@/i18n';
+import { getPostsForListing } from '@/lib/blog';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+
+// Listing helper bilingual — post ternormalisasi dengan URL siap pakai.
+const posts = (await getPostsForListing(lang)).slice(0, 6);
+
+const skeletonCount = Math.max(posts.length, 3);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.demo')}
+	description={t('page.description.demo')}
+>
+	<PageHero
+		eyebrow={t('demo.hero.eyebrow')}
+		title={t('demo.hero.title')}
+		lead={t('demo.hero.lead')}
+	/>
+
+	<section class="section">
+		<div class="container">
+			<div class="demo__controls">
+				<button class="demo__button" data-demo-trigger>{t('demo.trigger')}</button>
+				<p
+					class="demo__status"
+					data-demo-status
+					data-loading={t('demo.loading')}
+					data-done={t('demo.done')}
+					aria-live="polite"
+				></p>
+			</div>
+
+			<div data-demo-skeletons class="demo__grid" aria-hidden="true">
+				{Array.from({ length: skeletonCount }).map(() => <SkeletonCard />)}
+			</div>
+
+			<div data-demo-content class="demo__grid" hidden>
+				{posts.map((post) => <PostCard post={post} lang={lang} />)}
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.demo__controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-4);
+		margin-bottom: var(--space-8);
+	}
+
+	.demo__button {
+		padding: 0.625rem 1.375rem;
+		font-weight: 600;
+		font-size: var(--text-sm);
+		font-family: var(--font-sans);
+		color: #ffffff;
+		background-color: var(--color-primary);
+		border: 0;
+		border-radius: var(--radius-full);
+		cursor: pointer;
+		transition: background-color var(--transition-base);
+	}
+
+	.demo__button:hover {
+		background-color: var(--color-primary-dark);
+	}
+
+	.demo__button:disabled {
+		opacity: 0.6;
+		cursor: wait;
+	}
+
+	.demo__status {
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+	}
+
+	/* [hidden] kalah oleh display:grid (author > UA) → wajib dinyatakan ulang */
+	.demo__grid[hidden] {
+		display: none;
+	}
+
+	.demo__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+		gap: var(--space-6);
+	}
+</style>
+
+<script>
+	const trigger = document.querySelector<HTMLButtonElement>('[data-demo-trigger]');
+	const skeletons = document.querySelector<HTMLElement>('[data-demo-skeletons]');
+	const content = document.querySelector<HTMLElement>('[data-demo-content]');
+	const status = document.querySelector<HTMLElement>('[data-demo-status]');
+
+	// String terjemahan dibawa dari build-time via data-attributes.
+	const labelLoading = status?.dataset.loading ?? 'Loading…';
+	const labelDone = status?.dataset.done ?? 'Done';
+
+	let loading = false;
+
+	function simulateLoad() {
+		if (loading || !skeletons || !content) return;
+		loading = true;
+		if (trigger) trigger.disabled = true;
+		if (status) status.textContent = labelLoading;
+
+		// Simulasi network delay. Pemakaian nyata: fetch('/api/...').then(...)
+		setTimeout(() => {
+			skeletons.hidden = true;
+			content.hidden = false;
+			if (status) status.textContent = labelDone;
+			loading = false;
+			if (trigger) trigger.disabled = false;
+		}, 1200);
+	}
+
+	trigger?.addEventListener('click', simulateLoad);
+</script>

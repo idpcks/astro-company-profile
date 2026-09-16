@@ -1,14 +1,16 @@
 ---
 /**
- * Beranda — locale DEFAULT (id), TANPA prefix URL.
- * Isi komposisi ada di components/pages/HomeContent.astro yang
- * dipakai bersama wrapper /en. Pages/ hanya: layout + locale + komposisi.
+ * /en — beranda English. Wrapper [lang] untuk locale berprefix.
  */
 import HomeContent from '@/components/pages/HomeContent.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { tFactory, type Lang } from '@/i18n';
 
-const lang: Lang = 'id';
+export function getStaticPaths() {
+	return [{ params: { lang: 'en' } }];
+}
+
+const lang: Lang = 'en';
 const t = tFactory(lang);
 ---
 

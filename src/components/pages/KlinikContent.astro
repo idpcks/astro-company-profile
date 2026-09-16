@@ -1,0 +1,138 @@
+---
+/**
+ * Isi halaman /klinik — dipakai bersama oleh root (id) & [lang] (en).
+ * Daftar klinik dikelompokkan per kota; data dari src/data/clinics.ts.
+ */
+import Card from '@/components/ui/Card.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import { localized, tFactory, type Lang } from '@/i18n';
+import { CLINICS } from '@/data/clinics';
+import type { Clinic } from '@/types';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+// Kelompokkan klinik per kota (urutan = urutan data, bukan alfabetis).
+const groups = new Map<string, Clinic[]>();
+for (const clinic of CLINICS) {
+	const key = clinic.city[lang];
+	const list = groups.get(key) ?? [];
+	list.push(clinic);
+	groups.set(key, list);
+}
+---
+
+<PageHero
+	eyebrow={t('pagehero.eyebrow.klinik')}
+	title={t('klinikPage.hero.title')}
+	lead={t('klinikPage.hero.lead')}
+/>
+
+<section class="section">
+	<div class="container">
+		{
+			[...groups].map(([city, clinics]) => (
+				<div class="klinik__city">
+					<SectionHeading title={city} align="start" />
+					<div class="klinik__grid">
+						{clinics.map((clinic) => (
+							<Card id={clinic.slug} class="klinik__card">
+								<h3 class="klinik__name">{localized(clinic.name, lang)}</h3>
+								{clinic.corporate && (
+									<p class="klinik__badge">{t('klinikPage.corporate')}</p>
+								)}
+								<dl class="klinik__meta">
+									<div class="klinik__row">
+										<dt>{t('klinikPage.address')}</dt>
+										<dd>{localized(clinic.address, lang)}</dd>
+									</div>
+									<div class="klinik__row">
+										<dt>{t('klinikPage.phone')}</dt>
+										<dd>
+											<a
+												href={`tel:${clinic.phone.replace(/\s/g, '')}`}
+												class="klinik__phone"
+											>
+												{clinic.phone}
+											</a>
+										</dd>
+									</div>
+									<div class="klinik__row">
+										<dt>{t('klinikPage.hours')}</dt>
+										<dd>{localized(clinic.hours, lang)}</dd>
+									</div>
+								</dl>
+							</Card>
+						))}
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+	.klinik__city {
+		margin-bottom: var(--space-12);
+	}
+
+	.klinik__city:last-child {
+		margin-bottom: 0;
+	}
+
+	.klinik__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		gap: var(--space-6);
+	}
+
+	.klinik__name {
+		font-size: var(--text-xl);
+	}
+
+	.klinik__badge {
+		display: inline-block;
+		margin-top: var(--space-2);
+		padding: 0.25rem 0.6rem;
+		border-radius: 999px;
+		background-color: var(--color-primary-light);
+		color: var(--color-primary-text);
+		font-size: var(--text-sm);
+		font-weight: 600;
+	}
+
+	.klinik__meta {
+		margin: var(--space-4) 0 0;
+		display: grid;
+		gap: var(--space-3);
+	}
+
+	.klinik__row {
+		display: grid;
+		grid-template-columns: 5.5rem 1fr;
+		gap: var(--space-3);
+		font-size: var(--text-base);
+	}
+
+	.klinik__row dt {
+		color: var(--color-muted);
+	}
+
+	.klinik__row dd {
+		margin: 0;
+	}
+
+	.klinik__phone {
+		color: var(--color-primary-text);
+		font-weight: 600;
+		text-decoration: none;
+	}
+</style>

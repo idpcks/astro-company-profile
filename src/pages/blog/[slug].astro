@@ -1,0 +1,31 @@
+---
+/**
+ * /blog/[slug] — halaman detail artikel, locale default (id).
+ *
+ * BILINGUAL: id & en berbagi slug yang sama, jadi getStaticPaths
+ * mengiterasi SEMUA slug unik. Lookup post dilakukan DI DALAM
+ * getStaticPaths dan dikirim via props — pola standar Astro; sekaligus
+ * melewatkan slug yang (belum) punya file versi id.
+ * render(entry) dari 'astro:content' — entry asli ada di post.entry.
+ */
+import BlogPostLayout from '@/layouts/BlogPostLayout.astro';
+import { render } from 'astro:content';
+import { getAllSlugs, getPostBySlug, type NormalizedPost } from '@/lib/blog';
+
+export async function getStaticPaths() {
+	const slugs = await getAllSlugs();
+	const paths: { params: { slug: string }; props: { post: NormalizedPost } }[] = [];
+	for (const slug of slugs) {
+		const post = await getPostBySlug(slug, 'id');
+		if (post) paths.push({ params: { slug }, props: { post } });
+	}
+	return paths;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post.entry);
+---
+
+<BlogPostLayout post={post} lang="id">
+	<Content />
+</BlogPostLayout>

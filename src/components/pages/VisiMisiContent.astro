@@ -1,0 +1,129 @@
+---
+/**
+ * Isi halaman /visi-misi — bagian kedua dari submenu "Tentang Kami".
+ * Menampilkan visi, misi, dan nilai (memakai key aboutPage.* yang sama
+ * dengan halaman /about yang masih hidup).
+ */
+import Card from '@/components/ui/Card.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+const content = {
+	id: {
+		misi: [
+			'Memberikan pelayanan medis yang aman, berkualitas, dan berorientasi pada pasien.',
+			'Mengembangkan tenaga kesehatan yang kompeten dan berbelas kasih.',
+			'Memanfaatkan teknologi untuk pelayanan yang cepat dan transparan.',
+		],
+		values: [
+			{ title: 'Fokus pada Pasien', description: 'Setiap keputusan klinis dan operasional berangkat dari kebutuhan pasien.' },
+			{ title: 'Integritas', description: 'Jujur dan transparan dalam tindakan medis maupun administrasi.' },
+			{ title: 'Unggul', description: 'Terus memperbarui standar mutu, fasilitas, dan kompetensi tim.' },
+			{ title: 'Empati', description: 'Merawat bukan hanya penyakit, tapi juga menghangatkan hati pasien dan keluarga.' },
+		],
+	},
+	en: {
+		misi: [
+			'Deliver safe, high-quality, patient-centered medical care.',
+			'Develop competent and compassionate healthcare professionals.',
+			'Leverage technology for fast and transparent services.',
+		],
+		values: [
+			{ title: 'Patient Focus', description: 'Every clinical and operational decision starts with patient needs.' },
+			{ title: 'Integrity', description: 'Honest and transparent in medical care and administration.' },
+			{ title: 'Excellence', description: 'Continuously raising our standards of quality, facilities, and team competence.' },
+			{ title: 'Empathy', description: 'We treat the illness and warm the hearts of patients and families.' },
+		],
+	},
+} as const;
+
+const { misi, values } = content[lang];
+---
+
+<PageHero
+	eyebrow={t('pagehero.eyebrow.visiMisi')}
+	title={t('aboutPage.visionMisi.title')}
+	lead={t('aboutPage.values.lead')}
+/>
+
+<section class="section">
+	<div class="container">
+		<div class="visimisi__grid">
+			<Card>
+				<h3 class="visimisi__card-title">{t('aboutPage.vision')}</h3>
+				<p>
+					{lang === 'en'
+						? 'To be the hospital of choice for Indonesian families, known for excellent and empathetic medical care.'
+						: 'Menjadi rumah sakit pilihan keluarga Indonesia yang dikenal karena pelayanan medis yang unggul dan penuh empati.'}
+				</p>
+			</Card>
+			<Card>
+				<h3 class="visimisi__card-title">{t('aboutPage.mission')}</h3>
+				<ul class="visimisi__list" role="list">
+					{misi.map((item) => <li>{item}</li>)}
+				</ul>
+			</Card>
+		</div>
+	</div>
+</section>
+
+<section class="section section--alt">
+	<div class="container">
+		<SectionHeading
+			eyebrow={t('aboutPage.values.eyebrow')}
+			title={t('aboutPage.values.title')}
+			align="center"
+		/>
+		<div class="visimisi__values">
+			{
+				values.map((value) => (
+					<Card>
+						<h3 class="visimisi__card-title">{value.title}</h3>
+						<p class="visimisi__value-description">{value.description}</p>
+					</Card>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+	.visimisi__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+		gap: var(--space-6);
+	}
+
+	.visimisi__values {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: var(--space-6);
+	}
+
+	.visimisi__card-title {
+		font-size: var(--text-xl);
+		margin-bottom: var(--space-3);
+	}
+
+	.visimisi__list {
+		padding-left: var(--space-4);
+		display: grid;
+		gap: var(--space-2);
+	}
+
+	.visimisi__value-description {
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+	}
+</style>

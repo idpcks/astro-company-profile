@@ -1,0 +1,94 @@
+---
+/**
+ * Testimonials — grid testimoni pasien dari data/testimonials.ts.
+ * I18N: heading dari kamus, kutipan/konteks per locale via localized().
+ * Komposisi: Card (surface) + Badge (label konteks).
+ */
+import Badge from '@/components/ui/Badge.astro';
+import Card from '@/components/ui/Card.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { localized, tFactory, type Lang } from '@/i18n';
+import { TESTIMONIALS } from '@/data/testimonials';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<section class="section section--alt" id="testimoni">
+	<div class="container">
+		<SectionHeading
+			eyebrow={t('testimonials.eyebrow')}
+			title={t('testimonials.title')}
+			lead={t('testimonials.lead')}
+		/>
+
+		<div class="testimonials__grid">
+			{
+				TESTIMONIALS.map((testimonial) => (
+					<Card class="testimonial-card">
+						<svg
+							class="testimonial-card__quote"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							aria-hidden="true"
+						>
+							<path d="M10 8c-3.3 0-6 2.7-6 6v6h6v-6H6.5C6.5 11.5 8 10 10 10V8Zm10 0c-3.3 0-6 2.7-6 6v6h6v-6h-3.5c0-2.5 1.5-4 3.5-4V8Z" />
+						</svg>
+						<blockquote class="testimonial-card__quote-text">
+							<p>“{localized(testimonial.quote, lang)}”</p>
+						</blockquote>
+						<footer class="testimonial-card__footer">
+							<p class="testimonial-card__name">{testimonial.name}</p>
+							<Badge variant="primary">{localized(testimonial.context, lang)}</Badge>
+						</footer>
+					</Card>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.testimonials__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+		gap: var(--space-6);
+	}
+
+	.testimonial-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+	}
+
+	.testimonial-card__quote {
+		width: 2rem;
+		height: 2rem;
+		color: var(--color-primary-light);
+	}
+
+	.testimonial-card__quote-text {
+		margin: 0;
+		flex: 1; /* footer selalu menyentuh dasar kartu */
+	}
+
+	.testimonial-card__quote-text p {
+		color: var(--color-body);
+	}
+
+	.testimonial-card__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+	}
+
+	.testimonial-card__name {
+		font-weight: 600;
+		color: var(--color-ink);
+	}
+</style>

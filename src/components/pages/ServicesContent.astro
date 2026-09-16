@@ -1,0 +1,18 @@
+---
+/**
+ * Isi halaman /services — dipakai bersama oleh root (id) & [lang] (en).
+ * Reuse penuh: section yang sama dengan beranda.
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import Services from '@/components/sections/Services.astro';
+import type { Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<Services lang={lang} />
+<CTASection lang={lang} />

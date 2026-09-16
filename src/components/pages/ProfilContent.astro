@@ -1,0 +1,43 @@
+---
+/**
+ * Isi halaman /profil — bagian pertama dari submenu "Tentang Kami".
+ * Hero & intro memakai teks aboutPage (shared), body hijau profilPage.
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+	eyebrow={t('pagehero.eyebrow.profil')}
+	title={t('aboutPage.hero.title')}
+	lead={t('aboutPage.hero.lead')}
+/>
+
+<section class="section">
+	<div class="container">
+		<SectionHeading title={t('profilPage.body.heading')} align="start" />
+		<div class="profil__body">
+			<p>{t('profilPage.body.para1')}</p>
+			<p>{t('profilPage.body.para2')}</p>
+		</div>
+	</div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+	.profil__body {
+		display: grid;
+		gap: var(--space-4);
+		max-width: 42rem;
+	}
+</style>

@@ -1,0 +1,19 @@
+---
+/**
+ * /visi-misi — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import VisiMisiContent from '@/components/pages/VisiMisiContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.visiMisi')}
+	description={t('page.description.visiMisi')}
+>
+	<VisiMisiContent lang={lang} />
+</BaseLayout>

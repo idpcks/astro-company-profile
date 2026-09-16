@@ -1,0 +1,72 @@
+---
+/**
+ * SectionHeading — kepala section yang konsisten:
+ * eyebrow (label kecil) + judul + lead (kalimat pendukung).
+ * Dipakai semua section landing supaya ritme visual seragam.
+ *
+ * Konsep penting: <slot name="title">{title}</slot> adalah
+ * FALLBACK CONTENT — kalau pemakai tidak mengisi slot "title",
+ * nilai prop `title` yang tampil. Ini satu komponen dengan
+ * dua cara pemakaian: cepat (prop) atau fleksibel (slot markup).
+ */
+interface Props {
+	/** Label kecil di atas judul, mis. "Layanan Unggulan" */
+	eyebrow?: string;
+	/** Judul section — dioverride oleh slot name="title" bila diisi */
+	title?: string;
+	/** Kalimat pendukung di bawah judul */
+	lead?: string;
+	/** "center" untuk section simetris, "start" untuk teks rata kiri */
+	align?: 'center' | 'start';
+	class?: string;
+}
+
+const { eyebrow, title, lead, align = 'center', class: className } = Astro.props;
+---
+
+<div class:list={['section-heading', `section-heading--${align}`, className]}>
+	{eyebrow && <p class="section-heading__eyebrow">{eyebrow}</p>}
+	<h2 class="section-heading__title">
+		<slot name="title">{title}</slot>
+	</h2>
+	{lead && <p class="section-heading__lead">{lead}</p>}
+</div>
+
+<style>
+	.section-heading {
+		margin-bottom: var(--space-12);
+	}
+
+	.section-heading--center {
+		text-align: center;
+	}
+
+	.section-heading--start {
+		text-align: start;
+	}
+
+	.section-heading__eyebrow {
+		color: var(--color-primary-text);
+		font-size: var(--text-sm);
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		margin-bottom: var(--space-2);
+	}
+
+	.section-heading__title {
+		font-size: var(--text-3xl);
+	}
+
+	.section-heading__lead {
+		color: var(--color-muted);
+		font-size: var(--text-lg);
+		margin-top: var(--space-3);
+	}
+
+	/* Lead di mode center dibatasi lebarnya biar tidak fat-line */
+	.section-heading--center .section-heading__lead {
+		margin-inline: auto;
+		max-width: 42rem;
+	}
+</style>

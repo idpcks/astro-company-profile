@@ -1,0 +1,257 @@
+---
+/**
+ * BlogPostLayout — bingkai khusus halaman artikel.
+ *
+ * HUBUNGAN LAYOUT: membungkus BaseLayout, bukan menggantikannya.
+ *
+ * I18N: artikel saat ini ditulis dalam Bahasa Indonesia. Halaman
+ * detail hanya dibuat di root (/blog/[slug]); kalau nanti artikel
+ * punya versi en, halaman [lang] tinggal mengirim lang="en".
+ * Untuk pengunjung /en, notice berbahasa Inggris dijelaskan lewat
+ * slot "notice" — pola slot: konten opsional dari pemanggil.
+ *
+ * KONTEN MARKDOWN: <slot /> diisi <Content />; tipografinya via
+ * :global() karena elemen hasil Markdown tidak punya scope Astro.
+ */
+import PostMeta from '@/components/blog/PostMeta.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import { getOtherAvailableLocales, type NormalizedPost } from '@/lib/blog';
+import { languages, localePath, tFactory, type Lang } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+interface Props {
+	post: NormalizedPost;
+	lang?: Lang;
+}
+
+const { post, lang = 'id' } = Astro.props;
+const t = tFactory(lang);
+const { title, description, pubDate, updatedDate, author, tags, image } = post;
+const dateLocale = lang === 'en' ? 'en-US' : 'id-ID';
+
+// Lokale lain yang BENAR-BENAR punya terjemahan untuk artikel ini —
+// dipakai untuk link "baca dalam EN" & hreflang per-artikel.
+const otherLocales = getOtherAvailableLocales(post, lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={title}
+	description={description}
+	alternates={post.availableLocales.map((loc) => ({
+		path: `/blog/${post.slug}`,
+		lang: loc,
+	}))}
+>
+	<article class="post">
+		<header class="container post__header">
+			{
+				tags.length > 0 && (
+					<div class="post__tags">
+						{tags.map((tag) => (
+							<Badge variant="neutral">{tag}</Badge>
+						))}
+					</div>
+				)
+			}
+			<h1 class="post__title">{title}</h1>
+			<PostMeta pubDate={pubDate} author={author} lang={lang} format="long" class="post__meta" />
+			{
+				updatedDate && (
+					<p class="post__updated">
+						{t('post.updated')}{' '}
+						<time datetime={updatedDate.toISOString()}>
+							{updatedDate.toLocaleDateString(dateLocale, {
+								day: 'numeric',
+								month: 'long',
+								year: 'numeric',
+							})}
+						</time>
+					</p>
+				)
+			}
+		</header>
+
+		{
+			image && (
+				<img
+					class="post__image container"
+					src={image}
+					alt=""
+					width="1200"
+					height="630"
+					loading="eager"
+				/>
+			)
+		}
+
+		<div class="container post__body">
+			<div class="prose">
+				<slot />
+			</div>
+		</div>
+
+		<footer class="container post__footer">
+			{
+				post.isFallback && (
+					<p class="post__notice">{t('post.fallbackNotice')}</p>
+				)
+			}
+			{otherLocales.length > 0 && (
+				<p class="post__notice">
+					{t('post.availableIn')}{' '}
+					{
+						otherLocales.map((loc, i) => (
+							<>
+								{i > 0 && ', '}
+								<a href={localePath(`/blog/${post.slug}`, loc)} hreflang={loc}>
+									{languages[loc]}
+								</a>
+							</>
+						))
+					}
+				</p>
+			)}
+			<slot name="notice" />
+			<Button href={localePath('/blog', lang)} variant="outline">{t('post.back')}</Button>
+		</footer>
+	</article>
+</BaseLayout>
+
+<style>
+	.post__header {
+		max-width: 48rem;
+		padding-block: var(--space-12) 0;
+		text-align: center;
+	}
+
+	.post__tags {
+		display: flex;
+		justify-content: center;
+		gap: var(--space-2);
+		margin-bottom: var(--space-4);
+	}
+
+	.post__title {
+		font-size: var(--text-4xl);
+	}
+
+	.post__meta {
+		justify-content: center;
+		margin-top: var(--space-4);
+	}
+
+	.post__updated {
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+		margin-top: var(--space-2);
+	}
+
+	.post__image {
+		margin-top: var(--space-8);
+		border-radius: var(--radius-lg);
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+	}
+
+	.post__body {
+		max-width: 48rem;
+		padding-block: var(--space-8) 0;
+	}
+
+	.post__footer {
+		max-width: 48rem;
+		padding-block: var(--space-8) var(--space-12);
+		display: grid;
+		gap: var(--space-4);
+		justify-items: start;
+	}
+
+	/* Notice bahasa: kotak info tipis di atas tombol kembali */
+	.post__notice {
+		font-size: var(--text-sm);
+		color: var(--color-muted);
+		background-color: var(--color-surface-alt);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: var(--space-3) var(--space-4);
+	}
+
+	/* ── Tipografi konten Markdown ──
+	   Elemen h2, p, dll di bawah ini hasil render Markdown — mereka
+	   TIDAK membawa atribut scope Astro, sehingga selector scoped
+	   biasa (.prose h2) tidak akan pernah match. Solusi resmi: :global(). */
+	.prose {
+		font-size: var(--text-lg);
+		line-height: var(--leading-normal);
+	}
+
+	.prose :global(h2) {
+		font-size: var(--text-2xl);
+		margin-top: var(--space-8);
+		margin-bottom: var(--space-3);
+	}
+
+	.prose :global(h3) {
+		font-size: var(--text-xl);
+		margin-top: var(--space-6);
+		margin-bottom: var(--space-2);
+	}
+
+	.prose :global(p) {
+		margin-bottom: var(--space-4);
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		padding-left: var(--space-6);
+		margin-bottom: var(--space-4);
+	}
+
+	.prose :global(li) {
+		margin-bottom: var(--space-2);
+	}
+
+	.prose :global(a) {
+		color: var(--color-primary-text);
+		text-decoration: underline;
+	}
+
+	.prose :global(blockquote) {
+		border-left: 4px solid var(--color-primary);
+		background-color: var(--color-primary-light);
+		padding: var(--space-4) var(--space-6);
+		border-radius: 0 var(--radius-md) var(--radius-md) 0;
+		margin-block: var(--space-6);
+		font-style: italic;
+	}
+
+	.prose :global(strong) {
+		color: var(--color-ink);
+	}
+
+	.prose :global(code) {
+		background-color: var(--color-surface-alt);
+		padding: 0.125rem 0.375rem;
+		border-radius: var(--radius-sm);
+		font-size: var(--text-sm);
+	}
+
+	.prose :global(pre) {
+		/* surface-inverse: blok kode tetap gelap di kedua tema */
+		background-color: var(--color-surface-inverse);
+		color: #e2e8f0;
+		padding: var(--space-4);
+		border-radius: var(--radius-md);
+		overflow-x: auto;
+		margin-block: var(--space-6);
+	}
+
+	.prose :global(pre code) {
+		background: none;
+		padding: 0;
+		color: inherit;
+	}
+</style>

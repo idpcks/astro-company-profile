@@ -1,0 +1,51 @@
+---
+/**
+ * /en/blog — listing artikel dalam bahasa Inggris.
+ *
+ * BILINGUAL: artikel yang sudah diterjemahkan tampil penuh dalam EN;
+ * yang belum, tampil sebagai FALLBACK konten id + label kecil.
+ * Pola ini membiarkan terjemahan masuk bertahap tanpa listing kosong.
+ */
+import PostCard from '@/components/blog/PostCard.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPostsForListing } from '@/lib/blog';
+import { tFactory, type Lang } from '@/i18n';
+
+export function getStaticPaths() {
+	return [{ params: { lang: 'en' } }];
+}
+
+const lang: Lang = 'en';
+const t = tFactory(lang);
+
+const posts = await getPostsForListing(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.blog')}
+	description={t('page.description.blog')}
+>
+	<PageHero
+		eyebrow={t('pagehero.eyebrow.blog')}
+		title={t('blogPage.hero.title')}
+		lead={t('blogPage.hero.lead')}
+	/>
+
+	<section class="section">
+		<div class="container">
+			<div class="blog-list">
+				{posts.map((post) => <PostCard post={post} lang={lang} />)}
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.blog-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+		gap: var(--space-6);
+	}
+</style>

@@ -1,0 +1,26 @@
+---
+/**
+ * Komposisi beranda — dipakai BERSAMA oleh:
+ *   - src/pages/index.astro          (locale id, tanpa prefix)
+ *   - src/pages/[lang]/index.astro   (locale en, /en)
+ * Satu sumber komposisi, dua URL locale — tanpa duplikasi.
+ */
+import AboutUs from '@/components/sections/AboutUs.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Services from '@/components/sections/Services.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import type { Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<Hero lang={lang} />
+<Services lang={lang} />
+<AboutUs lang={lang} />
+<Testimonials lang={lang} />
+<CTASection lang={lang} />

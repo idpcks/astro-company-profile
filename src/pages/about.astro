@@ -1,0 +1,19 @@
+---
+/**
+ * /about — locale default (id), tanpa prefix.
+ */
+import AboutContent from '@/components/pages/AboutContent.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.about')}
+	description={t('page.description.about')}
+>
+	<AboutContent lang={lang} />
+</BaseLayout>

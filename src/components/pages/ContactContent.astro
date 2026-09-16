@@ -1,0 +1,206 @@
+---
+/**
+ * Isi halaman /contact — dipakai bersama oleh root (id) & [lang] (en).
+ * Semua teks dari kamus; kontak dari SITE (tidak diterjemahkan).
+ *
+ * FORM: situs static — <form> belum punya backend. Integrasi menyusul:
+ * layanan form eksternal, Astro Actions + adapter, atau API sendiri.
+ */
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import { tFactory, type Lang } from '@/i18n';
+import { SITE } from '@/data/site';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
+const phoneTel = SITE.phone.replace(/\s/g, '');
+---
+
+<PageHero
+	eyebrow={t('pagehero.eyebrow.contact')}
+	title={lang === 'en' ? 'We are ready to help' : 'Kami siap membantu Anda'}
+	lead={
+		lang === 'en'
+			? 'Contact us for service questions or further information.'
+			: 'Hubungi kami untuk pertanyaan layanan atau informasi tambahan.'
+	}
+/>
+
+<section class="section">
+	<div class="container contact">
+		<div class="contact__info">
+			<h2 class="contact__heading">{t('contactPage.info.heading')}</h2>
+
+			<div class="contact__item">
+				<p class="contact__label">{t('contactPage.info.address')}</p>
+				<p>{SITE.address}</p>
+			</div>
+
+			<div class="contact__item">
+				<p class="contact__label">{t('contactPage.info.phone')}</p>
+				<p><a href={`tel:${phoneTel}`}>{SITE.phone}</a></p>
+			</div>
+
+			<div class="contact__item">
+				<p class="contact__label">{t('contactPage.info.email')}</p>
+				<p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+			</div>
+
+			<div class="contact__item">
+				<p class="contact__label">{t('contactPage.info.hours')}</p>
+				<p>{SITE.hours[lang]}</p>
+			</div>
+
+			<aside class="contact__emergency">
+				<Badge variant="emergency">{t('contactPage.emergency.badge')}</Badge>
+				<p>{t('contactPage.emergency.body')}</p>
+				<a class="contact__emergency-link" href={`tel:${emergencyTel}`}>
+					{SITE.emergencyPhone}
+				</a>
+			</aside>
+		</div>
+
+		<div class="contact__form-col">
+			<h2 class="contact__heading">{t('contactPage.form.heading')}</h2>
+			<form class="contact-form" method="post">
+				<div class="contact-form__field">
+					<label for="name">{t('contactPage.form.name')}</label>
+					<input id="name" name="name" type="text" required autocomplete="name" />
+				</div>
+
+				<div class="contact-form__field">
+					<label for="email">{t('contactPage.form.email')}</label>
+					<input id="email" name="email" type="email" required autocomplete="email" />
+				</div>
+
+				<div class="contact-form__field">
+					<label for="phone">{t('contactPage.form.phone')}</label>
+					<input id="phone" name="phone" type="tel" autocomplete="tel" />
+				</div>
+
+				<div class="contact-form__field">
+					<label for="message">{t('contactPage.form.message')}</label>
+					<textarea
+						id="message"
+						name="message"
+						rows="5"
+						required
+						placeholder={t('contactPage.form.messagePlaceholder')}></textarea>
+				</div>
+
+				<Button type="submit" size="lg">{t('contactPage.form.submit')}</Button>
+			</form>
+		</div>
+	</div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+	.contact {
+		display: grid;
+		grid-template-columns: 1fr 1.2fr;
+		gap: var(--space-12);
+	}
+
+	.contact__heading {
+		font-size: var(--text-2xl);
+		margin-bottom: var(--space-6);
+	}
+
+	.contact__item {
+		padding-block: var(--space-3);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.contact__label {
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.contact__item a {
+		color: var(--color-primary-text);
+		text-decoration: none;
+	}
+
+	.contact__item a:hover {
+		text-decoration: underline;
+	}
+
+	.contact__emergency {
+		margin-top: var(--space-6);
+		padding: var(--space-4);
+		background-color: var(--color-emergency-light);
+		border: 1px solid var(--color-emergency);
+		border-radius: var(--radius-lg);
+		display: grid;
+		gap: var(--space-2);
+		font-size: var(--text-sm);
+	}
+
+	.contact__emergency p {
+		margin: 0;
+	}
+
+	.contact__emergency-link {
+		color: var(--color-emergency-text);
+		font-size: var(--text-xl);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.contact-form {
+		display: grid;
+		gap: var(--space-4);
+	}
+
+	.contact-form__field {
+		display: grid;
+		gap: var(--space-1);
+	}
+
+	.contact-form__field label {
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--color-ink);
+	}
+
+	.contact-form__field input,
+	.contact-form__field textarea {
+		width: 100%;
+		padding: 0.625rem var(--space-3);
+		font: inherit;
+		color: var(--color-ink);
+		background-color: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		transition: border-color var(--transition-base);
+	}
+
+	.contact-form__field input:focus,
+	.contact-form__field textarea:focus {
+		outline: none;
+		border-color: var(--color-primary);
+	}
+
+	.contact-form__field textarea {
+		resize: vertical;
+	}
+
+	@media (max-width: 900px) {
+		.contact {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

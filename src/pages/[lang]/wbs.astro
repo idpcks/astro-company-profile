@@ -1,0 +1,23 @@
+---
+/**
+ * /en/wbs — halaman WBS dalam bahasa Inggris.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import WbsContent from '@/components/pages/WbsContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+export function getStaticPaths() {
+	return [{ params: { lang: 'en' } }];
+}
+
+const lang: Lang = 'en';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.wbs')}
+	description={t('page.description.wbs')}
+>
+	<WbsContent lang={lang} />
+</BaseLayout>

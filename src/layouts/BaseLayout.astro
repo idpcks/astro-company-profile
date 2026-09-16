@@ -1,0 +1,142 @@
+---
+/**
+ * BaseLayout — kerangka HTML untuk SEMUA halaman umum.
+ *
+ * I18N: menerima `lang` (default 'id') — set <html lang>, ambil
+ * title/description dari kamus bila halaman tidak mengirim eksplisit,
+ * dan render <link rel="alternate" hreflang> untuk SEO multibahasa.
+ *
+ * Tema: script inline memasang data-theme SEBELUM paint pertama
+ * (baca localStorage 'themechoice') → tanpa kedipan putih (FOUC).
+ */
+import Footer from '@/components/shared/Footer.astro';
+import Header from '@/components/shared/Header.astro';
+import { ClientRouter } from 'astro:transitions';
+import LoadingIndicator from 'astro-loading-indicator/component';
+import { alternatePath, languages, localePath, tFactory, type Lang } from '@/i18n';
+import { SITE } from '@/data/site';
+import '@/styles/global.css';
+
+interface Props {
+	/** Locale halaman — diisi oleh wrapper halaman (root = id, [lang] = en) */
+	lang?: Lang;
+	/** Judul halaman — nama brand ditambahkan otomatis. */
+	title?: string;
+	/** Deskripsi untuk meta — default dari kamus per locale. */
+	description?: string;
+	/**
+	 * Padanan hreflang eksplisit per-URL (opsional).
+	 * Format: path TANPA prefix locale + locale.
+	 * Dipakai halaman detail artikel agar hreflang menunjuk terjemahan
+	 * yang benar-benar ada (slug disamakan antar locale).
+	 */
+	alternates?: { path: string; lang: Lang }[];
+}
+
+const { lang = 'id', title, description, alternates } = Astro.props;
+const t = tFactory(lang);
+
+// Judul: halaman menimpa lewat prop title (sudah diterjemahkan di
+// halaman); tanpa title → brand + tagline.
+const pageTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+
+// Deskripsi default: SITE.description per locale bila halaman
+// tidak mengirim deskripsi spesifik.
+const metaDescription = description ?? SITE.description[lang];
+
+// Canonical absolut butuh domain produksi → dipadukan dengan Astro.url.
+const canonicalURL = new URL(Astro.url.pathname, SITE.url);
+---
+
+<!doctype html>
+<html lang={lang === 'en' ? 'en' : 'id'}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- Tema dipasang SEBELUM paint pertama: baca pilihan tersimpan
+		     (localStorage 'themechoice'), default light. Tanpa ini, halaman
+		     bertema gelap akan kedip putih dulu setiap kali load (FOUC).
+		     is:inline = Astro tidak memproses/membundel script ini. -->
+		<script is:inline>
+			(function () {
+				var stored = null;
+				try {
+					stored = localStorage.getItem('themechoice');
+				} catch (e) {
+					/* localStorage tidak tersedia */
+				}
+				document.documentElement.dataset.theme =
+					stored === 'light' || stored === 'dark' ? stored : 'light';
+			})();
+		</script>
+
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+		<meta name="description" content={metaDescription} />
+		<link rel="canonical" href={canonicalURL} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+
+		<!-- hreflang: padanan halaman ini di locale lain (SEO multibahasa).
+		     x-default menunjuk versi locale default (id). -->
+		{alternates
+			? alternates.map(({ path, lang: altLang }) => (
+					<link
+						rel="alternate"
+						hreflang={altLang}
+						href={new URL(localePath(path, altLang), SITE.url)}
+					/>
+				))
+			: Object.entries(languages).map(([code]) => (
+					<link
+						rel="alternate"
+						hreflang={code}
+						href={new URL(
+							alternatePath(Astro.url.pathname, code as Lang),
+							SITE.url,
+						)}
+					/>
+				))}
+		{!alternates && (
+			<link
+				rel="alternate"
+				hreflang="x-default"
+				href={new URL(alternatePath(Astro.url.pathname, 'id'), SITE.url)}
+			/>
+		)}
+
+		<!-- ClientRouter = navigasi antar-halaman ala SPA (View Transitions);
+		     wajib ada supaya event astro:before-preparation / astro:before-swap
+		     dikirim ke LoadingIndicator. threshold={false} → indicator SELALU
+		     tampil saat berpindah halaman (default 200ms membuatnya nyaris
+		     tak terlihat di navigasi cepat). -->
+		<ClientRouter />
+		<LoadingIndicator
+			color="var(--color-primary)"
+			height="3px"
+			threshold={false}
+		/>
+
+		<!-- Open Graph: preview saat link dibagikan ke sosial media / chat -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={SITE.name} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={metaDescription} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:locale" content={lang === 'en' ? 'en_US' : 'id_ID'} />
+		<meta
+			property="og:locale:alternate"
+			content={lang === 'en' ? 'id_ID' : 'en_US'}
+		/>
+		<meta name="twitter:card" content="summary" />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">{t('header.topbar.skip')}</a>
+		<Header lang={lang} />
+		<main id="main">
+			<slot />
+		</main>
+		<Footer lang={lang} />
+	</body>
+</html>

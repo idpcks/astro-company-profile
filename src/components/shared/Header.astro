@@ -1,0 +1,452 @@
+---
+/**
+ * Header situs — dipakai oleh BaseLayout (bukan langsung dari pages).
+ *
+ * I18N: menerima prop `lang` dari BaseLayout; semua teks dari kamus
+ * ui.ts, link nav di-locale-kan lewat localePath(). Klaster aksi kanan
+ * kini berisi LangSwitcher + ThemeToggle + hamburger (mobile).
+ */
+import LangSwitcher from '@/components/ui/LangSwitcher.astro';
+import ThemeToggle from '@/components/ui/ThemeToggle.astro';
+import { languages, localePath, localized, tFactory, type Lang } from '@/i18n';
+import { NAV_ITEMS } from '@/data/nav';
+import { SITE } from '@/data/site';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+const pathname = Astro.url.pathname;
+
+/**
+ * Link aktif: bandingkan path TANPA prefix locale, jadi "/en/about"
+ * menandai item "About Us" sama seperti "/about". Contoh normalisasi:
+ *   "/en/about" → "/about", "/en" → "/", "/about" → "/about".
+ */
+const segments = pathname.split('/').filter(Boolean);
+const isPrefixed = segments.length > 0 && segments[0] in languages;
+const cleanPath = isPrefixed ? `/${segments.slice(1).join('/')}` : pathname;
+const isActive = (href: string) =>
+	href === '/' ? cleanPath === '/' : cleanPath.startsWith(href);
+
+// href untuk tel: tidak boleh ada spasi.
+const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
+---
+
+<div class="topbar">
+	<div class="container topbar__inner">
+		<p class="topbar__emergency">
+			{t('header.topbar.igd')}:
+			<a href={`tel:${emergencyTel}`}>{SITE.emergencyPhone}</a>
+		</p>
+		<p class="topbar__hours">{localized(SITE.hours, lang)}</p>
+	</div>
+</div>
+
+<header class="header">
+	<div class="container header__inner">
+		<a href={localePath('/', lang)} class="brand">
+			<img
+				class="brand__logo"
+				src="/favicon.svg"
+				alt=""
+				height="32"
+				transition:persist="brand-logo"
+			/>
+			{SITE.name}
+		</a>
+
+		<nav id="site-nav" class="site-nav" data-site-nav aria-label={t('nav.ariaLabel')}>
+			<ul class="site-nav__list">
+				{
+					NAV_ITEMS.map((item) => {
+						const hasChildren = item.children && item.children.length > 0;
+						// Item dengan children aktif bila salah satu anaknya aktif
+						// (mis. "Layanan" menyala saat hari /services).
+						const isItemActive = item.href
+							? isActive(item.href)
+							: (item.children ?? []).some((child) => isActive(child.href));
+						return (
+							<li class="site-nav__item">
+								{hasChildren ? (
+									<button
+										type="button"
+										class="site-nav__parent"
+										data-nav-parent
+										aria-expanded="false"
+										aria-current={isItemActive ? 'page' : undefined}
+									>
+										{localized(item.label, lang)}
+										<span class="site-nav__caret" aria-hidden="true">▾</span>
+									</button>
+								) : (
+									<a
+										href={localePath(item.href!, lang)}
+										aria-current={isItemActive ? 'page' : undefined}
+									>
+										{localized(item.label, lang)}
+									</a>
+								)}
+								{item.children && (
+									<ul class="site-nav__dropdown">
+										{item.children.map((child) => (
+											<li>
+												<a
+													href={localePath(child.href, lang)}
+													aria-current={
+														isActive(child.href) ? 'page' : undefined
+													}
+												>
+													{localized(child.label, lang)}
+												</a>
+											</li>
+										))}
+									</ul>
+								)}
+							</li>
+						);
+					})
+				}
+				</ul>
+			</nav>
+
+		<!-- Klaster aksi kanan: LangSwitcher + ThemeToggle + hamburger (mobile).
+		     Di luar <nav> supaya tetap terlihat saat menu mobile tertutup. -->
+		<div class="header__actions">
+			<LangSwitcher />
+			<ThemeToggle lang={lang} />
+			<button
+				class="menu-toggle"
+				data-menu-toggle
+				aria-expanded="false"
+				aria-controls="site-nav"
+			>
+				<span class="sr-only">{t('nav.menu.open')}</span>
+				<span class="menu-toggle__bar" aria-hidden="true"></span>
+				<span class="menu-toggle__bar" aria-hidden="true"></span>
+				<span class="menu-toggle__bar" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+</header>
+
+<style>
+	/* ── Topbar darurat ── */
+	.topbar {
+		background-color: var(--color-surface-alt);
+		border-bottom: 1px solid var(--color-border);
+		font-size: var(--text-sm);
+	}
+
+	.topbar__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-4);
+		padding-block: var(--space-2);
+	}
+
+	.topbar__emergency {
+		color: var(--color-emergency-text);
+		font-weight: 600;
+	}
+
+	.topbar__emergency a {
+		color: inherit;
+	}
+
+	.topbar__hours {
+		color: var(--color-muted);
+	}
+
+	/* ── Bar utama ── */
+	.header {
+		position: relative; /* acuan dropdown menu mobile */
+		background-color: var(--color-surface);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-4);
+		min-height: 4rem;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-3);
+		/* Fluid: mulai 18px di HP → 20px di layar lebar, ikut 3.5vw viewport.
+		   Menghindari brand meluap bersama klaster aksi di layar sempit. */
+		font-size: clamp(var(--text-lg), 3.5vw, var(--text-xl));
+		font-weight: 700;
+		color: var(--color-primary-text); /* teks aksen: kontras di dua tema */
+		text-decoration: none;
+	}
+
+	.brand__logo {
+		height: clamp(1.5rem, 6vw, 2rem); /* fluid: ~24px (HP) → 32px (desktop) */
+		width: auto; /* logo resmi berbentuk lebar (796x313) — jaga rasio */
+		flex-shrink: 0; /* jangan menyusut di layar kecil */
+	}
+
+	/* Logo resmi monokrom hitam → tampil putih di header gelap (dark theme),
+	   supaya kontras tetap terjaga. filter hanya membalik warna, bukan geometri. */
+	:global([data-theme='dark']) .brand__logo {
+		filter: invert(1);
+	}
+
+	/* ── Navigasi desktop ──
+	   margin-left:auto mendorong nav + klaster aksi ke kanan
+	   (brand tetap kiri), tanpa mengubah anchor vertikal. */
+	.site-nav {
+		display: flex;
+		align-items: center;
+		gap: var(--space-8);
+		margin-left: auto;
+	}
+
+	/* Klaster aksi kanan: LangSwitcher + ThemeToggle + hamburger.
+	   margin-left 1rem + gap header 1rem = 2rem dari CTA —
+	   sama dengan jarak antar-grup fungsional (links → CTA). */
+	.header__actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		margin-left: var(--space-4);
+	}
+
+	.site-nav__list {
+		display: flex;
+		align-items: center;
+		gap: var(--space-6);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.site-nav__list a {
+		color: var(--color-body);
+		font-size: var(--text-sm);
+		font-weight: 500;
+		text-decoration: none;
+		transition: color var(--transition-base);
+	}
+
+	.site-nav__list a:hover {
+		color: var(--color-primary-text);
+	}
+
+	.site-nav__list a[aria-current='page'] {
+		color: var(--color-primary-text);
+		font-weight: 600;
+	}
+
+	/* ── Item & dropdown (desktop) ── */
+	.site-nav__item {
+		position: relative; /* acuan dropdown absolute */
+	}
+
+	/* Tombol parent dropdown (Layanan ▾ / Informasi ▾) — gayanya disamakan
+	   dengan link nav supaya identik secara visual. */
+	.site-nav__parent {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding: 0;
+		background: none;
+		border: 0;
+		color: var(--color-body);
+		font-size: var(--text-sm);
+		font-weight: 500;
+		cursor: pointer;
+		transition: color var(--transition-base);
+	}
+
+	.site-nav__parent:hover,
+	.site-nav__parent[aria-current='page'] {
+		color: var(--color-primary-text);
+		font-weight: 600;
+	}
+
+	.site-nav__caret {
+		font-size: 0.8em;
+	}
+
+	/* Panel dropdown: muncul saat hover / fokus keyboard / diklik (.is-open). */
+	.site-nav__dropdown {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		min-width: 13rem;
+		margin: 0;
+		padding: var(--space-2);
+		list-style: none;
+		background-color: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-md);
+		z-index: 20;
+		display: none;
+	}
+
+	.site-nav__item:hover .site-nav__dropdown,
+	.site-nav__item:focus-within .site-nav__dropdown,
+	.site-nav__item.is-open .site-nav__dropdown {
+		display: block;
+	}
+
+	.site-nav__dropdown a {
+		display: block;
+		padding: var(--space-2) var(--space-3);
+		border-radius: var(--radius-sm);
+		white-space: nowrap;
+	}
+
+	.site-nav__dropdown a:hover {
+		background-color: var(--color-primary-light);
+		color: var(--color-primary-text);
+	}
+
+	/* ── Toggle mobile (tersembunyi di desktop) ── */
+	.menu-toggle {
+		display: none;
+		flex-direction: column;
+		gap: 5px;
+		padding: var(--space-2);
+		background: none;
+		border: 0;
+		cursor: pointer;
+	}
+
+	.menu-toggle__bar {
+		width: 22px;
+		height: 2px;
+		background-color: var(--color-ink);
+	}
+
+	/* ── Mobile ── */
+	@media (max-width: 768px) {
+		.topbar__hours {
+			display: none; /* hemat ruang di layar kecil */
+		}
+
+		/* Rapatkan jarak klaster aksi (theme + hamburger) di layar sempit —
+		   ukuran brand sendiri sudah fluid via clamp() di aturan dasar. */
+		.header__inner {
+			gap: var(--space-3);
+		}
+
+		.header__actions {
+			gap: var(--space-2);
+			margin-left: var(--space-2);
+		}
+
+		.menu-toggle {
+			display: inline-flex;
+		}
+
+		.site-nav {
+			display: none; /* default tertutup; .is-open membuka */
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			align-items: stretch;
+			gap: var(--space-4);
+			padding: var(--space-4);
+			background-color: var(--color-surface);
+			border-bottom: 1px solid var(--color-border);
+			box-shadow: var(--shadow-md);
+		}
+
+		.site-nav.is-open {
+			display: flex;
+		}
+
+		.site-nav__list {
+			flex-direction: column;
+			align-items: stretch;
+			gap: var(--space-2);
+		}
+
+		.site-nav__list a,
+		.site-nav__parent {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: var(--space-2) 0;
+			font-size: var(--text-base);
+		}
+
+		.site-nav__parent {
+			width: 100%;
+		}
+
+		/* Dropdown jadi inline (bukan melayang) di panel menu mobile:
+		   tetap tersembunyi sampai parent diklik (is-open). */
+		.site-nav__item {
+			position: static;
+		}
+
+		.site-nav__dropdown {
+			position: static;
+			min-width: 0;
+			padding: 0 0 0 var(--space-4);
+			border: 0;
+			box-shadow: none;
+		}
+
+		.site-nav__dropdown a {
+			padding: var(--space-2) var(--space-3);
+			font-size: var(--text-base);
+		}
+	}
+</style>
+
+<script>
+	// Astro membundel <script> ini sebagai module. Klak di-delegasikan ke
+	// document (bukan binding per-tombol) supaya listener bertahan melewati
+	// navigasi ClientRouter: runScripts tidak menjalankan ulang bundle yang
+	// sudah pernah dieksekusi (dedup) — binding per-tombol akan mati di
+	// halaman berikutnya. Flag di window mencegah listener ganda saat router
+	// menjalankan ulang bundle ini (state module tidak bertahan).
+	interface NavWindow {
+		__navControllerBound?: boolean;
+	}
+	const navWindow = window as unknown as NavWindow;
+
+	if (!navWindow.__navControllerBound) {
+		navWindow.__navControllerBound = true;
+
+		document.addEventListener('click', (event) => {
+			const target = event.target instanceof Element ? event.target : null;
+			if (!target) return;
+
+			const menuToggle = target.closest('[data-menu-toggle]');
+			if (menuToggle) {
+				const nav = document.querySelector('[data-site-nav]');
+				if (!nav) return;
+				const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+				menuToggle.setAttribute('aria-expanded', String(!isOpen));
+				nav.classList.toggle('is-open', !isOpen);
+				return;
+			}
+
+			// Parent dropdown (Layanan ▾ / Informasi ▾): toggle panel.
+			const parent = target.closest('[data-nav-parent]');
+			if (parent) {
+				const item = parent.closest('.site-nav__item');
+				if (!item) return;
+				const isOpen = item.classList.toggle('is-open');
+				parent.setAttribute('aria-expanded', String(isOpen));
+			}
+		});
+	}
+</script>

@@ -1,0 +1,19 @@
+---
+/**
+ * /services — locale default (id), tanpa prefix.
+ */
+import ServicesContent from '@/components/pages/ServicesContent.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.services')}
+	description={t('page.description.services')}
+>
+	<ServicesContent lang={lang} />
+</BaseLayout>

@@ -1,0 +1,158 @@
+---
+/**
+ * Footer situs — dipakai oleh BaseLayout.
+ * I18N: menerima prop `lang`; teks UI dari kamus, teks data
+ * (menu, hours) dari file data per locale. Kontak tidak diterjemahkan.
+ */
+import { localized, localePath, tFactory, type Lang } from '@/i18n';
+import { NAV_ITEMS } from '@/data/nav';
+import { SITE, SOCIAL_LINKS } from '@/data/site';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+const year = new Date().getFullYear();
+const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
+const phoneTel = SITE.phone.replace(/\s/g, '');
+
+// Footer menampilkan tautan "ujung" saja: item dropdown (Layanan/Informasi)
+// mewakili anaknya, sisanya item biasa.
+const footerLinks = NAV_ITEMS.flatMap((item) =>
+	item.children && item.children.length > 0
+		? item.children
+		: [{ label: item.label, href: item.href ?? '#' }],
+);
+---
+
+<footer class="footer">
+	<div class="container footer__grid">
+		<div class="footer__brand-col">
+			<p class="footer__brand">{SITE.name}</p>
+			<p class="footer__tagline">{SITE.tagline}</p>
+			<ul class="footer__social" aria-label={t('footer.social')}>
+				{
+					SOCIAL_LINKS.map((social) => (
+						<li>
+							<a href={social.href} target="_blank" rel="noopener noreferrer">
+								{social.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<nav aria-label={t('footer.menu')}>
+			<h3 class="footer__heading">{t('footer.menu')}</h3>
+			<ul class="footer__links">
+				{
+					footerLinks.map((link) => (
+						<li>
+							<a href={localePath(link.href, lang)}>
+								{localized(link.label, lang)}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<div>
+			<h3 class="footer__heading">{t('footer.contact')}</h3>
+			<address class="footer__address">
+				<p>{SITE.address}</p>
+				<p><a href={`tel:${phoneTel}`}>{SITE.phone}</a></p>
+				<p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+			</address>
+		</div>
+
+		<div>
+			<h3 class="footer__heading">{t('footer.hours')}</h3>
+			<p>{localized(SITE.hours, lang)}</p>
+			<p class="footer__emergency">
+				{t('footer.emergencyLabel')}:
+				<a href={`tel:${emergencyTel}`}>{SITE.emergencyPhone}</a>
+			</p>
+		</div>
+	</div>
+
+	<div class="footer__bottom">
+		<div class="container">
+			<p>&copy; {year} {SITE.name}. {t('footer.rights')}</p>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		/* surface-inverse = SELALU gelap di dua tema (identitas visual footer) */
+		background-color: var(--color-surface-inverse);
+		color: #cbd5e1; /* slate-300 — teks terang di atas gelap */
+		font-size: var(--text-sm);
+	}
+
+	.footer__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: var(--space-8);
+		padding-block: var(--space-12);
+	}
+
+	.footer__brand {
+		color: #ffffff;
+		font-size: var(--text-xl);
+		font-weight: 700;
+	}
+
+	.footer__tagline {
+		margin-top: var(--space-2);
+	}
+
+	.footer__heading {
+		color: #ffffff;
+		font-size: var(--text-base);
+		margin-bottom: var(--space-4);
+	}
+
+	.footer__social,
+	.footer__links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: var(--space-2);
+	}
+
+	.footer a {
+		color: inherit;
+		text-decoration: none;
+		transition: color var(--transition-base);
+	}
+
+	.footer a:hover {
+		color: #ffffff;
+		text-decoration: underline;
+	}
+
+	.footer__address {
+		font-style: normal;
+		display: grid;
+		gap: var(--space-2);
+	}
+
+	.footer__emergency {
+		margin-top: var(--space-3);
+		color: var(--color-emergency-text); /* token: terang=red-600, gelap=red-300 */
+		font-weight: 600;
+	}
+
+	.footer__bottom {
+		border-top: 1px solid rgb(255 255 255 / 0.1);
+		padding-block: var(--space-4);
+		text-align: center;
+	}
+</style>
