@@ -28,6 +28,10 @@ export const NAV_ITEMS: NavItem[] = [
 				label: { id: 'Layanan Bisnis', en: 'Business Services' },
 				href: '/layanan-bisnis',
 			},
+			{
+				label: { id: 'Umpan Balik', en: 'Feedback' },
+				href: '/feedback',
+			},
 		],
 	},
 	{
