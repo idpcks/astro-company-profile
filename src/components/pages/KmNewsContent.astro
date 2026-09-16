@@ -1,0 +1,50 @@
+---
+/**
+ * Isi halaman /km-news — dipakai bersama oleh root (id) & [lang] (en).
+ * Minimal: hero + catatan bahwa berita segera hadir.
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import Card from '@/components/ui/Card.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+	eyebrow={t('pagehero.eyebrow.kmNews')}
+	title={t('page.title.kmNews')}
+	lead={t('page.description.kmNews')}
+/>
+
+<section class="section">
+	<div class="container">
+		<SectionHeading title={t('kmNewsPage.note.title')} align="start" />
+		<div class="kmnews__grid">
+			<Card>
+				<p class="kmnews__note">{t('kmNewsPage.note.body')}</p>
+			</Card>
+		</div>
+	</div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+	.kmnews__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: var(--space-6);
+	}
+
+	.kmnews__note {
+		color: var(--color-muted);
+		font-size: var(--text-base);
+	}
+</style>

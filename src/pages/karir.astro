@@ -1,0 +1,19 @@
+---
+/**
+ * /karir — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import KarirContent from '@/components/pages/KarirContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.karir')}
+	description={t('page.description.karir')}
+>
+	<KarirContent lang={lang} />
+</BaseLayout>

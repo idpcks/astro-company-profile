@@ -1,0 +1,19 @@
+---
+/**
+ * /lelang-pengadaan — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import LelangPengadaanContent from '@/components/pages/LelangPengadaanContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.lelangPengadaan')}
+	description={t('page.description.lelangPengadaan')}
+>
+	<LelangPengadaanContent lang={lang} />
+</BaseLayout>

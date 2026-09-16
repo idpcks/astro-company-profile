@@ -21,11 +21,11 @@ export const SITE = {
 	/** URL produksi — dipakai untuk canonical URL & Open Graph.
 	 *  TODO: masih placeholder, ganti saat domain siap. */
 	url: 'https://rsseatsentosa.example.com',
-	email: 'info@rsseatsentosa.example.com',
+	email: 'info@krakataumedika.co.id',
 	/** Telepon umum / front office */
-	phone: '+62 21 555 0100',
+	phone: '(0254) 396333',
 	/** Hotline IGD — tampil di banner darurat & Header */
-	emergencyPhone: '+62 811 1000 100',
+	emergencyPhone: '(0254) 396333',
 	address: 'Jl. Semang Raya No. 1, Kotabumi, Kec. Purwakarta, Kota Cilegon, Banten 42435',
 	/** Jam operasional ringkas — per locale */
 	hours: {

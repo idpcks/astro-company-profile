@@ -1,0 +1,19 @@
+---
+/**
+ * /km-news — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import KmNewsContent from '@/components/pages/KmNewsContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.kmNews')}
+	description={t('page.description.kmNews')}
+>
+	<KmNewsContent lang={lang} />
+</BaseLayout>

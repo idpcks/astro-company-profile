@@ -23,6 +23,10 @@ const id = {
 	'page.title.layananBisnis': 'Layanan Bisnis',
 	'page.title.profil': 'Profil',
 	'page.title.visiMisi': 'Visi & Misi',
+	'page.title.kmNews': 'KM News',
+	'page.title.lelangPengadaan': 'Lelang Pengadaan',
+	'page.title.laporanKeuangan': 'Laporan Keuangan',
+	'page.title.karir': 'Karir',
 	'page.description.home': 'Rumah sakit swasta dengan layanan IGD 24 jam, dokter spesialis, dan fasilitas modern untuk melayani keluarga Anda.',
 	'page.description.about': 'Mengenal RS Krakatau Medika: visi, misi, dan nilai yang kami pegang dalam melayani pasien dan keluarga.',
 	'page.description.services': 'Layanan unggulan RS Krakatau Medika: IGD 24 jam, poliklinik spesialis, rawat inap, bedah sentral, laboratorium, dan medical checkup.',
@@ -35,6 +39,10 @@ const id = {
 	'page.description.layananBisnis': 'Layanan kesehatan untuk perusahaan dan industri: medical checkup karyawan, kontrak pelayanan, dan kerja sama klinik.',
 	'page.description.profil': 'Profil RS Krakatau Medika: komitmen, fasilitas, dan layanan yang kami hadirkan untuk Anda.',
 	'page.description.visiMisi': 'Visi, misi, dan nilai yang menjadi arah serta fondasi pelayanan RS Krakatau Medika.',
+	'page.description.kmNews': 'Kabar dan berita terbaru RS Krakatau Medika.',
+	'page.description.lelangPengadaan': 'Informasi lelang dan pengadaan barang/jasa di lingkungan RS Krakatau Medika.',
+	'page.description.laporanKeuangan': 'Laporan keuangan dan dokumen publik RS Krakatau Medika yang transparan dan akuntabel.',
+	'page.description.karir': 'Lowongan kerja dan peluang berkarir di RS Krakatau Medika.',
 	// Header
 	'nav.ariaLabel': 'Navigasi utama',
 	'nav.menu.open': 'Buka menu navigasi',
@@ -105,6 +113,10 @@ const id = {
 	'pagehero.eyebrow.layananBisnis': 'Layanan Bisnis',
 	'pagehero.eyebrow.profil': 'Profil',
 	'pagehero.eyebrow.visiMisi': 'Visi & Misi',
+	'pagehero.eyebrow.kmNews': 'Berita',
+	'pagehero.eyebrow.lelangPengadaan': 'Pengadaan',
+	'pagehero.eyebrow.laporanKeuangan': 'Keuangan',
+	'pagehero.eyebrow.karir': 'Karir',
 
 	// Halaman Galeri
 	'galeriPage.hero.title': 'Galeri Foto & Kegiatan',
@@ -174,6 +186,22 @@ const id = {
 	'blogPage.hero.title': 'Wawasan kesehatan dari dokter kami',
 	'blogPage.hero.lead': 'Artikel edukasi yang ditulis dan direview oleh tim medis kami.',
 
+	// Halaman /km-news
+	'kmNewsPage.note.title': 'Berita segera hadir',
+	'kmNewsPage.note.body': 'Kumpulan kabar dan pengumuman terbaru RS Krakatau Medika akan tersedia di halaman ini segera.',
+
+	// Halaman /lelang-pengadaan
+	'lelangPengadaanPage.note.title': 'Pengumuman lelang segera hadir',
+	'lelangPengadaanPage.note.body': 'Informasi lelang pengadaan barang dan jasa akan kami publikasikan di halaman ini secara transparan.',
+
+	// Halaman /laporan-keuangan
+	'laporanKeuanganPage.note.title': 'Laporan keuangan segera hadir',
+	'laporanKeuanganPage.note.body': 'Dokumen laporan keuangan dan laporan publik akan tersedia di halaman ini sebagai wujud transparansi kami.',
+
+	// Halaman /karir
+	'karirPage.note.title': 'Lowongan pekerjaan segera hadir',
+	'karirPage.note.body': 'Peluang karier di RS Krakatau Medika akan kami unggah di halaman ini. Pantau terus pembaruan kami.',
+
 	// Blog komponen
 	'post.updated': 'Diperbarui:',
 	'post.back': '← Semua Artikel',
@@ -207,6 +235,10 @@ const en: Record<UiKeys, string> = {
 	'page.title.layananBisnis': 'Business Services',
 	'page.title.profil': 'Profile',
 	'page.title.visiMisi': 'Vision & Mission',
+	'page.title.kmNews': 'KM News',
+	'page.title.lelangPengadaan': 'Tender & Procurement',
+	'page.title.laporanKeuangan': 'Financial Reports',
+	'page.title.karir': 'Careers',
 	'page.description.home': 'A private hospital with 24/7 emergency care, specialist doctors, and modern facilities for your family.',
 	'page.description.about': 'Get to know RS Krakatau Medika: the vision, mission, and values behind our care for patients and families.',
 	'page.description.services': 'Featured services at RS Krakatau Medika: 24/7 emergency, specialist clinics, inpatient care, surgery, laboratory, and checkups.',
@@ -219,6 +251,10 @@ const en: Record<UiKeys, string> = {
 	'page.description.layananBisnis': 'Corporate healthcare services: employee checkups, service contracts, and clinic partnerships.',
 	'page.description.profil': 'Profile of RS Krakatau Medika: the commitment, facilities, and services we bring to you.',
 	'page.description.visiMisi': 'The vision, mission, and values that guide our care at RS Krakatau Medika.',
+	'page.description.kmNews': 'Latest news and updates from RS Krakatau Medika.',
+	'page.description.lelangPengadaan': 'Tender and procurement announcements at RS Krakatau Medika.',
+	'page.description.laporanKeuangan': 'Financial and public reports of RS Krakatau Medika — transparent and accountable.',
+	'page.description.karir': 'Job openings and career opportunities at RS Krakatau Medika.',
 
 	// Header
 	'nav.ariaLabel': 'Main navigation',
@@ -290,6 +326,10 @@ const en: Record<UiKeys, string> = {
 	'pagehero.eyebrow.layananBisnis': 'Business Services',
 	'pagehero.eyebrow.profil': 'Profile',
 	'pagehero.eyebrow.visiMisi': 'Vision & Mission',
+	'pagehero.eyebrow.kmNews': 'News',
+	'pagehero.eyebrow.lelangPengadaan': 'Procurement',
+	'pagehero.eyebrow.laporanKeuangan': 'Finance',
+	'pagehero.eyebrow.karir': 'Careers',
 
 	// Gallery page
 	'galeriPage.hero.title': 'Gallery & Activities',
@@ -358,6 +398,22 @@ const en: Record<UiKeys, string> = {
 	// /blog
 	'blogPage.hero.title': 'Health insights from our doctors',
 	'blogPage.hero.lead': 'Educational articles written and reviewed by our medical team.',
+
+	// /km-news
+	'kmNewsPage.note.title': 'News coming soon',
+	'kmNewsPage.note.body': 'The latest news and announcements from RS Krakatau Medika will be available on this page soon.',
+
+	// /lelang-pengadaan
+	'lelangPengadaanPage.note.title': 'Tender announcements coming soon',
+	'lelangPengadaanPage.note.body': 'Tender and procurement announcements will be published on this page transparently.',
+
+	// /laporan-keuangan
+	'laporanKeuanganPage.note.title': 'Financial reports coming soon',
+	'laporanKeuanganPage.note.body': 'Financial and public reporting documents will be available on this page as part of our transparency commitment.',
+
+	// /karir
+	'karirPage.note.title': 'Job openings coming soon',
+	'karirPage.note.body': 'Career opportunities at RS Krakatau Medika will be posted on this page. Keep an eye on our updates.',
 
 	// Blog
 	'post.updated': 'Updated:',

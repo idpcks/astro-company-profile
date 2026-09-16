@@ -45,6 +45,10 @@ export const NAV_ITEMS: NavItem[] = [
 		label: { id: 'Informasi', en: 'Information' },
 		children: [
 			{ label: { id: 'Blog / Artikel', en: 'Blog / Articles' }, href: '/blog' },
+			{ label: { id: 'KM News', en: 'KM News' }, href: '/km-news' },
+			{ label: { id: 'Lelang Pengadaan', en: 'Tender Procurement' }, href: '/lelang-pengadaan' },
+			{ label: { id: 'Laporan Keuangan', en: 'Financial Reports' }, href: '/laporan-keuangan' },
+			{ label: { id: 'Karir', en: 'Careers' }, href: '/karir' },
 		],
 	},
 	{ label: { id: 'Galeri', en: 'Gallery' }, href: '/galeri' },

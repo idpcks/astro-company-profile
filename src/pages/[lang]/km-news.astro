@@ -1,0 +1,23 @@
+---
+/**
+ * /en/km-news — halaman KM News dalam bahasa Inggris.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import KmNewsContent from '@/components/pages/KmNewsContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+export function getStaticPaths() {
+	return [{ params: { lang: 'en' } }];
+}
+
+const lang: Lang = 'en';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.kmNews')}
+	description={t('page.description.kmNews')}
+>
+	<KmNewsContent lang={lang} />
+</BaseLayout>

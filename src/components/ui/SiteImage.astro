@@ -1,0 +1,70 @@
+---
+/**
+ * SiteImage — SATU-SATUNYA titik pemuatan gambar di situs (SOT).
+ *
+ * Mendukung dua macam sumber:
+ *   1. ImageMetadata  → <Image /> astro:assets: resize, format WebP/AVIF,
+ *                       srcset responsif (widths/sizes), anti-layout-shift.
+ *   2. string (URL)   → <img> murni (mis. frontmatter blog `image:` yang
+ *                       belum bisa dioptimasi astro:assets). width/height
+ *                       wajib dikirim pemanggil supaya tidak layout-shift.
+ *
+ * Kebijakan default: lazy + decoding async + format webp. Elemen LCP
+ * (hero/cover above-the-fold) tinggal override `loading="eager"`.
+ */
+import { Image } from 'astro:assets';
+
+export interface Props {
+	src: ImageMetadata | string;
+	alt: string;
+	loading?: 'lazy' | 'eager';
+	fetchpriority?: 'high' | 'low';
+	/** Hanya dipakai untuk jalur string (URL) — cegah layout shift. */
+	width?: number;
+	height?: number;
+	widths?: number[];
+	sizes?: string;
+	format?: 'webp' | 'avif';
+	class?: string;
+}
+
+const {
+	src,
+	alt,
+	loading = 'lazy',
+	fetchpriority,
+	width,
+	height,
+	widths = [640, 768, 1024, 1280],
+	sizes = 'min(100vw, 1200px)',
+	format = 'webp',
+	class: className,
+} = Astro.props;
+---
+
+{
+	typeof src === 'string' ? (
+		<img
+			src={src}
+			alt={alt}
+			width={width}
+			height={height}
+			loading={loading}
+			fetchpriority={fetchpriority}
+			decoding="async"
+			class={className}
+		/>
+	) : (
+		<Image
+			src={src}
+			alt={alt}
+			loading={loading}
+			fetchpriority={fetchpriority}
+			widths={widths}
+			sizes={sizes}
+			format={format}
+			decoding="async"
+			class={className}
+		/>
+	)
+}

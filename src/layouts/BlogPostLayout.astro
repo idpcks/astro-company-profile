@@ -16,6 +16,7 @@
 import PostMeta from '@/components/blog/PostMeta.astro';
 import Badge from '@/components/ui/Badge.astro';
 import Button from '@/components/ui/Button.astro';
+import SiteImage from '@/components/ui/SiteImage.astro';
 import { getOtherAvailableLocales, type NormalizedPost } from '@/lib/blog';
 import { languages, localePath, tFactory, type Lang } from '@/i18n';
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -75,13 +76,14 @@ const otherLocales = getOtherAvailableLocales(post, lang);
 
 		{
 			image && (
-				<img
+				<SiteImage
 					class="post__image container"
 					src={image}
 					alt=""
-					width="1200"
-					height="630"
+					width={1200}
+					height={630}
 					loading="eager"
+					fetchpriority="high"
 				/>
 			)
 		}

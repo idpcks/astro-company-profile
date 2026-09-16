@@ -1,0 +1,50 @@
+---
+/**
+ * Isi halaman /laporan-keuangan — dipakai bersama oleh root (id) & [lang] (en).
+ * Minimal: hero + catatan bahwa laporan segera hadir.
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import Card from '@/components/ui/Card.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+	eyebrow={t('pagehero.eyebrow.laporanKeuangan')}
+	title={t('page.title.laporanKeuangan')}
+	lead={t('page.description.laporanKeuangan')}
+/>
+
+<section class="section">
+	<div class="container">
+		<SectionHeading title={t('laporanKeuanganPage.note.title')} align="start" />
+		<div class="keuangan__grid">
+			<Card>
+				<p class="keuangan__note">{t('laporanKeuanganPage.note.body')}</p>
+			</Card>
+		</div>
+	</div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+	.keuangan__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: var(--space-6);
+	}
+
+	.keuangan__note {
+		color: var(--color-muted);
+		font-size: var(--text-base);
+	}
+</style>
