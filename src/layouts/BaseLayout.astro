@@ -13,6 +13,7 @@ import Footer from '@/components/shared/Footer.astro';
 import Header from '@/components/shared/Header.astro';
 import { ClientRouter } from 'astro:transitions';
 import LoadingIndicator from 'astro-loading-indicator/component';
+import WebVitals from '@/components/ui/WebVitals.astro';
 import { alternatePath, languages, localePath, tFactory, type Lang } from '@/i18n';
 import { SITE } from '@/data/site';
 import '@/styles/global.css';
@@ -138,5 +139,6 @@ const canonicalURL = new URL(Astro.url.pathname, SITE.url);
 			<slot />
 		</main>
 		<Footer lang={lang} />
+		<WebVitals />
 	</body>
 </html>

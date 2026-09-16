@@ -8,6 +8,11 @@ export default defineConfig({
     server: {
         host: true,
     },
+    build: {
+        // Critical CSS: inline semua CSS ke <head> tiap halaman → hilangkan
+        // satu request render-blocking (CSS bundle 11 KB satu-satunya).
+        inlineStylesheets: 'always',
+    },
     integrations: [
         icon(),
         Compress({

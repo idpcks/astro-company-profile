@@ -11,6 +11,11 @@
  *
  * Kebijakan default: lazy + decoding async + format webp. Elemen LCP
  * (hero/cover above-the-fold) tinggal override `loading="eager"`.
+ *
+ * PENGAMAN CLS: jalur string (URL) WAJIB mengirim width+height — build
+ * gagal (error) jika dilanggar, supaya layout shift dari gambar tak
+ * pernah lolos ke production. Jalur ImageMetadata tidak butuh karena
+ * astro:assets membaca dimensi dari metadata file.
  */
 import { Image } from 'astro:assets';
 
@@ -19,7 +24,7 @@ export interface Props {
 	alt: string;
 	loading?: 'lazy' | 'eager';
 	fetchpriority?: 'high' | 'low';
-	/** Hanya dipakai untuk jalur string (URL) — cegah layout shift. */
+	/** Wajib untuk src string (URL) — pemicu CLS bila diabaikan. */
 	width?: number;
 	height?: number;
 	widths?: number[];
@@ -40,6 +45,15 @@ const {
 	format = 'webp',
 	class: className,
 } = Astro.props;
+
+// Pengaman CLS: jalur URL tanpa dimensi = build error, buka jalan
+// gambar yang lari-lari ke production.
+if (typeof src === 'string' && (typeof width !== 'number' || typeof height !== 'number')) {
+	throw new Error(
+		`SiteImage: src string (URL) "${src}" butuh width & height bertipe number — cegah CLS. ` +
+			`Gunakan <SiteImage src="..." width={1200} height={630} />.`
+	);
+}
 ---
 
 {

@@ -1,0 +1,48 @@
+---
+/**
+ * WebVitals — instrumentasi LCP / INP / CLS untuk pengukuran di lapangan.
+ *
+ * Disejajarkan HANYA saat mode development (`import.meta.env.DEV`).
+ * Output: log console ter-label per metrik + nilai threshold ("good").
+ *
+ * Saat analytics/production siap, tambahkan jalur di bawah ini:
+ *   const send = (payload) => beaconSend(`/api/vitals`, payload);
+ * lalu panggil send() di tiap callback — tidak perlu ubah layout.
+ */
+const on = import.meta.env.DEV;
+---
+
+{
+	on && (
+		<script>
+			import { onCLS, onINP, onLCP } from 'web-vitals';
+
+			const targets: Record<string, { good: number; unit: string }> = {
+				LCP: { good: 2500, unit: 'ms' },
+				INP: { good: 200, unit: 'ms' },
+				CLS: { good: 0.1, unit: '' },
+			};
+
+			const verdict = (label: string, value: number) =>
+				value <= targets[label].good ? '✓ good' : '✗ perbaiki';
+
+			onLCP((m) =>
+				console.info(
+					`[WebVitals] LCP ${m.value.toFixed(0)}ms (${verdict('LCP', m.value)}) — elemen utama`
+				)
+			);
+
+			onINP((m) =>
+				console.info(
+					`[WebVitals] INP ${m.value.toFixed(0)}ms (${verdict('INP', m.value)}) — responsiveness`
+				)
+			);
+
+			onCLS((m) =>
+				console.info(
+					`[WebVitals] CLS ${m.value.toFixed(3)} (${verdict('CLS', m.value)}) — layout shift`
+				)
+			);
+		</script>
+	)
+}
