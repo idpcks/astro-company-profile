@@ -76,6 +76,10 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 			<p>&copy; {year} {SITE.name}. {t('footer.rights')}</p>
 		</div>
 	</div>
+
+	<!-- Big Footer Typography: identitas brand raksasa di dasar halaman.
+	     "RSKM" = akronim Rumah Sakit Krakatau Medika; dekoratif (aria-hidden). -->
+	<div class="footer__masthead" aria-hidden="true">RSKM</div>
 </footer>
 
 <style>
@@ -84,6 +88,8 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 		background-color: var(--color-surface-inverse);
 		color: #cbd5e1; /* slate-300 — teks terang di atas gelap */
 		font-size: var(--text-sm);
+		/* Teks masthead selebar layar tidak boleh bikin scrollbar horizontal */
+		overflow-x: clip;
 	}
 
 	.footer__grid {
@@ -144,5 +150,27 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 		border-top: 1px solid rgb(255 255 255 / 0.1);
 		padding-block: var(--space-4);
 		text-align: center;
+	}
+
+	/* ── Big Footer Typography ── */
+	.footer__masthead {
+		font-size: clamp(4rem, 20vw, 18rem);
+		font-weight: 900;
+		line-height: 0.8; /* rapatkan megateks raksasa */
+		letter-spacing: -0.02em;
+		text-align: center;
+		white-space: nowrap;
+		color: rgb(255 255 255 / 0.07); /* watermark halus di atas gelap */
+		user-select: none;
+		padding: var(--space-4) 0 0;
+		/* Serap descender agar megateks tidak menciptakan gap tak kelihatan
+		   di tepi bawah footer. */
+		margin-bottom: -0.18em;
+	}
+
+	@media (max-width: 640px) {
+		.footer__masthead {
+			letter-spacing: 0.1em; /* jarak antar huruf lebih longgar di layar sempit */
+		}
 	}
 </style>
