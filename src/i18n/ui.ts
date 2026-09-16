@@ -57,6 +57,7 @@ const id = {
 
 	// Hero
 	'hero.eyebrow': 'Mitra kesehatan keluarga Anda',
+	'hero.imageAlt': 'Foto gedung RS Krakatau Medika',
 	'hero.title': 'Kesehatan keluarga, prioritas kami',
 	'hero.cta.services': 'Lihat Layanan',
 	'hero.cta.contact': 'Hubungi Kami',
@@ -99,6 +100,7 @@ const id = {
 	'footer.contact': 'Kontak',
 	'footer.hours': 'Jam Layanan',
 	'footer.social': 'Sosial media',
+	'footer.links': 'Tautan',
 	'footer.rights': 'Semua hak dilindungi.',
 	'footer.emergencyLabel': 'IGD',
 
@@ -181,6 +183,16 @@ const id = {
 	'contactPage.form.message': 'Pesan',
 	'contactPage.form.messagePlaceholder': 'Ceritakan kebutuhan Anda, misal: pertanyaan layanan atau jadwal poliklinik.',
 	'contactPage.form.submit': 'Kirim Pesan',
+	'contactPage.form.consent': 'Saya setuju data yang saya isi diproses untuk menjawab permintaan ini (sesuai UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi).',
+	'contactPage.form.privacyNote': 'Data Anda hanya digunakan untuk merespons pesan ini dan tidak dibagikan kepada pihak lain.',
+	'contactPage.form.sending': 'Mengirim…',
+	'contactPage.form.success': 'Pesan Anda terkirim. Tim kami akan segera menghubungi Anda.',
+	'contactPage.form.error': 'Pesan gagal terkirim. Silakan coba lagi, atau hubungi kami langsung lewat telepon.',
+	'contactPage.form.invalid': 'Mohon lengkapi isian yang wajib dengan benar.',
+	'contactPage.form.consentError': 'Mohon berikan izin pemrosesan data Anda terlebih dahulu.',
+	'contactPage.form.confirmTitle': 'Konfirmasi pengiriman',
+	'contactPage.form.confirmSend': 'Ya, Kirim',
+	'contactPage.form.confirmCancel': 'Batal',
 
 	// Halaman /blog
 	'blogPage.hero.title': 'Wawasan kesehatan dari dokter kami',
@@ -270,6 +282,7 @@ const en: Record<UiKeys, string> = {
 
 	// Hero
 	'hero.eyebrow': 'Your family\u2019s healthcare partner',
+	'hero.imageAlt': 'Krakatau Medika hospital building',
 	'hero.title': 'Your family\u2019s health, our priority',
 	'hero.cta.services': 'Our Services',
 	'hero.cta.contact': 'Contact Us',
@@ -312,6 +325,7 @@ const en: Record<UiKeys, string> = {
 	'footer.contact': 'Contact',
 	'footer.hours': 'Service Hours',
 	'footer.social': 'Social media',
+	'footer.links': 'Links',
 	'footer.rights': 'All rights reserved.',
 	'footer.emergencyLabel': 'ER',
 
@@ -394,6 +408,16 @@ const en: Record<UiKeys, string> = {
 	'contactPage.form.message': 'Message',
 	'contactPage.form.messagePlaceholder': 'Tell us what you need, e.g. a question about services or clinic schedules.',
 	'contactPage.form.submit': 'Send Message',
+	'contactPage.form.consent': 'I consent to my data being processed to answer this request (per Indonesia Law No. 27 of 2022 on Personal Data Protection).',
+	'contactPage.form.privacyNote': 'Your data is used only to respond to this message and is never shared with third parties.',
+	'contactPage.form.sending': 'Sending…',
+	'contactPage.form.success': 'Your message has been sent. Our team will contact you shortly.',
+	'contactPage.form.error': 'Failed to send your message. Please try again, or call us directly.',
+	'contactPage.form.invalid': 'Please fill in the required fields correctly.',
+	'contactPage.form.consentError': 'Please give your consent to data processing first.',
+	'contactPage.form.confirmTitle': 'Confirm submission',
+	'contactPage.form.confirmSend': 'Confirm & Send',
+	'contactPage.form.confirmCancel': 'Cancel',
 
 	// /blog
 	'blogPage.hero.title': 'Health insights from our doctors',

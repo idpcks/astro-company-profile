@@ -24,7 +24,9 @@ export interface Props {
 	alt: string;
 	loading?: 'lazy' | 'eager';
 	fetchpriority?: 'high' | 'low';
-	/** Wajib untuk src string (URL) — pemicu CLS bila diabaikan. */
+	/** Wajib untuk src string (URL) — pemicu CLS bila diabaikan.
+	 *  Untuk src ImageMetadata: pasang keduanya untuk crop landscape
+	 *  eksplisit saat build (mis. hero 1200×900). */
 	width?: number;
 	height?: number;
 	widths?: number[];
@@ -74,8 +76,10 @@ if (typeof src === 'string' && (typeof width !== 'number' || typeof height !== '
 			alt={alt}
 			loading={loading}
 			fetchpriority={fetchpriority}
-			widths={widths}
-			sizes={sizes}
+			widths={width !== undefined && height !== undefined ? undefined : widths}
+			sizes={width !== undefined && height !== undefined ? undefined : sizes}
+			width={width}
+			height={height}
 			format={format}
 			decoding="async"
 			class={className}

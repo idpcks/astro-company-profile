@@ -13,6 +13,14 @@ export default defineConfig({
         // satu request render-blocking (CSS bundle 11 KB satu-satunya).
         inlineStylesheets: 'always',
     },
+    prefetch: {
+        // Mode selektif: karena ClientRouter otomatis menyalakan prefetchAll,
+        // kita matikan di sini (prefetchAll: false) agar HANYA link yang
+        // diberi data-astro-prefetch yang di-prefetch (nav utama, hover).
+        // 'tap' = strategi default untuk atribut tanpa nilai (tak dipakai).
+        prefetchAll: false,
+        defaultStrategy: 'tap',
+    },
     integrations: [
         icon(),
         Compress({

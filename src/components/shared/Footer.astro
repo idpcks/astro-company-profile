@@ -4,9 +4,8 @@
  * I18N: menerima prop `lang`; teks UI dari kamus, teks data
  * (menu, hours) dari file data per locale. Kontak tidak diterjemahkan.
  */
-import { localized, localePath, tFactory, type Lang } from '@/i18n';
-import { NAV_ITEMS } from '@/data/nav';
-import { SITE, SOCIAL_LINKS } from '@/data/site';
+import { localized, tFactory, type Lang } from '@/i18n';
+import { SITE, SOCIAL_LINKS, USEFUL_LINKS } from '@/data/site';
 
 interface Props {
 	lang: Lang;
@@ -18,14 +17,6 @@ const t = tFactory(lang);
 const year = new Date().getFullYear();
 const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 const phoneTel = SITE.phone.replace(/\s/g, '');
-
-// Footer menampilkan tautan "ujung" saja: item dropdown (Layanan/Informasi)
-// mewakili anaknya, sisanya item biasa.
-const footerLinks = NAV_ITEMS.flatMap((item) =>
-	item.children && item.children.length > 0
-		? item.children
-		: [{ label: item.label, href: item.href ?? '#' }],
-);
 ---
 
 <footer class="footer">
@@ -46,20 +37,20 @@ const footerLinks = NAV_ITEMS.flatMap((item) =>
 			</ul>
 		</div>
 
-		<nav aria-label={t('footer.menu')}>
-			<h3 class="footer__heading">{t('footer.menu')}</h3>
-			<ul class="footer__links">
+		<div>
+			<h3 class="footer__heading">{t('footer.links')}</h3>
+			<ul class="footer__social" aria-label={t('footer.links')}>
 				{
-					footerLinks.map((link) => (
+					USEFUL_LINKS.map((link) => (
 						<li>
-							<a href={localePath(link.href, lang)}>
-								{localized(link.label, lang)}
+							<a href={link.href} target="_blank" rel="noopener noreferrer">
+								{link.label}
 							</a>
 						</li>
 					))
 				}
 			</ul>
-		</nav>
+		</div>
 
 		<div>
 			<h3 class="footer__heading">{t('footer.contact')}</h3>
@@ -118,8 +109,7 @@ const footerLinks = NAV_ITEMS.flatMap((item) =>
 		margin-bottom: var(--space-4);
 	}
 
-	.footer__social,
-	.footer__links {
+	.footer__social {
 		list-style: none;
 		margin: 0;
 		padding: 0;

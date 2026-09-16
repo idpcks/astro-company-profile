@@ -61,7 +61,9 @@ export function alternatePath(path: string, targetLang: Lang): string {
 	const [, maybeLang, ...rest] = path.split('/');
 	const isPrefixed = maybeLang in languages;
 	const withoutLang = isPrefixed ? `/${rest.join('/')}` : path;
-	return localePath(withoutLang === '/' ? '' : withoutLang, targetLang);
+	// Root home direpresentasikan "/" (bukan "") supaya localePath
+	// untuk defaultLang (id, tanpa prefix) menghasilkan "/"—bukan kosong.
+	return localePath(withoutLang === '/' ? '/' : withoutLang, targetLang);
 }
 
 /**

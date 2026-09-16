@@ -12,6 +12,7 @@ import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import { tFactory, type Lang } from '@/i18n';
 import { SITE } from '@/data/site';
+import { HONEYPOT_NAME } from '@/lib/form';
 
 interface Props {
 	lang: Lang;
@@ -68,22 +69,45 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 			</aside>
 		</div>
 
-		<div class="contact__form-col">
+<div class="contact__form-col">
 			<h2 class="contact__heading">{t('contactPage.form.heading')}</h2>
-			<form class="contact-form" method="post">
+			<form
+				class="contact-form"
+				method="post"
+				novalidate
+				data-contact-form
+				data-msg-sending={t('contactPage.form.sending')}
+				data-msg-success={t('contactPage.form.success')}
+				data-msg-error={t('contactPage.form.error')}
+				data-msg-invalid={t('contactPage.form.invalid')}
+				data-msg-consent={t('contactPage.form.consentError')}
+			>
+				{/* Honeypot anti-bot: siluman bagi manusia, umpan bagi bot.
+				    Jika terisi, submitContact() membuangnya tanpa mengirim. */}
+				<p class="contact-form__honey" aria-hidden="true">
+					<label for={`${HONEYPOT_NAME}-${lang}`}>Jangan isi kolom ini</label>
+					<input
+						id={`${HONEYPOT_NAME}-${lang}`}
+						name={HONEYPOT_NAME}
+						type="text"
+						tabindex="-1"
+						autocomplete="off"
+					/>
+				</p>
+
 				<div class="contact-form__field">
 					<label for="name">{t('contactPage.form.name')}</label>
-					<input id="name" name="name" type="text" required autocomplete="name" />
+					<input id="name" name="name" type="text" required autocomplete="name" maxlength="80" />
 				</div>
 
 				<div class="contact-form__field">
 					<label for="email">{t('contactPage.form.email')}</label>
-					<input id="email" name="email" type="email" required autocomplete="email" />
+					<input id="email" name="email" type="email" required autocomplete="email" maxlength="120" />
 				</div>
 
 				<div class="contact-form__field">
 					<label for="phone">{t('contactPage.form.phone')}</label>
-					<input id="phone" name="phone" type="tel" autocomplete="tel" />
+					<input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="24" />
 				</div>
 
 				<div class="contact-form__field">
@@ -93,16 +117,199 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 						name="message"
 						rows="5"
 						required
+						maxlength="2000"
 						placeholder={t('contactPage.form.messagePlaceholder')}></textarea>
 				</div>
 
-				<Button type="submit" size="lg">{t('contactPage.form.submit')}</Button>
+				<label class="contact-form__consent" for="consent">
+					<input id="consent" name="consent" type="checkbox" />
+					<span>{t('contactPage.form.consent')}</span>
+				</label>
+
+				<p class="contact-form__privacy">{t('contactPage.form.privacyNote')}</p>
+
+				<p class="contact-form__status" role="status" aria-live="polite" data-form-status hidden></p>
+
+				<Button type="submit" size="lg" data-contact-submit>
+					{t('contactPage.form.submit')}
+				</Button>
 			</form>
+
+			{/* Konfirmasi sebelum kirim: ringkasan data + persetujuan, diulang di modal. */}
+			<dialog
+				class="contact-form__dialog"
+				data-contact-dialog
+				aria-labelledby="contact-dialog-title"
+			>
+				<h3 id="contact-dialog-title" class="contact-form__dialog-title">
+					{t('contactPage.form.confirmTitle')}
+				</h3>
+
+				<dl class="contact-form__dialog-summary">
+					<div class="contact-form__dialog-row">
+						<dt>{t('contactPage.form.name')}</dt>
+						<dd data-dialog-field="name"></dd>
+					</div>
+					<div class="contact-form__dialog-row">
+						<dt>{t('contactPage.form.email')}</dt>
+						<dd data-dialog-field="email"></dd>
+					</div>
+					<div class="contact-form__dialog-row">
+						<dt>{t('contactPage.form.phone')}</dt>
+						<dd data-dialog-field="phone"></dd>
+					</div>
+					<div class="contact-form__dialog-row contact-form__dialog-row--message">
+						<dt>{t('contactPage.form.message')}</dt>
+						<dd data-dialog-field="message"></dd>
+					</div>
+				</dl>
+
+				<p class="contact-form__privacy">{t('contactPage.form.privacyNote')}</p>
+
+				<div class="contact-form__dialog-actions">
+					<Button type="button" variant="outline" data-dialog-cancel>
+						{t('contactPage.form.confirmCancel')}
+					</Button>
+					<Button type="button" data-dialog-confirm>
+						{t('contactPage.form.confirmSend')}
+					</Button>
+				</div>
+			</dialog>
 		</div>
 	</div>
 </section>
 
 <CTASection lang={lang} />
+
+<script>
+	import { submitContact, HONEYPOT_NAME } from '@/lib/form';
+
+	interface ContactData {
+		name: string;
+		email: string;
+		phone?: string;
+		message: string;
+		consent: boolean;
+	}
+
+	const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+	if (form) {
+		const statusEl = form.querySelector<HTMLParagraphElement>('[data-form-status]');
+		const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
+		const honeyInput = form.querySelector<HTMLInputElement>(`input[name="${HONEYPOT_NAME}"]`);
+		const consentInput = form.querySelector<HTMLInputElement>('input[name="consent"]');
+		const dialog = document.querySelector<HTMLDialogElement>('[data-contact-dialog]');
+		const dialogRows = Array.from(
+			document.querySelectorAll<HTMLElement>('[data-dialog-field]'),
+		);
+		const originalLabel = submitBtn?.textContent ?? '';
+
+		/** Kiriman yang menunggu konfirmasi pengguna di modal. */
+		let pendingData: ContactData | null = null;
+
+		const show = (msg: string, error: boolean) => {
+			if (!statusEl) return;
+			statusEl.textContent = msg;
+			statusEl.classList.toggle('contact-form__status--error', error);
+			statusEl.hidden = false;
+		};
+
+		// Validasi izin UU PDP sebagai validitas tersendiri (bahasa UI).
+		const syncConsentValidity = () => {
+			if (!consentInput) return;
+			consentInput.setCustomValidity(consentInput.checked ? '' : form.dataset.msgConsent ?? '');
+		};
+		consentInput?.addEventListener('change', syncConsentValidity);
+
+		/** Proses kirim sebenarnya — hanya dijalankan setelah modal dikonfirmasi. */
+		const performSubmit = async (data: ContactData) => {
+			if (!statusEl || !submitBtn) return;
+			show(form.dataset.msgSending ?? '', false);
+			submitBtn.disabled = true;
+			submitBtn.textContent = form.dataset.msgSending ?? '';
+
+			try {
+				const result = await submitContact(data, honeyInput?.value);
+				if (result.ok) {
+					show(form.dataset.msgSuccess ?? '', false);
+					form.reset();
+				} else {
+					show(form.dataset.msgError ?? '', true);
+				}
+			} catch {
+				show(form.dataset.msgError ?? '', true);
+			} finally {
+				submitBtn.disabled = false;
+				submitBtn.textContent = originalLabel;
+			}
+		};
+
+		/** Isi ringkasan di modal. textContent → aman dari injeksi HTML. */
+		const fillSummary = (data: ContactData) => {
+			const values: Record<string, string> = {
+				name: data.name,
+				email: data.email,
+				phone: data.phone || '—',
+				message: data.message,
+			};
+			for (const row of dialogRows) {
+				const key = row.dataset.dialogField;
+				if (key) row.textContent = values[key] ?? '';
+			}
+		};
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			if (!statusEl || !submitBtn || !dialog) return;
+
+			syncConsentValidity();
+			if (!form.checkValidity()) {
+				show(form.dataset.msgInvalid ?? '', true);
+				// Pindahkan fokus ke isian pertama yang tidak valid.
+				form.querySelector<HTMLElement>(':invalid')?.focus();
+				return;
+			}
+
+			pendingData = {
+				name: (form.elements.namedItem('name') as HTMLInputElement).value.trim(),
+				email: (form.elements.namedItem('email') as HTMLInputElement).value.trim(),
+				phone: (form.elements.namedItem('phone') as HTMLInputElement)?.value.trim() || undefined,
+				message: (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim(),
+				consent: consentInput?.checked ?? false,
+			};
+
+			fillSummary(pendingData);
+			dialog.showModal();
+		});
+
+		// Konfirmasi di modal → tutup lalu kirim.
+		document
+			.querySelector<HTMLButtonElement>('[data-dialog-confirm]')
+			?.addEventListener('click', () => {
+				if (!pendingData) return;
+				const data = pendingData;
+				pendingData = null;
+				dialog?.close();
+				performSubmit(data);
+			});
+
+		// Batal → tutup, kembalikan fokus ke form, jangan kirim apa pun.
+		document
+			.querySelector<HTMLButtonElement>('[data-dialog-cancel]')
+			?.addEventListener('click', () => {
+				pendingData = null;
+				dialog?.close();
+			});
+
+		// Klik di luar modal = batal (sama seperti tombol Batal).
+		dialog?.addEventListener('click', (event) => {
+			if (event.target === dialog) {
+				pendingData = null;
+				dialog.close();
+			}
+		});
+	}
+</script>
 
 <style>
 	.contact {
@@ -196,6 +403,100 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 
 	.contact-form__field textarea {
 		resize: vertical;
+	}
+
+	/* Honeypot: tersembunyi dari manusia, tetap ada di DOM untuk bot */
+	.contact-form__honey {
+		position: absolute;
+		left: -9999px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	.contact-form__consent {
+		display: flex;
+		gap: var(--space-2);
+		align-items: flex-start;
+		font-size: var(--text-sm);
+		color: var(--color-muted);
+		cursor: pointer;
+	}
+
+	.contact-form__consent input {
+		margin-top: 0.25rem;
+		accent-color: var(--color-primary);
+	}
+
+	.contact-form__privacy {
+		font-size: var(--text-xs);
+		color: var(--color-muted);
+	}
+
+	.contact-form__status {
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--color-primary-text);
+	}
+
+	.contact-form__status--error {
+		color: var(--color-emergency-text);
+	}
+
+	.contact-form__dialog {
+		width: min(32rem, calc(100vw - var(--space-6)));
+		margin: auto;
+		max-height: min(26rem, calc(100dvh - var(--space-8)));
+		overflow-y: auto;
+		border: none;
+		border-radius: var(--radius-lg);
+		padding: var(--space-6);
+		background-color: var(--color-surface);
+		color: var(--color-ink);
+		box-shadow: 0 20px 60px rgb(0 0 0 / 0.25);
+	}
+
+	.contact-form__dialog::backdrop {
+		background-color: rgb(0 0 0 / 0.55);
+	}
+
+	.contact-form__dialog-title {
+		font-size: var(--text-xl);
+		margin-block: 0 var(--space-4);
+	}
+
+	.contact-form__dialog-summary {
+		margin: 0;
+		display: grid;
+		gap: var(--space-2);
+	}
+
+	.contact-form__dialog-row {
+		display: grid;
+		grid-template-columns: clamp(4.5rem, 30%, 7rem) 1fr;
+		gap: var(--space-3);
+		font-size: var(--text-sm);
+	}
+
+	.contact-form__dialog-row dt {
+		color: var(--color-muted);
+	}
+
+	.contact-form__dialog-row dd {
+		margin: 0;
+		font-weight: 600;
+		overflow-wrap: anywhere;
+		white-space: pre-wrap;
+		max-height: 10rem;
+		overflow-y: auto;
+	}
+
+	.contact-form__dialog-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: var(--space-3);
+		margin-top: var(--space-6);
 	}
 
 	@media (max-width: 900px) {

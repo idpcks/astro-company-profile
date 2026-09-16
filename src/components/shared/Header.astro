@@ -86,6 +86,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 									<a
 										href={localePath(item.href!, lang)}
 										aria-current={isItemActive ? 'page' : undefined}
+										data-astro-prefetch="hover"
 									>
 										{localized(item.label, lang)}
 									</a>
@@ -99,6 +100,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 													aria-current={
 														isActive(child.href) ? 'page' : undefined
 													}
+													data-astro-prefetch="hover"
 												>
 													{localized(child.label, lang)}
 												</a>
