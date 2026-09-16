@@ -2,9 +2,18 @@
 import { defineConfig } from 'astro/config';
 import icon from "astro-icon";
 import Compress from '@playform/compress';
+import sitemap from '@astrojs/sitemap';
+import { loadEnv } from 'vite';
+
+// .env / .env.development / .env.production — lihat file .env.example.
+// loadEnv memberi prioritas ke variabel di shell, lalu file env.
+const { ASTRO_SITE } = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), '');
 
 // https://astro.build/config
 export default defineConfig({
+    // Site URL untuk sitemap & canonical. Default = domain produksi;
+    // overridden oleh .env (dev → localhost, prod → domain).
+    site: ASTRO_SITE || 'https://www.krakataumedika.co.id/',
     server: {
         host: true,
     },
@@ -31,6 +40,17 @@ export default defineConfig({
             JSON: true,
             Image: true,
         }),
+       sitemap({
+           // Hreflang alternates antar locale di setiap URL (SEO i18n).
+           // defaultLocale = locale tanpa prefix di URL (id).
+           i18n: {
+               defaultLocale: 'id',
+               locales: {
+                   id: 'id-ID',
+                   en: 'en-US',
+               },
+           },
+       }),
     ],
     i18n: {
         // Locale default (id) TIDAK berprefix → tetap di "/", "/about", dst.

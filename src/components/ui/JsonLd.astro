@@ -1,0 +1,18 @@
+---
+/**
+ * JsonLd — render satu blok <script type="application/ld+json">.
+ *
+ * Reusable: untuk LocalBusiness (BaseLayout), dan nanti bisa dipakai
+ * BreadcrumbList, Article, FAQPage, dsb. dari halaman mana pun.
+ * Data dikirim sebagai object murni — komponen ini hanya serialisasi.
+ */
+interface Props {
+	/** Objek Schema.org — satu node, atau array beberapa node terpisah. */
+	data: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { data } = Astro.props;
+const payload = Array.isArray(data) ? data : [data];
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(payload)} />

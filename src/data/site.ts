@@ -18,9 +18,8 @@ export const SITE = {
 		id: 'Rumah sakit swasta dengan layanan IGD 24 jam, dokter spesialis, dan fasilitas modern untuk melayani keluarga Anda.',
 		en: 'A private hospital with 24/7 emergency care, specialist doctors, and modern facilities for your family.',
 	},
-	/** URL produksi — dipakai untuk canonical URL & Open Graph.
-	 *  TODO: masih placeholder, ganti saat domain siap. */
-	url: 'https://rsseatsentosa.example.com',
+	/** `url` sudah tidak dipakai — canonical & OG sekarang mengikuti
+	 *  Astro.site (= `site` di astro.config.mjs, env-driven). */
 	email: 'info@krakataumedika.co.id',
 	/** Telepon umum / front office */
 	phone: '(0254) 396333',
@@ -31,6 +30,11 @@ export const SITE = {
 	hours: {
 		id: 'Poliklinik: Senin–Minggu 08.00–23.00 WIB · IGD: 24 jam',
 		en: 'Outpatient clinics: Mon–Sun 08.00–23.00 WIB · ER: 24/7',
+	},
+	/** Koordinat RS — dipakai JSON-LD LocalBusiness (lihat map resmi). */
+	geo: {
+		lat: -5.9885656,
+		lng: 106.0309412,
 	},
 };
 
