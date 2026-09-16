@@ -166,9 +166,13 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 
 	/* ── Bar utama ── */
 	.header {
-		position: relative; /* acuan dropdown menu mobile */
+		position: sticky; /* tetap di atas saat scroll; topbar ikut hilang */
+		top: 0;
+		z-index: 60;
 		background-color: var(--color-surface);
 		border-bottom: 1px solid var(--color-border);
+		/* Bayangan lembut: batas visual antara navbar & konten saat ter-stick */
+		box-shadow: 0 2px 12px rgb(15 23 42 / 0.06);
 	}
 
 	.header__inner {
@@ -366,6 +370,10 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 			background-color: var(--color-surface);
 			border-bottom: 1px solid var(--color-border);
 			box-shadow: var(--shadow-md);
+			/* Menu tidak boleh kalah tinggi dari viewport —
+			   bernavigasi dengan menggulir panelnya sendiri. */
+			max-height: calc(100vh - var(--header-offset, 4rem));
+			overflow-y: auto;
 		}
 
 		.site-nav.is-open {
