@@ -1,0 +1,52 @@
+---
+import ReviewsContent from '@/components/pages/ReviewsContent.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+
+// Review schema untuk SEO (dari konten testimoni)
+const reviewSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'AggregateRating',
+	itemReviewed: {
+		'@type': 'MedicalOrganization',
+		name: 'RS Krakatau Medika',
+	},
+	ratingValue: '4.8',
+	bestRating: '5',
+	worstRating: '1',
+	reviewCount: '3',
+	description: 'Testimoni pasien tentang pengalaman berobat di RS Krakatau Medika.',
+	review: [
+		{
+			'@type': 'Review',
+			author: { '@type': 'Person', name: 'Sari Wulandari' },
+			reviewRating: { '@type': 'Rating', ratingValue: '5' },
+			reviewBody: 'Pelayanan di IGD cepat dan tenang. Dokter dan perawatnya komunikatif dari awal sampai kami pulang.',
+		},
+		{
+			'@type': 'Review',
+			author: { '@type': 'Person', name: 'Budi Santoso' },
+			reviewRating: { '@type': 'Rating', ratingValue: '5' },
+			reviewBody: 'Anak saya dirawat di kelas 2 dan perawatannya luar biasa. Kamarnya bersih dan fasilitasnya modern.',
+		},
+		{
+			'@type': 'Review',
+			author: { '@type': 'Person', name: 'Dewi Lestari' },
+			reviewRating: { '@type': 'Rating', ratingValue: '5' },
+			reviewBody: 'Daftarnya gampang lewat telepon, hasil medical checkup keluar cepat dan dijelaskan dengan detail.',
+		},
+	],
+};
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.reviews')}
+	description={t('page.description.reviews')}
+	jsonLd={reviewSchema}
+>
+	<ReviewsContent lang={lang} />
+</BaseLayout>

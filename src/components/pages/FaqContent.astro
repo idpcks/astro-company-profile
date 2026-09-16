@@ -1,0 +1,112 @@
+---
+/**
+ * Konten halaman FAQ — dipakai bersama oleh root (id) & [lang] (en).
+ * FAQ schema JSON-LD disuntikkan melalui BaseLayout.
+ */
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+// FAQ items — structured data untuk schema.org/FAQPage
+const faqItems = [
+	{
+		question: 'Apa saja layanan yang tersedia di RS Krakatau Medika?',
+		answer: 'RS Krakatau Medika menyediakan layanan IGD 24 jam, poliklinik spesialis, rawat inap, bedah sentral, laboratorium & radiologi, dan medical checkup.',
+	},
+	{
+		question: 'Bagaimana cara membuat janji temu?',
+		answer: 'Anda dapat membuat janji temu melalui telepon di (0254) 396333, atau datang langsung ke loket pendaftaran rumah sakit.',
+	},
+	{
+		question: 'Berapa jam operasional poliklinik?',
+		answer: 'Poliklinik beroperasi Senin–Minggu pukul 08.00–23.00 WIB. IGD tersedia 24 jam setiap hari.',
+	},
+	{
+		question: 'Apakah RS Krakatau Medika menerima BPJS Kesehatan?',
+		answer: 'Ya, RS Krakatau Medika merupakan mitra BPJS Kesehatan. Silakan bawa kartu BPJS Anda saat kunjungan.',
+	},
+	{
+		question: 'Di mana saya bisa menemukan informasi tentang klinik satellite?',
+		answer: 'Informasi tentang klinik di Cilegon dan Serang tersedia di halaman Klinik. Kunjungi halaman Klinik untuk detail alamat dan jam operasional.',
+	},
+	{
+		question: 'Bagaimana cara menghubungi RS Krakatau Medika untuk keadaan darurat?',
+		answer: 'Untuk keadaan darurat, silakan hubungi IGD darurat di (0254) 396333 atau kunjungi rumah sakit langsung.',
+	},
+];
+---
+
+<section class="section">
+	<div class="container faq">
+		<h1 class="faq__title">{t('page.title.faq')}</h1>
+
+		<div class="faq__list">
+			{
+				faqItems.map((item) => (
+					<div class="faq-item">
+						<h3 class="faq-item__question">{item.question}</h3>
+						<p class="faq-item__answer">{item.answer}</p>
+					</div>
+				))
+			}
+		</div>
+
+		<p class="faq__note">
+			Jika Anda memiliki pertanyaan yang tidak tercantum di atas, silakan hubungi kami di{' '}
+			<a href="mailto:info@krakataumedika.co.id">info@krakataumedika.co.id</a>.
+		</p>
+	</div>
+</section>
+
+<style>
+	.faq {
+		max-width: 48rem;
+		margin: 0 auto;
+	}
+
+	.faq__title {
+		font-size: var(--text-3xl);
+		margin-bottom: var(--space-6);
+	}
+
+	.faq__list {
+		display: grid;
+		gap: var(--space-4);
+	}
+
+	.faq-item {
+		background-color: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-5);
+	}
+
+	.faq-item__question {
+		font-size: var(--text-lg);
+		font-weight: 600;
+		color: var(--color-ink);
+		margin-bottom: var(--space-2);
+	}
+
+	.faq-item__answer {
+		color: var(--color-body);
+		line-height: var(--leading-normal);
+	}
+
+	.faq__note {
+		margin-top: var(--space-8);
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+		text-align: center;
+	}
+
+	.faq__note a {
+		color: var(--color-primary-text);
+		text-decoration: underline;
+	}
+</style>

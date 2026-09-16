@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.astro/
+.vscode/
+coverage/
+public/old*
+.env*
+bun.lockb
+package-lock.json

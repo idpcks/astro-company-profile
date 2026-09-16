@@ -1,0 +1,118 @@
+---
+/**
+ * Konten halaman Ulasan & Testimoni — dipakai bersama oleh root (id) & [lang] (en).
+ */
+import { tFactory, type Lang } from '@/i18n';
+import TestimonialCard from '@/components/blog/PostCard.astro';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<section class="section">
+	<div class="container reviews">
+		<h1 class="reviews__title">{t('page.title.reviews')}</h1>
+
+		<div class="reviews__list">
+			<div class="reviews__item">
+				<h3 class="reviews__name">Sari Wulandari</h3>
+				<p class="reviews__context">Pasien IGD</p>
+				<blockquote class="reviews__quote">
+					<p>
+						Pelayanan di IGD cepat dan tenang. Dokter dan perawatnya komunikatif
+						dari awal sampai kami pulang.
+					</p>
+				</blockquote>
+			</div>
+
+			<div class="reviews__item">
+				<h3 class="reviews__name">Budi Santoso</h3>
+				<p class="reviews__context">Orang tua pasien</p>
+				<blockquote class="reviews__quote">
+					<p>
+						Anak saya dirawat di kelas 2 dan perawatannya luar biasa.
+						Kamarnya bersih dan fasilitasnya modern.
+					</p>
+				</blockquote>
+			</div>
+
+			<div class="reviews__item">
+				<h3 class="reviews__name">Dewi Lestari</h3>
+				<p class="reviews__context">Peserta Medical Checkup</p>
+				<blockquote class="reviews__quote">
+					<p>
+						Daftarnya gampang lewat telepon, hasil medical checkup keluar cepat
+						dan dijelaskan dengan detail.
+					</p>
+				</blockquote>
+			</div>
+		</div>
+
+		<p class="reviews__note">
+			Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui
+			<a href="/contact">halaman kontak</a>.
+		</p>
+	</div>
+</section>
+
+<style>
+	.reviews {
+		max-width: 48rem;
+		margin: 0 auto;
+	}
+
+	.reviews__title {
+		font-size: var(--text-3xl);
+		margin-bottom: var(--space-6);
+	}
+
+	.reviews__list {
+		display: grid;
+		gap: var(--space-6);
+	}
+
+	.reviews__item {
+		background-color: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-6);
+	}
+
+	.reviews__name {
+		font-size: var(--text-lg);
+		font-weight: 700;
+		color: var(--color-ink);
+		margin-bottom: var(--space-1);
+	}
+
+	.reviews__context {
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+		margin-bottom: var(--space-4);
+	}
+
+	.reviews__quote {
+		border-left: 4px solid var(--color-primary);
+		padding-left: var(--space-4);
+		margin: 0;
+		font-style: italic;
+		color: var(--color-body);
+		line-height: var(--leading-normal);
+	}
+
+	.reviews__note {
+		margin-top: var(--space-8);
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+		text-align: center;
+	}
+
+	.reviews__note a {
+		color: var(--color-primary-text);
+		text-decoration: underline;
+	}
+</style>

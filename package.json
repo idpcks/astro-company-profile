@@ -9,7 +9,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint . --ext .astro,.js,.mjs,.ts",
+    "lint:fix": "eslint . --ext .astro,.js,.mjs,.ts --fix",
+    "format": "prettier --write \"src/**/*.{astro,js,ts,css}\"",
+    "format:check": "prettier --check \"src/**/*.{astro,js,ts,css}\"",
+    "check": "bun run lint && bun run format:check",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -25,6 +31,14 @@
     "@astrojs/check": "^0.9.10",
     "@playform/compress": "^0.2.5",
     "@types/bun": "^1.4.2",
-    "typescript": "^6"
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.7.0",
+    "globals": "^15.15.0",
+    "prettier": "^3.9.7",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^6.0.3"
   }
 }

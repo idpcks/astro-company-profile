@@ -1,0 +1,20 @@
+---
+import TermsContent from '@/components/pages/TermsContent.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+export function getStaticPaths() {
+	return [{ params: { lang: 'en' } }];
+}
+
+const lang: Lang = 'en';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+	lang={lang}
+	title={t('page.title.terms')}
+	description={t('page.description.terms')}
+>
+	<TermsContent lang={lang} />
+</BaseLayout>

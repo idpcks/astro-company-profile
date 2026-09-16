@@ -1,0 +1,247 @@
+---
+/**
+ * Konten halaman Kebijakan Privasi — dipakai bersama oleh root (id) & [lang] (en).
+ */
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+
+const content = {
+	id: {
+		sections: [
+			{
+				number: '1',
+				title: 'Pengertian Data Pribadi',
+				body: 'Data pribadi adalah setiap informasi tentang individu yang dapat diidentifikasi, baik secara langsung maupun tidak langsung, yang dikumpulkan oleh RS Krakatau Medika.',
+			},
+			{
+				number: '2',
+				title: 'Jenis Data yang Dikumpulkan',
+				body: 'RS Krakatau Medika mengumpulkan jenis data berikut:',
+				items: [
+					'Nama lengkap, tanggal lahir, dan jenis kelamin',
+					'Informasi kontak (alamat, nomor telepon, email)',
+					'Riwayat medis dan data kesehatan',
+					'Informasi pembayaran dan klaim asuransi',
+					'Data navigasi situs web (IP address, browser, halaman yang dikunjungi)',
+				],
+			},
+			{
+				number: '3',
+				title: 'Tujuan Pengumpulan Data',
+				body: 'Data pribadi dikumpulkan untuk:',
+				items: [
+					'Memfasilitasi layanan kesehatan yang diberikan',
+					'Memproses rekam medis dan administrasi pasien',
+					'Mengirimkan informasi kesehatan dan promosi layanan',
+					'Memenuhi kewajiban hukum dan regulasi',
+					'Menjaga keamanan dan perlindungan data',
+				],
+			},
+			{
+				number: '4',
+				title: 'Hak Pasien',
+				body: 'Pasien memiliki hak untuk:',
+				items: [
+					'Mengakses dan memperoleh salinan data pribadi mereka',
+					'Memperbaiki data yang tidak akurat atau tidak lengkap',
+					'Meminta penghapusan data (dalam keadaan tertentu)',
+					'Menolak pengolahan data untuk tujuan tertentu',
+					'Mengajukan pengaduan terkait penanganan data pribadi',
+				],
+			},
+			{
+				number: '5',
+				title: 'Penyimpanan dan Keamanan Data',
+				body: 'RS Krakatau Medika menerapkan langkah-langkah keamanan yang memadai untuk melindungi data pribadi dari akses tidak sah, kebocoran, atau kerusakan.',
+			},
+			{
+				number: '6',
+				title: 'Pengungkapan Pihak Ketiga',
+				body: 'Data pribadi tidak akan dijual atau diserahkan kepada pihak ketiga tanpa persetujuan pasien, kecuali:',
+				items: [
+					'Diwajibkan oleh hukum atau peraturan',
+					'Untuk kepentingan pelayanan kesehatan',
+					'Untuk perlindungan hak dan keselamatan pasien atau pihak lain',
+				],
+			},
+			{
+				number: '7',
+				title: 'Kebijakan Cookies',
+				body: 'Situs web ini menggunakan cookies untuk meningkatkan pengalaman pengguna. Pasien dapat mengelola preferensi cookies melalui pengaturan browser mereka.',
+			},
+			{
+				number: '8',
+				title: 'Perubahan Kebijakan',
+				body: 'RS Krakatau Medika berhak mengubah kebijakan privasi ini sewaktu-waktu. Perubahan akan dikomunikasikan melalui situs web atau sarana lain yang sesuai.',
+			},
+			{
+				number: '9',
+				title: 'Hubungi Kami',
+				body: 'Untuk pertanyaan lebih lanjut mengenai kebijakan privasi ini, silakan hubungi kami di {email}.',
+				email: 'info@krakataumedika.co.id',
+			},
+		],
+	},
+	en: {
+		sections: [
+			{
+				number: '1',
+				title: 'Definition of Personal Data',
+				body: 'Personal data is any information about an identifiable individual, whether directly or indirectly, collected by RS Krakatau Medika.',
+			},
+			{
+				number: '2',
+				title: 'Types of Data Collected',
+				body: 'RS Krakatau Medika collects the following types of data:',
+				items: [
+					'Full name, date of birth, and gender',
+					'Contact information (address, phone number, email)',
+					'Medical history and health data',
+					'Payment information and insurance claims',
+					'Website navigation data (IP address, browser, pages visited)',
+				],
+			},
+			{
+				number: '3',
+				title: 'Purpose of Data Collection',
+				body: 'Personal data is collected to:',
+				items: [
+					'Facilitate the healthcare services provided',
+					'Process medical records and patient administration',
+					'Send health information and service promotions',
+					'Fulfil legal and regulatory obligations',
+					'Maintain the security and protection of data',
+				],
+			},
+			{
+				number: '4',
+				title: 'Patient Rights',
+				body: 'Patients have the right to:',
+				items: [
+					'Access and obtain a copy of their personal data',
+					'Correct inaccurate or incomplete data',
+					'Request deletion of data (under certain circumstances)',
+					'Object to the processing of data for certain purposes',
+					'Submit a complaint regarding the handling of personal data',
+				],
+			},
+			{
+				number: '5',
+				title: 'Data Storage and Security',
+				body: 'RS Krakatau Medika implements adequate security measures to protect personal data from unauthorised access, leaks, or damage.',
+			},
+			{
+				number: '6',
+				title: 'Disclosure to Third Parties',
+				body: "Personal data will not be sold or disclosed to third parties without the patient's consent, except:",
+				items: [
+					'Where required by law or regulation',
+					'For the purpose of providing healthcare services',
+					'To protect the rights and safety of the patient or other parties',
+				],
+			},
+			{
+				number: '7',
+				title: 'Cookie Policy',
+				body: 'This website uses cookies to improve the user experience. Patients can manage their cookie preferences through their browser settings.',
+			},
+			{
+				number: '8',
+				title: 'Policy Changes',
+				body: 'RS Krakatau Medika reserves the right to change this privacy policy at any time. Changes will be communicated through the website or other appropriate means.',
+			},
+			{
+				number: '9',
+				title: 'Contact Us',
+				body: 'For further questions regarding this privacy policy, please contact us at {email}.',
+				email: 'info@krakataumedika.co.id',
+			},
+		],
+	},
+} as const;
+
+const data = content[lang];
+---
+
+<section class="section">
+	<div class="container privacy">
+		<h1 class="privacy__title">{t('page.title.privacy')}</h1>
+
+		<div class="privacy__content">
+			{data.sections.map((section) => (
+				<>
+					<h2>{section.number}. {section.title}</h2>
+					{'email' in section ? (
+						<p>
+							{section.body.split('{email}')[0]}
+							<a href={`mailto:${section.email}`}>{section.email}</a>
+							{section.body.split('{email}')[1]}
+						</p>
+					) : (
+						<p>{section.body}</p>
+					)}
+					{'items' in section && (
+						<ul>
+							{section.items.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+					)}
+				</>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.privacy {
+		max-width: 48rem;
+		margin: 0 auto;
+	}
+
+	.privacy__title {
+		font-size: var(--text-3xl);
+		margin-bottom: var(--space-6);
+	}
+
+	.privacy__content {
+		display: grid;
+		gap: var(--space-6);
+	}
+
+	.privacy__content h2 {
+		font-size: var(--text-xl);
+		margin-top: var(--space-8);
+		margin-bottom: var(--space-3);
+		color: var(--color-ink);
+	}
+
+	.privacy__content p {
+		color: var(--color-body);
+		line-height: var(--leading-normal);
+		margin-bottom: var(--space-4);
+	}
+
+	.privacy__content ul {
+		padding-left: var(--space-6);
+		margin-bottom: var(--space-4);
+		display: grid;
+		gap: var(--space-2);
+	}
+
+	.privacy__content li {
+		color: var(--color-body);
+		line-height: var(--leading-normal);
+	}
+
+	.privacy__content a {
+		color: var(--color-primary-text);
+		text-decoration: underline;
+	}
+</style>

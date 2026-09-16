@@ -1,0 +1,131 @@
+---
+/**
+ * Konten halaman Syarat & Ketentuan — dipakai bersama oleh root (id) & [lang] (en).
+ */
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<section class="section">
+	<div class="container terms">
+		<h1 class="terms__title">{t('page.title.terms')}</h1>
+
+		<div class="terms__content">
+			<h2>1. Penerimaan Syarat dan Ketentuan</h2>
+			<p>
+				Dengan mengakses dan menggunakan website RS Krakatau Medika, Anda setuju untuk
+				mematuhi semua syarat dan ketentuan yang tercantum dalam kebijakan ini.
+			</p>
+
+			<h2>2. Perubahan Syarat dan Ketentuan</h2>
+			<p>
+				RS Krakatau Medika berhak mengubah atau memperbarui syarat dan ketentuan ini
+				dari waktu ke waktu tanpa pemberitahuan sebelumnya. Perubahan akan berlaku
+				segera setelah dipublikasikan di situs web.
+			</p>
+
+			<h2>3. Penggunaan Website</h2>
+			<p>Website ini disediakan untuk tujuan informasi layanan kesehatan RS Krakatau Medika. Pengguna dilarang:</p>
+			<ul>
+				<li>Menggunakan website untuk tujuan ilegal atau tidak sah</li>
+				<li>Mengganggu atau merusak keamanan website</li>
+				<li>Menyalin, mendistribusikan, atau memodifikasi konten tanpa izin tertulis</li>
+				<li>Menggunakan website untuk menyebarkan virus atau malware</li>
+			</ul>
+
+			<h2>4. Hak Kekayaan Intelektual</h2>
+			<p>
+				Semua konten di website ini, termasuk teks, gambar, logo, dan merek dagang,
+				adalah milik RS Krakatau Medika atau lisensornya dan dilindungi oleh undang-undang
+				hak kekayaan intelektual yang berlaku.
+			</p>
+
+			<h2>5. Penyangkalan Tanggung Jawab</h2>
+			<p>
+				RS Krakatau Medika tidak menjamin bahwa website ini bebas dari kesalahan atau
+				gangguan teknis. Informasi yang disediakan bersifat umum dan tidak menggantikan
+				konsultasi medis langsung dengan tenaga kesehatan profesional.
+			</p>
+
+			<h2>6. Keterhubungan Pihak Ketiga</h2>
+			<p>
+				Website ini mungkin berisi tautan ke website pihak ketiga. RS Krakatau Medika
+				tidak bertanggung jawab atas isi, kebijakan privasi, atau praktik website
+				pihak ketiga tersebut.
+			</p>
+
+			<h2>7. Pembatasan Tanggung Jawab</h2>
+			<p>
+				Dalam batas yang diizinkan oleh hukum, RS Krakatau Medika tidak akan bertanggung
+				jawab atas kerusakan tidak langsung, insidental, khusus, konsekuensial, atau
+				punitive yang timbul dari penggunaan atau ketidakmampuan untuk menggunakan website ini.
+			</p>
+
+			<h2>8. Hukum yang Berlaku</h2>
+			<p>
+				Syarat dan ketentuan ini tunduk pada hukum Indonesia. Setiap sengketa yang
+				timbul terkait dengan syarat dan ketentuan ini akan diselesaikan melalui pengadilan
+				yang berwenang di wilayah hukum RS Krakatau Medika.
+			</p>
+
+			<h2>9. Hubungi Kami</h2>
+			<p>
+				Untuk pertanyaan lebih lanjut mengenai syarat dan ketentuan ini, silakan hubungi kami di:
+				<a href="mailto:info@krakataumedika.co.id">info@krakataumedika.co.id</a>
+			</p>
+		</div>
+	</div>
+</section>
+
+<style>
+	.terms {
+		max-width: 48rem;
+		margin: 0 auto;
+	}
+
+	.terms__title {
+		font-size: var(--text-3xl);
+		margin-bottom: var(--space-6);
+	}
+
+	.terms__content {
+		display: grid;
+		gap: var(--space-6);
+	}
+
+	.terms__content h2 {
+		font-size: var(--text-xl);
+		margin-top: var(--space-8);
+		margin-bottom: var(--space-3);
+		color: var(--color-ink);
+	}
+
+	.terms__content p {
+		color: var(--color-body);
+		line-height: var(--leading-normal);
+		margin-bottom: var(--space-4);
+	}
+
+	.terms__content ul {
+		padding-left: var(--space-6);
+		margin-bottom: var(--space-4);
+		display: grid;
+		gap: var(--space-2);
+	}
+
+	.terms__content li {
+		color: var(--color-body);
+		line-height: var(--leading-normal);
+	}
+
+	.terms__content a {
+		color: var(--color-primary-text);
+		text-decoration: underline;
+	}
+</style>

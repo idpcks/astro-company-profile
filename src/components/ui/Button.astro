@@ -1,10 +1,22 @@
 ---
 /**
- * Tombol serbaguna — komponen UI murni (tanpa konten hardcode).
- *
- * Render <a> kalau diberi `href`, <button> kalau tidak.
- * Satu komponen, dua bentuk: ini alasan dia di ui/, bukan sections/.
- */
+   * Tombol serbaguna — komponen UI murni (tanpa konten hardcode).
+   *
+   * Komponen ini merender elemen `<a>` kalau diberi `href`,
+   * dan `<button>` kalau tidak.
+   *
+   * Ini memungkinkan satu komponen untuk dua bentuk:
+   * - Tautan navigasi (seperti di navigasi utama)
+   * - Tombol aksi (seperti submit formulir)
+   *
+   * @prop href - Kalau diisi → render <a href>; kalau kosong → render <button>
+   * @prop variant - Gaya visual: 'primary' (default), 'emergency', 'outline', 'light', 'ghost'
+   * @prop size - Ukuran: 'md' (default) atau 'lg'
+   * @prop type - Jenis tombol HTML (hanya relevan untuk <button>): 'button' (default) atau 'submit'
+   * @prop class - Class tambahan dari pemakai
+   * @prop {...attrs} - Atribut native/data-* lain (mis. disabled, aria-*, data-contact-submit)
+   *                    yang diteruskan ke elemen akhir
+   */
 interface Props {
 	/** Kalau diisi → render <a href>; kalau kosong → render <button> */
 	href?: string;
