@@ -5,14 +5,24 @@
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import Services from '@/components/sections/Services.astro';
-import type { Lang } from '@/i18n';
+import PageHero from '@/components/ui/PageHero.astro';
+import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
 	lang: Lang;
 }
 
 const { lang } = Astro.props;
+const t = tFactory(lang);
 ---
+
+<!-- Dedicated /services: h1 sendiri (section Services tetap h2 agar
+     tidak >1 h1 — halaman ini TANPA hero lainnya). -->
+<PageHero
+	eyebrow={t('page.eyebrow.services')}
+	title={t('page.title.services')}
+	lead={t('page.description.services')}
+/>
 
 <Services lang={lang} />
 <CTASection lang={lang} />

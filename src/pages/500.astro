@@ -1,11 +1,11 @@
 ---
-const lang = Astro.currentLocale || 'id';
+const lang = (Astro.currentLocale as 'id' | 'en') || 'id';
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/ui/Button.astro';
 ---
 
-<BaseLayout lang={lang} title="500 — Kesalahan Server" description="Terjadi kesalahan internal server.">
+<BaseLayout noindex lang={lang} title="500 — Kesalahan Server" description="Terjadi kesalahan internal server.">
 	<section class="section">
 		<div class="container notfound">
 			<p class="notfound__code" aria-hidden="true">500</p>
@@ -21,7 +21,7 @@ import Button from '@/components/ui/Button.astro';
 				<Button href={lang === 'en' ? '/en' : '/'}>
 					{lang === 'en' ? '← Home' : '← Beranda'}
 				</Button>
-				<Button href="/contact" variant="outline">
+				<Button href={lang === 'en' ? '/en/contact' : '/contact'} variant="outline">
 					{lang === 'en' ? 'Contact Support' : 'Hubungi Dukungan'}
 				</Button>
 			</div>

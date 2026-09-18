@@ -50,6 +50,9 @@ export default defineConfig({
                    en: 'en-US',
                },
            },
+           // Halaman noindex (error, demo internal) tidak layak di sitemap.
+           filter: (page) =>
+               !/(\/404|\/500|\/skeleton-demo)(\/)?$/.test(page),
        }),
     ],
     i18n: {

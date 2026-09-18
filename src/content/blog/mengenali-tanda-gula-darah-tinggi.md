@@ -3,6 +3,7 @@ title: 'Mengenali Tanda Awal Gula Darah Tinggi'
 description: 'Gula darah tinggi sering tanpa gejala. Kenali tanda-tanda awalnya dan kapan sebaiknya Anda memeriksakan diri.'
 pubDate: 2026-08-12
 author: 'dr. Andini Prameswari, Sp.PD'
+image: 'https://picsum.photos/id/1043/1200/630'
 tags: ['Kesehatan', 'Edukasi']
 ---
 

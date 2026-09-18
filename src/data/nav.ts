@@ -30,7 +30,7 @@ export const NAV_ITEMS: NavItem[] = [
 			},
 			{
 				label: { id: 'Umpan Balik', en: 'Feedback' },
-				href: '/feedback',
+				href: '/reviews',
 			},
 		],
 	},

@@ -3,6 +3,7 @@ title: 'Menjaga Kesehatan Jantung dengan Kebiasaan Sehari-hari'
 description: 'Kesehatan jantung ditentukan kebiasaan kecil yang diulang setiap hari. Mulai dari lima kebiasaan ini.'
 pubDate: 2026-06-15
 author: 'dr. Sinta Maharani, Sp.JP'
+image: 'https://picsum.photos/id/1031/1200/630'
 tags: ['Jantung', 'Gaya Hidup']
 ---
 

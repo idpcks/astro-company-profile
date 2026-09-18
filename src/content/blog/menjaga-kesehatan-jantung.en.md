@@ -3,6 +3,7 @@ title: 'Protecting Your Heart with Everyday Habits'
 description: 'Heart health is decided by small habits repeated daily. Start with these five.'
 pubDate: 2026-06-15
 author: 'dr. Sinta Maharani, Sp.JP'
+image: 'https://picsum.photos/id/1031/1200/630'
 tags: ['Heart', 'Lifestyle']
 ---
 

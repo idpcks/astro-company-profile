@@ -3,6 +3,7 @@ title: 'Pentingnya Medical Checkup Rutin, Bahkan Saat Merasa Sehat'
 description: 'Medical checkup bukan hanya untuk yang sakit. Inilah pemeriksaan yang dianjurkan sesuai usia dan faktor risiko.'
 pubDate: 2026-07-03
 author: 'dr. Raditya Nugraha'
+image: 'https://picsum.photos/id/1040/1200/630'
 tags: ['Medical Checkup', 'Pencegahan']
 ---
 

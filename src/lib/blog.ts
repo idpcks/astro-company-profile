@@ -161,6 +161,46 @@ export async function getPostsForListing(lang: Lang): Promise<NormalizedPost[]> 
 }
 
 /**
+ * Artikel TERKAIT untuk halaman detail — post lain yang paling banyak
+ * berbagi tag dengan artikel yang sedang dibaca.
+ *
+ * Peringkat: jumlah tag yang sama (dibandingkan antar LOCALE yang sama —
+ * contoh tag terjemahan berbeda: 'Kesehatan' vs 'Health'), lalu urutan
+ * jatuh ke yang terbaru. Selalu mengembalikan sebanyak `limit` (fallback
+ * ke artikel terbaru) — perilaku umum blog bila tidak ada kesamaan topik.
+ *
+ * @param current Post versi `lang` yang sedang dibuka.
+ * @param lang    Locale halaman — pemilihan versi & label tags mengikuti ini.
+ * @param limit   Jumlah maksimum artikel terkait (default 4 = grid 2×2 desktop).
+ */
+export async function getRelatedPosts(
+	current: NormalizedPost,
+	lang: Lang,
+	limit = 4,
+): Promise<NormalizedPost[]> {
+	// Listing per-locale: versi bahasa halaman (fallback ke id) + URL siap pakai.
+	const listing = await getPostsForListing(lang);
+	const others = listing.filter((p) => p.slug !== current.slug);
+
+	// Normalisasi tag: huruf kecil + buang non-alphanumeric
+	// ('Medical Checkup' == 'medical-checkup', 'Gaya Hidup' == 'gaya hidup').
+	const norm = (tag: string) => tag.toLowerCase().replace(/[^a-z0-9]/g, '');
+	const currentTags = new Set(current.tags.map(norm));
+
+	return others
+		.map((post) => ({
+			post,
+			overlap: post.tags.filter((tag) => currentTags.has(norm(tag))).length,
+		}))
+		.sort(
+			(a, b) =>
+				b.overlap - a.overlap || b.post.pubDate.valueOf() - a.post.pubDate.valueOf(),
+		)
+		.slice(0, limit)
+		.map(({ post }) => post);
+}
+
+/**
  * Lokale non-default yang benar-benar punya terjemahan untuk slug ini.
  * Dipakai LangSwitcher (fallback ke listing) & hreflang per-artikel.
  */

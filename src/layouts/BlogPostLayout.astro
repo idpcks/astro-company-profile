@@ -13,9 +13,15 @@
  * KONTEN MARKDOWN: <slot /> diisi <Content />; tipografinya via
  * :global() karena elemen hasil Markdown tidak punya scope Astro.
  */
+import ArticleToc from '@/components/blog/ArticleToc.astro';
+import AuthorCard from '@/components/blog/AuthorCard.astro';
 import PostMeta from '@/components/blog/PostMeta.astro';
+import RelatedCard from '@/components/blog/RelatedCard.astro';
+import SidebarCta from '@/components/blog/SidebarCta.astro';
 import Badge from '@/components/ui/Badge.astro';
 import Button from '@/components/ui/Button.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import ShareButtons from '@/components/ui/ShareButtons.astro';
 import SiteImage from '@/components/ui/SiteImage.astro';
 import { getOtherAvailableLocales, type NormalizedPost } from '@/lib/blog';
 import { languages, localePath, tFactory, type Lang } from '@/i18n';
@@ -24,9 +30,19 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 interface Props {
 	post: NormalizedPost;
 	lang?: Lang;
+	/**
+	 * Artikel terkait (post lain dengan tag serupa) — dihitung oleh
+	 * halaman pemanggil via getRelatedPosts(), dirender di bawah isi.
+	 */
+	relatedPosts?: NormalizedPost[];
+	/**
+	 * Heading artikel (hasil `render()` di halaman detail) — dipakai
+	 * untuk Daftar Isi (Table of Contents) di sidebar kanan.
+	 */
+	headings: { depth: number; slug: string; text: string }[];
 }
 
-const { post, lang = 'id' } = Astro.props;
+const { post, lang = 'id', relatedPosts = [], headings } = Astro.props;
 const t = tFactory(lang);
 const { title, description, pubDate, updatedDate, author, tags, image } = post;
 const dateLocale = lang === 'en' ? 'en-US' : 'id-ID';
@@ -122,10 +138,18 @@ const breadcrumb = {
 			)
 		}
 
-		<div class="container post__body">
-			<div class="prose">
-				<slot />
+		<div class="container post__layout">
+			<div class="post__main">
+				<div class="prose">
+					<slot />
+				</div>
 			</div>
+
+			<aside class="post__sidebar">
+				<ArticleToc headings={headings} lang={lang} />
+				<AuthorCard author={author} pubDate={pubDate} lang={lang} />
+				<SidebarCta lang={lang} />
+			</aside>
 		</div>
 
 		<footer class="container post__footer">
@@ -150,9 +174,27 @@ const breadcrumb = {
 				</p>
 			)}
 			<slot name="notice" />
+			<ShareButtons
+				lang={lang}
+				title={title}
+				url={new URL(localePath(`/blog/${post.slug}`, lang), Astro.site).href}
+			/>
 			<Button href={localePath('/blog', lang)} variant="outline">{t('post.back')}</Button>
 		</footer>
 	</article>
+
+	{
+		relatedPosts.length > 0 && (
+			<section class="section related">
+				<div class="container">
+					<SectionHeading title={t('post.relatedTitle')} align="start" />
+					<div class="related__list">
+						{relatedPosts.map((post) => <RelatedCard post={post} lang={lang} />)}
+					</div>
+				</div>
+			</section>
+		)
+	}
 </BaseLayout>
 
 <style>
@@ -184,7 +226,10 @@ const breadcrumb = {
 		margin-top: var(--space-2);
 	}
 
-	.post__image {
+	/* Cover artikel — dimuat via SiteImage (komponen lain), sehingga img
+	   TIDAK punya atribut scope komponen ini. Selector scoped biasa tidak
+	   akan match → wajib :global() (gotcha sama seperti hero bg). */
+	:global(.post__image) {
 		margin-top: var(--space-8);
 		border-radius: var(--radius-lg);
 		width: 100%;
@@ -192,17 +237,71 @@ const breadcrumb = {
 		object-fit: cover;
 	}
 
-	.post__body {
-		max-width: 48rem;
+	/* Layout 2 kolom: konten utama (kiri) + sidebar sticky (kanan) */
+	.post__layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--space-8);
 		padding-block: var(--space-8) 0;
+		align-items: start;
+	}
+
+	.post__main {
+		min-width: 0;
+	}
+
+	.post__main .prose {
+		max-width: 46rem;
+	}
+
+	.post__sidebar {
+		display: grid;
+		gap: var(--space-4);
+		align-content: start;
+	}
+
+	/* Desktop: sidebar sticky di kanan */
+	@media (min-width: 78em) {
+		.post__layout {
+			grid-template-columns: minmax(0, 1fr) 20rem;
+			column-gap: var(--space-10);
+		}
+
+		.post__sidebar {
+			position: sticky;
+			top: 5.5rem;
+		}
+	}
+
+	/* Anchor heading Markdown: offset saat diklik dari Daftar Isi */
+	:global(:where(h2, h3, h4)[id]) {
+		scroll-margin-top: 5.5rem;
 	}
 
 	.post__footer {
-		max-width: 48rem;
-		padding-block: var(--space-8) var(--space-12);
 		display: grid;
+		grid-template-columns: minmax(0, 46rem); /* selaras dengan lebar baca .prose */
 		gap: var(--space-4);
-		justify-items: start;
+		padding-block: var(--space-8) var(--space-12);
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* Artikel terkait — list kompak (thumbnail kecil + judul ramping) */
+	.related {
+		padding-block: 0 var(--space-12);
+	}
+
+	.related__list {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-3);
+	}
+
+	@media (min-width: 40em) {
+		.related__list {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--space-4);
+		}
 	}
 
 	/* Notice bahasa: kotak info tipis di atas tombol kembali */

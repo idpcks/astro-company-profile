@@ -3,7 +3,6 @@
  * Konten halaman Ulasan & Testimoni — dipakai bersama oleh root (id) & [lang] (en).
  */
 import { tFactory, type Lang } from '@/i18n';
-import TestimonialCard from '@/components/blog/PostCard.astro';
 
 interface Props {
 	lang: Lang;
@@ -53,8 +52,12 @@ const t = tFactory(lang);
 		</div>
 
 		<p class="reviews__note">
-			Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui
-			<a href="/contact">halaman kontak</a>.
+			{lang === 'en'
+				? 'If you would like to share your experience, please send your testimonial through our '
+				: 'Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui '}
+			<a href={lang === 'en' ? '/en/contact' : '/contact'}>
+				{lang === 'en' ? 'contact page' : 'halaman kontak'}
+			</a>.
 		</p>
 	</div>
 </section>

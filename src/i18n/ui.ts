@@ -14,6 +14,7 @@ const id = {
 	'page.title.home': 'Beranda',
 	'page.title.about': 'Tentang Kami',
 	'page.title.services': 'Layanan',
+	'page.eyebrow.services': 'Semua Layanan',
 	'page.title.contact': 'Kontak',
 	'page.title.blog': 'Blog Kesehatan',
 	'page.title.demo': 'Demo Skeleton',
@@ -112,6 +113,22 @@ const id = {
 	'footer.rights': 'Semua hak dilindungi.',
 	'footer.emergencyLabel': 'IGD',
 
+	// Share widget (social share buttons)
+	'share.title': 'Bagikan halaman ini',
+	'share.whatsapp': 'Bagikan ke WhatsApp',
+	'share.facebook': 'Bagikan ke Facebook',
+	'share.x': 'Bagikan ke X (Twitter)',
+	'share.telegram': 'Bagikan ke Telegram',
+	'share.linkedin': 'Bagikan ke LinkedIn',
+	'share.email': 'Bagikan lewat email',
+	'share.copy': 'Salin tautan',
+	'share.copied': 'Tautan disalin!',
+	'sidebar.cta.title': 'Mau konsultasi?',
+	'sidebar.cta.lead': 'Tim RSKM siap membantu Anda kapan pun.',
+	'sidebar.cta.whatsapp': 'Chat WhatsApp',
+	'sidebar.cta.call': 'Telepon RSKM',
+	'sidebar.cta.contact': 'Hubungi Kami',
+
 	// PageHero eyebrows (halaman dalam)
 	'pagehero.eyebrow.about': 'Tentang Kami',
 	'pagehero.eyebrow.services': 'Layanan',
@@ -168,6 +185,8 @@ const id = {
 	// Halaman /about
 	'aboutPage.hero.title': 'Rumah sakit yang tumbuh bersama keluarga Anda',
 	'aboutPage.hero.lead': 'Sejak 2005, kami berkomitmen menghadirkan pelayanan kesehatan yang utuh, modern, dan menyenangkan hati.',
+	'profilPage.hero.title': 'Profil Perusahaan',
+	'profilPage.hero.lead': 'RS Krakatau Medika — identitas, komitmen, dan perjalanan kami sejak berdiri hingga kini.',
 	'aboutPage.visionMisi.eyebrow': 'Visi & Misi',
 	'aboutPage.visionMisi.title': 'Arah dan tujuan kami',
 	'aboutPage.vision': 'Visi',
@@ -225,6 +244,10 @@ const id = {
 	// Blog komponen
 	'post.updated': 'Diperbarui:',
 	'post.back': '← Semua Artikel',
+	'post.relatedTitle': 'Artikel Terkait',
+	'toc.title': 'Daftar Isi',
+	'post.writtenBy': 'Ditulis oleh',
+	'post.publishedLabel': 'Tanggal terbit',
 	'post.availableIn': 'Artikel ini juga tersedia dalam:',
 	'post.fallbackNotice': 'Artikel ini belum tersedia dalam Bahasa Inggris.',
 	'post.readIn': 'Baca dalam',
@@ -246,6 +269,7 @@ const en: Record<UiKeys, string> = {
 	'page.title.home': 'Home',
 	'page.title.about': 'About Us',
 	'page.title.services': 'Services',
+	'page.eyebrow.services': 'All Services',
 	'page.title.contact': 'Contact',
 	'page.title.blog': 'Health Blog',
 	'page.title.demo': 'Skeleton Demo',
@@ -345,6 +369,22 @@ const en: Record<UiKeys, string> = {
 	'footer.rights': 'All rights reserved.',
 	'footer.emergencyLabel': 'ER',
 
+	// Share widget (social share buttons)
+	'share.title': 'Share this page',
+	'share.whatsapp': 'Share on WhatsApp',
+	'share.facebook': 'Share on Facebook',
+	'share.x': 'Share on X (Twitter)',
+	'share.telegram': 'Share on Telegram',
+	'share.linkedin': 'Share on LinkedIn',
+	'share.email': 'Share via email',
+	'share.copy': 'Copy link',
+	'share.copied': 'Link copied!',
+	'sidebar.cta.title': 'Need to talk?',
+	'sidebar.cta.lead': 'The RSKM team is ready to help anytime.',
+	'sidebar.cta.whatsapp': 'Chat on WhatsApp',
+	'sidebar.cta.call': 'Call RSKM',
+	'sidebar.cta.contact': 'Contact Us',
+
 	// PageHero
 	'pagehero.eyebrow.about': 'About Us',
 	'pagehero.eyebrow.services': 'Services',
@@ -401,6 +441,8 @@ const en: Record<UiKeys, string> = {
 	// /about
 	'aboutPage.hero.title': 'A hospital that grows with your family',
 	'aboutPage.hero.lead': 'Since 2005, we have been committed to delivering holistic, modern, and heartfelt healthcare.',
+	'profilPage.hero.title': 'Company Profile',
+	'profilPage.hero.lead': 'RS Krakatau Medika — our identity, commitment, and journey since the beginning.',
 	'aboutPage.visionMisi.eyebrow': 'Vision & Mission',
 	'aboutPage.visionMisi.title': 'Our direction and purpose',
 	'aboutPage.vision': 'Vision',
@@ -458,6 +500,10 @@ const en: Record<UiKeys, string> = {
 	// Blog
 	'post.updated': 'Updated:',
 	'post.back': '← All Articles',
+	'post.relatedTitle': 'Related Articles',
+	'toc.title': 'Table of Contents',
+	'post.writtenBy': 'Written by',
+	'post.publishedLabel': 'Published on',
 	'post.availableIn': 'This article is also available in:',
 	'post.fallbackNotice': 'This article is not yet available in English.',
 	'post.readIn': 'Read in',

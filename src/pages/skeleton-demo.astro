@@ -2,7 +2,8 @@
 /**
  * DEMO: skeleton loading pattern (tidak masuk menu nav) — locale id.
  * Isi demo ada di sini (bukan content component) karena halaman
- * internal; [lang]/skeleton-demo.astro adalah padanan en.
+ * internal. noindex — halaman demo tidak untuk diindeks mesin pencari,
+ * dan hanya ada versi id (tanpa padanan /en).
  *
  * String status JS dikirim lewat data-attributes (script client-side
  * tidak bisa memanggil t() build-time).
@@ -24,6 +25,7 @@ const skeletonCount = Math.max(posts.length, 3);
 ---
 
 <BaseLayout
+	noindex
 	lang={lang}
 	title={t('page.title.demo')}
 	description={t('page.description.demo')}

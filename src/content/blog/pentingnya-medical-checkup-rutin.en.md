@@ -3,6 +3,7 @@ title: 'Why Routine Medical Checkups Matter, Even When You Feel Healthy'
 description: 'Medical checkups are not only for the sick. Here is what screening is recommended for your age and risk factors.'
 pubDate: 2026-07-03
 author: 'dr. Raditya Nugraha'
+image: 'https://picsum.photos/id/1040/1200/630'
 tags: ['Medical Checkup', 'Prevention']
 ---
 

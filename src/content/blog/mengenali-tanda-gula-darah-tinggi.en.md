@@ -3,6 +3,7 @@ title: 'Recognizing the Early Signs of High Blood Sugar'
 description: 'High blood sugar often has no symptoms. Learn the early warning signs and when to get checked.'
 pubDate: 2026-08-12
 author: 'dr. Andini Prameswari, Sp.PD'
+image: 'https://picsum.photos/id/1043/1200/630'
 tags: ['Health', 'Education']
 ---
 

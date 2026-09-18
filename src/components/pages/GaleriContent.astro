@@ -1,12 +1,14 @@
 ---
 /**
  * Isi halaman /galeri — dipakai bersama oleh root (id) & [lang] (en).
- * Minimal: hero + catatan bahwa galeri foto sedang disiapkan.
+ * Grid foto dummy (Picsum) untuk melihat tata letak galeri — DIGANTI
+ * foto asli saat materi tersedia. Caption per-locale ditulis di sini
+ * (pola sama dengan AboutContent), bukan di data/.
  */
 import CTASection from '@/components/sections/CTASection.astro';
-import Card from '@/components/ui/Card.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
+import SiteImage from '@/components/ui/SiteImage.astro';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
@@ -15,6 +17,40 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+interface GalleryItem {
+	src: string;
+	caption: { id: string; en: string };
+}
+
+// Foto dummy deterministik (picsum.photos) — ganti `src` dengan foto
+// asli lokal + `alt` deskriptif saat galeri resmi tersedia.
+const GALLERY: GalleryItem[] = [
+	{
+		src: 'https://picsum.photos/id/1015/800/600',
+		caption: { id: 'Gedung dan fasilitas RSKM', en: 'RSKM building and facilities' },
+	},
+	{
+		src: 'https://picsum.photos/id/1016/800/600',
+		caption: { id: 'Konsultasi dokter', en: 'Doctor consultation' },
+	},
+	{
+		src: 'https://picsum.photos/id/1018/800/600',
+		caption: { id: 'Tim perawat RSKM', en: 'RSKM nursing team' },
+	},
+	{
+		src: 'https://picsum.photos/id/1019/800/600',
+		caption: { id: 'Ruang rawat inap', en: 'Inpatient room' },
+	},
+	{
+		src: 'https://picsum.photos/id/1020/800/600',
+		caption: { id: 'Kegiatan edukasi kesehatan', en: 'Health education activity' },
+	},
+	{
+		src: 'https://picsum.photos/id/1021/800/600',
+		caption: { id: 'Peralatan medis modern', en: 'Modern medical equipment' },
+	},
+];
 ---
 
 <PageHero
@@ -27,9 +63,21 @@ const t = tFactory(lang);
 	<div class="container">
 		<SectionHeading title={t('galeriPage.note.title')} align="start" />
 		<div class="galeri__grid">
-			<Card>
-				<p class="galeri__note">{t('galeriPage.note.body')}</p>
-			</Card>
+			{
+				GALLERY.map((item) => (
+					<figure class="galeri__item">
+						<SiteImage
+							src={item.src}
+							alt={item.caption[lang]}
+							width={800}
+							height={600}
+							loading="lazy"
+							class="galeri__image"
+						/>
+						<figcaption class="galeri__caption">{item.caption[lang]}</figcaption>
+					</figure>
+				))
+			}
 		</div>
 	</div>
 </section>
@@ -39,12 +87,23 @@ const t = tFactory(lang);
 <style>
 	.galeri__grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
 		gap: var(--space-6);
 	}
 
-	.galeri__note {
+	.galeri__item {
+		margin: 0;
+	}
+
+	.galeri__image {
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-md);
+	}
+
+	.galeri__caption {
+		margin-top: var(--space-2);
 		color: var(--color-muted);
-		font-size: var(--text-base);
+		font-size: var(--text-sm);
 	}
 </style>

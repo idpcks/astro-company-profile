@@ -10,7 +10,7 @@
  */
 import BlogPostLayout from '@/layouts/BlogPostLayout.astro';
 import { render } from 'astro:content';
-import { getAllSlugs, getPostBySlug, type NormalizedPost } from '@/lib/blog';
+import { getAllSlugs, getPostBySlug, getRelatedPosts, type NormalizedPost } from '@/lib/blog';
 
 export async function getStaticPaths() {
 	const slugs = await getAllSlugs();
@@ -23,9 +23,10 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post.entry);
+const { Content, headings } = await render(post.entry);
+const relatedPosts = await getRelatedPosts(post, 'id');
 ---
 
-<BlogPostLayout post={post} lang="id">
+<BlogPostLayout post={post} lang="id" relatedPosts={relatedPosts} headings={headings}>
 	<Content />
 </BlogPostLayout>

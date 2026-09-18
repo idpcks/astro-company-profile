@@ -7,6 +7,7 @@
  */
 import Badge from '@/components/ui/Badge.astro';
 import PostMeta from '@/components/blog/PostMeta.astro';
+import SiteImage from '@/components/ui/SiteImage.astro';
 import Card from '@/components/ui/Card.astro';
 import type { Lang } from '@/i18n';
 import type { NormalizedPost } from '@/lib/blog';
@@ -17,10 +18,21 @@ interface Props {
 }
 
 const { post, lang = 'id' } = Astro.props;
-const { title, description, tags, pubDate, author, url } = post;
+const { title, description, tags, pubDate, author, url, image } = post;
 ---
 
 <Card href={url} class="post-card">
+	{image && (
+		<SiteImage
+			src={image}
+			alt=""
+			width={960}
+			height={540}
+			loading="lazy"
+			class="post-card__image"
+		/>
+	)}
+
 	{
 		tags.length > 0 && (
 			<div class="post-card__tags">
@@ -40,6 +52,16 @@ const { title, description, tags, pubDate, author, url } = post;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-3);
+	}
+
+	/* Thumbnail via SiteImage (komponen lain) → img tanpa scope id milik
+	   komponen ini → wajib :global() supaya rule benar-benar match. */
+	:global(.post-card__image) {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		border-radius: var(--radius-md);
 	}
 
 	.post-card__tags {

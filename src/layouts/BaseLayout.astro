@@ -56,9 +56,15 @@ interface Props {
 	 * yang benar-benar ada (slug disamakan antar locale).
 	 */
 	alternates?: { path: string; lang: Lang }[];
+	/**
+	 * Halaman yang TIDAK boleh diindeks (404, 500, demo internal).
+	 * Saat true: robots jadi "noindex, follow" dan hreflang dimatikan
+	 * (padanan locale-nya belum tentu ada → menghindari hreflang broken).
+	 */
+	noindex?: boolean;
 }
 
-const { lang = 'id', title, description, ogImage, jsonLd, pageType = 'website', article, alternates } = Astro.props;
+const { lang = 'id', title, description, ogImage, jsonLd, pageType = 'website', article, alternates, noindex = false } = Astro.props;
 const t = tFactory(lang);
 
 // Judul: halaman menimpa lewat prop title (sudah diterjemahkan di
@@ -163,7 +169,7 @@ const localBusiness: Record<string, unknown> = {
 		</script>
 
 		<meta name="generator" content={Astro.generator} />
-		<meta name="robots" content="index, follow" />
+		<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
 		<title>{pageTitle}</title>
 		<meta name="description" content={metaDescription} />
 		<link rel="canonical" href={canonicalURL} />
@@ -174,26 +180,29 @@ const localBusiness: Record<string, unknown> = {
 		<meta name="theme-color" content="#0f766e" />
 
 		<!-- hreflang: padanan halaman ini di locale lain (SEO multibahasa).
-		     x-default menunjuk versi locale default (id). -->
-		{alternates
-			? alternates.map(({ path, lang: altLang }) => (
-					<link
-						rel="alternate"
-						hreflang={altLang}
-						href={new URL(localePath(path, altLang), Astro.site)}
-					/>
-				))
-			: Object.entries(languages).map(([code]) => (
-					<link
-						rel="alternate"
-						hreflang={code}
-						href={new URL(
-							alternatePath(Astro.url.pathname, code as Lang),
-							Astro.site,
-						)}
-					/>
-				))}
-		{!alternates && (
+		     x-default menunjuk versi locale default (id).
+		     Dimatikan total saat noindex — padanan locale halaman error/demo
+		     belum tentu ada, dan hreflang pada halaman tak-terindeks tak perlu. -->
+		{!noindex &&
+			(alternates
+				? alternates.map(({ path, lang: altLang }) => (
+						<link
+							rel="alternate"
+							hreflang={altLang}
+							href={new URL(localePath(path, altLang), Astro.site)}
+						/>
+					))
+				: Object.entries(languages).map(([code]) => (
+						<link
+							rel="alternate"
+							hreflang={code}
+							href={new URL(
+								alternatePath(Astro.url.pathname, code as Lang),
+								Astro.site,
+							)}
+						/>
+					)))}
+		{!noindex && !alternates && (
 			<link
 				rel="alternate"
 				hreflang="x-default"
@@ -244,8 +253,9 @@ const localBusiness: Record<string, unknown> = {
 		<meta name="twitter:description" content={metaDescription} />
 		<meta name="twitter:image" content={shareImageURL} />
 
-		<!-- Structured Data: LocalBusiness RSKM (+ node tambahan dari halaman). -->
-		<JsonLd data={[localBusiness, ...(jsonLd ? [jsonLd] : [])]} />
+		<!-- Structured Data: LocalBusiness RSKM (+ node tambahan dari halaman).
+		     Dilewati saat noindex — skema organisasi tak berguna di 404/demo. -->
+		{!noindex && <JsonLd data={[localBusiness, ...(jsonLd ? [jsonLd] : [])]} />}
 	</head>
 	<body>
 		<a class="skip-link" href="#main">{t('header.topbar.skip')}</a>
