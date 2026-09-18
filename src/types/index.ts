@@ -73,3 +73,11 @@ export interface Testimonial {
   /** Konteks singkat, mis. "Pasien IGD", per locale */
   context: { id: string; en: string };
 }
+
+/** Satu item FAQ — dipakai halaman /faq (render + JSON-LD FAQPage). */
+export interface FaqItem {
+	/** Pertanyaan, per locale */
+	question: { id: string; en: string };
+	/** Jawaban singkat, per locale */
+	answer: { id: string; en: string };
+}

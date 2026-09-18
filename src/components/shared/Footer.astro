@@ -4,7 +4,7 @@
  * I18N: menerima prop `lang`; teks UI dari kamus, teks data
  * (menu, hours) dari file data per locale. Kontak tidak diterjemahkan.
  */
-import { localized, tFactory, type Lang } from '@/i18n';
+import { localized, localePath, tFactory, type Lang } from '@/i18n';
 import { SITE, SOCIAL_LINKS, USEFUL_LINKS } from '@/data/site';
 
 interface Props {
@@ -52,14 +52,24 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
       </ul>
     </div>
 
-    <div>
-      <h3 class="footer__heading">{t('footer.contact')}</h3>
-      <address class="footer__address">
-        <p>{SITE.address}</p>
-        <p><a href={`tel:${phoneTel}`}>{SITE.phone}</a></p>
-        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-      </address>
-    </div>
+		<div>
+			<h3 class="footer__heading">{t('footer.legal')}</h3>
+			<ul class="footer__social" aria-label={t('footer.legal')}>
+				<li><a href={localePath('/faq', lang)}>{t('footer.link.faq')}</a></li>
+				<li><a href={localePath('/reviews', lang)}>{t('footer.link.reviews')}</a></li>
+				<li><a href={localePath('/privacy', lang)}>{t('footer.link.privacy')}</a></li>
+				<li><a href={localePath('/terms', lang)}>{t('footer.link.terms')}</a></li>
+			</ul>
+		</div>
+
+		<div>
+			<h3 class="footer__heading">{t('footer.contact')}</h3>
+			<address class="footer__address">
+				<p>{SITE.address}</p>
+				<p><a href={`tel:${phoneTel}`}>{SITE.phone}</a></p>
+				<p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+			</address>
+		</div>
 
     <div>
       <h3 class="footer__heading">{t('footer.hours')}</h3>

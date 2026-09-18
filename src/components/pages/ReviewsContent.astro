@@ -2,7 +2,8 @@
 /**
  * Konten halaman Ulasan & Testimoni — dipakai bersama oleh root (id) & [lang] (en).
  */
-import { tFactory, type Lang } from '@/i18n';
+import { localized, localePath, tFactory, type Lang } from '@/i18n';
+import { TESTIMONIALS } from '@/data/testimonials';
 
 interface Props {
   lang: Lang;
@@ -16,52 +17,29 @@ const t = tFactory(lang);
   <div class="container reviews">
     <h1 class="reviews__title">{t('page.title.reviews')}</h1>
 
-    <div class="reviews__list">
-      <div class="reviews__item">
-        <h3 class="reviews__name">Sari Wulandari</h3>
-        <p class="reviews__context">Pasien IGD</p>
-        <blockquote class="reviews__quote">
-          <p>
-            Pelayanan di IGD cepat dan tenang. Dokter dan perawatnya komunikatif dari awal sampai
-            kami pulang.
-          </p>
-        </blockquote>
-      </div>
+		<div class="reviews__list">
+			{
+				TESTIMONIALS.map((review) => (
+					<div class="reviews__item">
+						<h3 class="reviews__name">{review.name}</h3>
+						<p class="reviews__context">{localized(review.context, lang)}</p>
+						<blockquote class="reviews__quote">
+							<p>{localized(review.quote, lang)}</p>
+						</blockquote>
+					</div>
+				))
+			}
+		</div>
 
-      <div class="reviews__item">
-        <h3 class="reviews__name">Budi Santoso</h3>
-        <p class="reviews__context">Orang tua pasien</p>
-        <blockquote class="reviews__quote">
-          <p>
-            Anak saya dirawat di kelas 2 dan perawatannya luar biasa. Kamarnya bersih dan
-            fasilitasnya modern.
-          </p>
-        </blockquote>
-      </div>
-
-      <div class="reviews__item">
-        <h3 class="reviews__name">Dewi Lestari</h3>
-        <p class="reviews__context">Peserta Medical Checkup</p>
-        <blockquote class="reviews__quote">
-          <p>
-            Daftarnya gampang lewat telepon, hasil medical checkup keluar cepat dan dijelaskan
-            dengan detail.
-          </p>
-        </blockquote>
-      </div>
-    </div>
-
-    <p class="reviews__note">
-      {
-        lang === 'en'
-          ? 'If you would like to share your experience, please send your testimonial through our '
-          : 'Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui '
-      }
-      <a href={lang === 'en' ? '/en/contact' : '/contact'}>
-        {lang === 'en' ? 'contact page' : 'halaman kontak'}
-      </a>.
-    </p>
-  </div>
+		<p class="reviews__note">
+			{lang === 'en'
+				? 'If you would like to share your experience, please send your testimonial through our '
+				: 'Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui '}
+			<a href={localePath('/contact', lang)}>
+				{lang === 'en' ? 'contact page' : 'halaman kontak'}
+			</a>.
+		</p>
+	</div>
 </section>
 
 <style>

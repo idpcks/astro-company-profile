@@ -122,14 +122,19 @@ const id = {
   'cta.contact': 'Hubungi Kami',
   'cta.phone': 'Telepon',
 
-  // Footer
-  'footer.menu': 'Menu',
-  'footer.contact': 'Kontak',
-  'footer.hours': 'Jam Layanan',
-  'footer.social': 'Sosial media',
-  'footer.links': 'Tautan',
-  'footer.rights': 'Semua hak dilindungi.',
-  'footer.emergencyLabel': 'IGD',
+	// Footer
+	'footer.menu': 'Menu',
+	'footer.contact': 'Kontak',
+	'footer.hours': 'Jam Layanan',
+	'footer.social': 'Sosial media',
+	'footer.links': 'Tautan',
+	'footer.legal': 'Legal & Bantuan',
+	'footer.link.faq': 'FAQ',
+	'footer.link.privacy': 'Kebijakan Privasi',
+	'footer.link.terms': 'Syarat & Ketentuan',
+	'footer.link.reviews': 'Ulasan Pasien',
+	'footer.rights': 'Semua hak dilindungi.',
+	'footer.emergencyLabel': 'IGD',
 
   // Share widget (social share buttons)
   'share.title': 'Bagikan halaman ini',
@@ -415,14 +420,19 @@ const en: Record<UiKeys, string> = {
   'cta.contact': 'Contact Us',
   'cta.phone': 'Call',
 
-  // Footer
-  'footer.menu': 'Menu',
-  'footer.contact': 'Contact',
-  'footer.hours': 'Service Hours',
-  'footer.social': 'Social media',
-  'footer.links': 'Links',
-  'footer.rights': 'All rights reserved.',
-  'footer.emergencyLabel': 'ER',
+	// Footer
+	'footer.menu': 'Menu',
+	'footer.contact': 'Contact',
+	'footer.hours': 'Service Hours',
+	'footer.social': 'Social media',
+	'footer.links': 'Links',
+	'footer.legal': 'Legal & Help',
+	'footer.link.faq': 'FAQ',
+	'footer.link.privacy': 'Privacy Policy',
+	'footer.link.terms': 'Terms of Service',
+	'footer.link.reviews': 'Patient Reviews',
+	'footer.rights': 'All rights reserved.',
+	'footer.emergencyLabel': 'ER',
 
   // Share widget (social share buttons)
   'share.title': 'Share this page',
