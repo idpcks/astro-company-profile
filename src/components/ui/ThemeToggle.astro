@@ -151,8 +151,8 @@ const t = tFactory(lang);
 			applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
 		});
 
-		document.addEventListener('astro:before-swap', ((event: TransitionBeforeSwapEvent) => {
-			event.newDocument.documentElement.dataset.theme = currentTheme();
-		}) as EventListener);
+		document.addEventListener('astro:before-swap', (event: Event) => {
+			(event as TransitionBeforeSwapEvent).newDocument.documentElement.dataset.theme = currentTheme();
+		});
 	}
 </script>
