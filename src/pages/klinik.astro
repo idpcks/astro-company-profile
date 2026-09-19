@@ -10,10 +10,6 @@ const lang: Lang = 'id';
 const t = tFactory(lang);
 ---
 
-<BaseLayout
-	lang={lang}
-	title={t('page.title.klinik')}
-	description={t('page.description.klinik')}
->
-	<KlinikContent lang={lang} />
+<BaseLayout lang={lang} title={t('page.title.klinik')} description={t('page.description.klinik')}>
+  <KlinikContent lang={lang} />
 </BaseLayout>

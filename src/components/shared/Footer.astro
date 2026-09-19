@@ -8,7 +8,7 @@ import { localized, tFactory, type Lang } from '@/i18n';
 import { SITE, SOCIAL_LINKS, USEFUL_LINKS } from '@/data/site';
 
 interface Props {
-	lang: Lang;
+  lang: Lang;
 }
 
 const { lang } = Astro.props;
@@ -20,157 +20,157 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 ---
 
 <footer class="footer">
-	<div class="container footer__grid">
-		<div class="footer__brand-col">
-			<p class="footer__brand">{SITE.name}</p>
-			<p class="footer__tagline">{SITE.tagline}</p>
-			<ul class="footer__social" aria-label={t('footer.social')}>
-				{
-					SOCIAL_LINKS.map((social) => (
-						<li>
-							<a href={social.href} target="_blank" rel="noopener noreferrer">
-								{social.label}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</div>
+  <div class="container footer__grid">
+    <div class="footer__brand-col">
+      <p class="footer__brand">{SITE.name}</p>
+      <p class="footer__tagline">{SITE.tagline}</p>
+      <ul class="footer__social" aria-label={t('footer.social')}>
+        {
+          SOCIAL_LINKS.map((social) => (
+            <li>
+              <a href={social.href} target="_blank" rel="noopener noreferrer">
+                {social.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
-		<div>
-			<h3 class="footer__heading">{t('footer.links')}</h3>
-			<ul class="footer__social" aria-label={t('footer.links')}>
-				{
-					USEFUL_LINKS.map((link) => (
-						<li>
-							<a href={link.href} target="_blank" rel="noopener noreferrer">
-								{link.label}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</div>
+    <div>
+      <h3 class="footer__heading">{t('footer.links')}</h3>
+      <ul class="footer__social" aria-label={t('footer.links')}>
+        {
+          USEFUL_LINKS.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener noreferrer">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
-		<div>
-			<h3 class="footer__heading">{t('footer.contact')}</h3>
-			<address class="footer__address">
-				<p>{SITE.address}</p>
-				<p><a href={`tel:${phoneTel}`}>{SITE.phone}</a></p>
-				<p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-			</address>
-		</div>
+    <div>
+      <h3 class="footer__heading">{t('footer.contact')}</h3>
+      <address class="footer__address">
+        <p>{SITE.address}</p>
+        <p><a href={`tel:${phoneTel}`}>{SITE.phone}</a></p>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      </address>
+    </div>
 
-		<div>
-			<h3 class="footer__heading">{t('footer.hours')}</h3>
-			<p>{localized(SITE.hours, lang)}</p>
-			<p class="footer__emergency">
-				{t('footer.emergencyLabel')}:
-				<a href={`tel:${emergencyTel}`}>{SITE.emergencyPhone}</a>
-			</p>
-		</div>
-	</div>
+    <div>
+      <h3 class="footer__heading">{t('footer.hours')}</h3>
+      <p>{localized(SITE.hours, lang)}</p>
+      <p class="footer__emergency">
+        {t('footer.emergencyLabel')}:
+        <a href={`tel:${emergencyTel}`}>{SITE.emergencyPhone}</a>
+      </p>
+    </div>
+  </div>
 
-	<div class="footer__bottom">
-		<div class="container">
-			<p>&copy; {year} {SITE.name}. {t('footer.rights')}</p>
-		</div>
-	</div>
+  <div class="footer__bottom">
+    <div class="container">
+      <p>&copy; {year} {SITE.name}. {t('footer.rights')}</p>
+    </div>
+  </div>
 
-	<!-- Big Footer Typography: identitas brand raksasa di dasar halaman.
+  <!-- Big Footer Typography: identitas brand raksasa di dasar halaman.
 	     "RSKM" = akronim Rumah Sakit Krakatau Medika; dekoratif (aria-hidden). -->
-	<div class="footer__masthead" aria-hidden="true">RSKM</div>
+  <div class="footer__masthead" aria-hidden="true">RSKM</div>
 </footer>
 
 <style>
-	.footer {
-		/* surface-inverse = SELALU gelap di dua tema (identitas visual footer) */
-		background-color: var(--color-surface-inverse);
-		color: #cbd5e1; /* slate-300 — teks terang di atas gelap */
-		font-size: var(--text-sm);
-		/* Teks masthead selebar layar tidak boleh bikin scrollbar horizontal */
-		overflow-x: clip;
-	}
+  .footer {
+    /* surface-inverse = SELALU gelap di dua tema (identitas visual footer) */
+    background-color: var(--color-surface-inverse);
+    color: #cbd5e1; /* slate-300 — teks terang di atas gelap */
+    font-size: var(--text-sm);
+    /* Teks masthead selebar layar tidak boleh bikin scrollbar horizontal */
+    overflow-x: clip;
+  }
 
-	.footer__grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-		gap: var(--space-8);
-		padding-block: var(--space-12);
-	}
+  .footer__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-8);
+    padding-block: var(--space-12);
+  }
 
-	.footer__brand {
-		color: #ffffff;
-		font-size: var(--text-xl);
-		font-weight: 700;
-	}
+  .footer__brand {
+    color: #ffffff;
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
 
-	.footer__tagline {
-		margin-top: var(--space-2);
-	}
+  .footer__tagline {
+    margin-top: var(--space-2);
+  }
 
-	.footer__heading {
-		color: #ffffff;
-		font-size: var(--text-base);
-		margin-bottom: var(--space-4);
-	}
+  .footer__heading {
+    color: #ffffff;
+    font-size: var(--text-base);
+    margin-bottom: var(--space-4);
+  }
 
-	.footer__social {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: grid;
-		gap: var(--space-2);
-	}
+  .footer__social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
 
-	.footer a {
-		color: inherit;
-		text-decoration: none;
-		transition: color var(--transition-base);
-	}
+  .footer a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
 
-	.footer a:hover {
-		color: #ffffff;
-		text-decoration: underline;
-	}
+  .footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
 
-	.footer__address {
-		font-style: normal;
-		display: grid;
-		gap: var(--space-2);
-	}
+  .footer__address {
+    font-style: normal;
+    display: grid;
+    gap: var(--space-2);
+  }
 
-	.footer__emergency {
-		margin-top: var(--space-3);
-		color: var(--color-emergency-text); /* token: terang=red-600, gelap=red-300 */
-		font-weight: 600;
-	}
+  .footer__emergency {
+    margin-top: var(--space-3);
+    color: var(--color-emergency-text); /* token: terang=red-600, gelap=red-300 */
+    font-weight: 600;
+  }
 
-	.footer__bottom {
-		border-top: 1px solid rgb(255 255 255 / 0.1);
-		padding-block: var(--space-4);
-		text-align: center;
-	}
+  .footer__bottom {
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    padding-block: var(--space-4);
+    text-align: center;
+  }
 
-	/* ── Big Footer Typography ── */
-	.footer__masthead {
-		font-size: clamp(4rem, 20vw, 18rem);
-		font-weight: 900;
-		line-height: 0.8; /* rapatkan megateks raksasa */
-		letter-spacing: -0.02em;
-		text-align: center;
-		white-space: nowrap;
-		color: rgb(255 255 255 / 0.07); /* watermark halus di atas gelap */
-		user-select: none;
-		padding: var(--space-4) 0 0;
-		/* Serap descender agar megateks tidak menciptakan gap tak kelihatan
+  /* ── Big Footer Typography ── */
+  .footer__masthead {
+    font-size: clamp(4rem, 20vw, 18rem);
+    font-weight: 900;
+    line-height: 0.8; /* rapatkan megateks raksasa */
+    letter-spacing: -0.02em;
+    text-align: center;
+    white-space: nowrap;
+    color: rgb(255 255 255 / 0.07); /* watermark halus di atas gelap */
+    user-select: none;
+    padding: var(--space-4) 0 0;
+    /* Serap descender agar megateks tidak menciptakan gap tak kelihatan
 		   di tepi bawah footer. */
-		margin-bottom: -0.18em;
-	}
+    margin-bottom: -0.18em;
+  }
 
-	@media (max-width: 640px) {
-		.footer__masthead {
-			letter-spacing: 0.1em; /* jarak antar huruf lebih longgar di layar sempit */
-		}
-	}
+  @media (max-width: 640px) {
+    .footer__masthead {
+      letter-spacing: 0.1em; /* jarak antar huruf lebih longgar di layar sempit */
+    }
+  }
 </style>

@@ -21,62 +21,62 @@
  * transform dianimasikan di compositor GPU — tidak memicu repaint.
  */
 interface Props {
-	/** Lebar elemen, nilai CSS apa pun: '60%', '12rem', dst. */
-	width?: string;
-	/** Tinggi elemen, mis. '1rem' (1 baris teks) atau '8rem' (gambar). */
-	height?: string;
-	/** Bentuk lingkaran (avatar) */
-	circle?: boolean;
-	class?: string;
+  /** Lebar elemen, nilai CSS apa pun: '60%', '12rem', dst. */
+  width?: string;
+  /** Tinggi elemen, mis. '1rem' (1 baris teks) atau '8rem' (gambar). */
+  height?: string;
+  /** Bentuk lingkaran (avatar) */
+  circle?: boolean;
+  class?: string;
 }
 
 const { width = '100%', height = '1rem', circle = false, class: className } = Astro.props;
 ---
 
 <span
-	class:list={['skeleton', { 'skeleton--circle': circle }, className]}
-	style={`width:${width};height:${height}`}
-	aria-hidden="true"
+  class:list={['skeleton', { 'skeleton--circle': circle }, className]}
+  style={`width:${width};height:${height}`}
+  aria-hidden="true"
 >
-	<span class="skeleton__shimmer"></span>
+  <span class="skeleton__shimmer"></span>
 </span>
 
 <style>
-	.skeleton {
-		position: relative;
-		display: block;
-		overflow: hidden;
-		background-color: var(--color-surface-alt);
-		border-radius: var(--radius-md);
-	}
+  .skeleton {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: var(--color-surface-alt);
+    border-radius: var(--radius-md);
+  }
 
-	.skeleton--circle {
-		border-radius: var(--radius-full);
-	}
+  .skeleton--circle {
+    border-radius: var(--radius-full);
+  }
 
-	/* Sweep terang yang melintas sekali tiap siklus */
-	.skeleton__shimmer {
-		position: absolute;
-		inset: 0;
-		transform: translateX(-100%);
-		background: linear-gradient(
-			90deg,
-			transparent 0%,
-			rgb(255 255 255 / 0.65) 50%,
-			transparent 100%
-		);
-		animation: skeleton-shimmer 1.4s ease-in-out infinite;
-	}
+  /* Sweep terang yang melintas sekali tiap siklus */
+  .skeleton__shimmer {
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(255 255 255 / 0.65) 50%,
+      transparent 100%
+    );
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  }
 
-	@keyframes skeleton-shimmer {
-		to {
-			transform: translateX(100%);
-		}
-	}
+  @keyframes skeleton-shimmer {
+    to {
+      transform: translateX(100%);
+    }
+  }
 
-	@media (prefers-reduced-motion: reduce) {
-		.skeleton__shimmer {
-			animation: none;
-		}
-	}
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton__shimmer {
+      animation: none;
+    }
+  }
 </style>

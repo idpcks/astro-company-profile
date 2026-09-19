@@ -1,45 +1,45 @@
 ---
 /**
-   * Tombol serbaguna — komponen UI murni (tanpa konten hardcode).
-   *
-   * Komponen ini merender elemen `<a>` kalau diberi `href`,
-   * dan `<button>` kalau tidak.
-   *
-   * Ini memungkinkan satu komponen untuk dua bentuk:
-   * - Tautan navigasi (seperti di navigasi utama)
-   * - Tombol aksi (seperti submit formulir)
-   *
-   * @prop href - Kalau diisi → render <a href>; kalau kosong → render <button>
-   * @prop variant - Gaya visual: 'primary' (default), 'emergency', 'outline', 'light', 'ghost'
-   * @prop size - Ukuran: 'md' (default) atau 'lg'
-   * @prop type - Jenis tombol HTML (hanya relevan untuk <button>): 'button' (default) atau 'submit'
-   * @prop class - Class tambahan dari pemakai
-   * @prop {...attrs} - Atribut native/data-* lain (mis. disabled, aria-*, data-contact-submit)
-   *                    yang diteruskan ke elemen akhir
-   */
+ * Tombol serbaguna — komponen UI murni (tanpa konten hardcode).
+ *
+ * Komponen ini merender elemen `<a>` kalau diberi `href`,
+ * dan `<button>` kalau tidak.
+ *
+ * Ini memungkinkan satu komponen untuk dua bentuk:
+ * - Tautan navigasi (seperti di navigasi utama)
+ * - Tombol aksi (seperti submit formulir)
+ *
+ * @prop href - Kalau diisi → render <a href>; kalau kosong → render <button>
+ * @prop variant - Gaya visual: 'primary' (default), 'emergency', 'outline', 'light', 'ghost'
+ * @prop size - Ukuran: 'md' (default) atau 'lg'
+ * @prop type - Jenis tombol HTML (hanya relevan untuk <button>): 'button' (default) atau 'submit'
+ * @prop class - Class tambahan dari pemakai
+ * @prop {...attrs} - Atribut native/data-* lain (mis. disabled, aria-*, data-contact-submit)
+ *                    yang diteruskan ke elemen akhir
+ */
 interface Props {
-	/** Kalau diisi → render <a href>; kalau kosong → render <button> */
-	href?: string;
-	variant?: 'primary' | 'emergency' | 'outline' | 'light' | 'ghost';
-	size?: 'md' | 'lg';
-	/** Hanya relevan untuk <button> */
-	type?: 'button' | 'submit';
-	/** Class tambahan dari pemakai */
-	class?: string;
-	/**
-	 * Atribut native/`data-*` lain diteruskan ke elemen (mis.
-	 * `disabled`, `aria-*`, `data-contact-submit`).
-	 */
-	[key: string]: unknown;
+  /** Kalau diisi → render <a href>; kalau kosong → render <button> */
+  href?: string;
+  variant?: 'primary' | 'emergency' | 'outline' | 'light' | 'ghost';
+  size?: 'md' | 'lg';
+  /** Hanya relevan untuk <button> */
+  type?: 'button' | 'submit';
+  /** Class tambahan dari pemakai */
+  class?: string;
+  /**
+   * Atribut native/`data-*` lain diteruskan ke elemen (mis.
+   * `disabled`, `aria-*`, `data-contact-submit`).
+   */
+  [key: string]: unknown;
 }
 
 const {
-	href,
-	variant = 'primary',
-	size = 'md',
-	type = 'button',
-	class: className,
-	...attrs
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className,
+  ...attrs
 } = Astro.props;
 
 // Variabel berkapital dipakai sebagai tag dinamis oleh Astro.
@@ -47,90 +47,90 @@ const Tag = href ? 'a' : 'button';
 ---
 
 <Tag
-	href={href}
-	type={href ? undefined : type}
-	class:list={['button', `button--${variant}`, `button--${size}`, className]}
-	{...attrs}
+  href={href}
+  type={href ? undefined : type}
+  class:list={['button', `button--${variant}`, `button--${size}`, className]}
+  {...attrs}
 >
-	<slot />
+  <slot />
 </Tag>
 
 <style>
-	.button {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-2);
-		font-weight: 600;
-		font-family: var(--font-sans);
-		text-decoration: none;
-		border: 1px solid transparent;
-		border-radius: var(--radius-full);
-		cursor: pointer;
-		transition:
-			background-color var(--transition-base),
-			color var(--transition-base),
-			border-color var(--transition-base);
-	}
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-weight: 600;
+    font-family: var(--font-sans);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-base),
+      color var(--transition-base),
+      border-color var(--transition-base);
+  }
 
-	/* ── Ukuran ── */
-	.button--md {
-		padding: 0.625rem 1.375rem;
-		font-size: var(--text-sm);
-	}
+  /* ── Ukuran ── */
+  .button--md {
+    padding: 0.625rem 1.375rem;
+    font-size: var(--text-sm);
+  }
 
-	.button--lg {
-		padding: var(--space-3) var(--space-6);
-		font-size: var(--text-base);
-	}
+  .button--lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-base);
+  }
 
-	/* ── Varian ── */
-	.button--primary {
-		background-color: var(--color-primary);
-		color: #ffffff;
-	}
+  /* ── Varian ── */
+  .button--primary {
+    background-color: var(--color-primary);
+    color: #ffffff;
+  }
 
-	.button--primary:hover {
-		background-color: var(--color-primary-dark);
-	}
+  .button--primary:hover {
+    background-color: var(--color-primary-dark);
+  }
 
-	.button--emergency {
-		background-color: var(--color-emergency);
-		color: #ffffff;
-	}
+  .button--emergency {
+    background-color: var(--color-emergency);
+    color: #ffffff;
+  }
 
-	.button--emergency:hover {
-		background-color: var(--color-emergency-dark);
-	}
+  .button--emergency:hover {
+    background-color: var(--color-emergency-dark);
+  }
 
-	.button--outline {
-		background-color: transparent;
-		border-color: var(--color-primary-text);
-		color: var(--color-primary-text);
-	}
+  .button--outline {
+    background-color: transparent;
+    border-color: var(--color-primary-text);
+    color: var(--color-primary-text);
+  }
 
-	.button--outline:hover {
-		background-color: var(--color-primary-light);
-	}
+  .button--outline:hover {
+    background-color: var(--color-primary-light);
+  }
 
-	/* Untuk tombol di atas background gelap (band CTA) */
-	.button--light {
-		background-color: #ffffff;
-		color: var(--color-primary-dark);
-	}
+  /* Untuk tombol di atas background gelap (band CTA) */
+  .button--light {
+    background-color: #ffffff;
+    color: var(--color-primary-dark);
+  }
 
-	.button--light:hover {
-		background-color: var(--color-primary-light);
-	}
+  .button--light:hover {
+    background-color: var(--color-primary-light);
+  }
 
-	/* Tombol transparan untuk di atas background gelap */
-	.button--ghost {
-		background-color: transparent;
-		border-color: rgb(255 255 255 / 0.6);
-		color: #ffffff;
-	}
+  /* Tombol transparan untuk di atas background gelap */
+  .button--ghost {
+    background-color: transparent;
+    border-color: rgb(255 255 255 / 0.6);
+    color: #ffffff;
+  }
 
-	.button--ghost:hover {
-		background-color: rgb(255 255 255 / 0.12);
-	}
+  .button--ghost:hover {
+    background-color: rgb(255 255 255 / 0.12);
+  }
 </style>

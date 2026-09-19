@@ -8,7 +8,7 @@ import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
-	lang: Lang;
+  lang: Lang;
 }
 
 const { lang } = Astro.props;
@@ -19,57 +19,57 @@ const wbsEmail = 'wbs@krakataumedika.co.id';
 ---
 
 <PageHero
-	eyebrow={t('pagehero.eyebrow.wbs')}
-	title={t('wbsPage.hero.title')}
-	lead={t('wbsPage.hero.lead')}
+  eyebrow={t('pagehero.eyebrow.wbs')}
+  title={t('wbsPage.hero.title')}
+  lead={t('wbsPage.hero.lead')}
 />
 
 <section class="section">
-	<div class="container">
-		<SectionHeading title={t('wbsPage.body.heading')} align="start" />
-		<div class="wbs__grid">
-			<div class="wbs__body">
-				<p>{t('wbsPage.body.para1')}</p>
-				<p>{t('wbsPage.body.para2')}</p>
-			</div>
-			<aside class="wbs__contact">
-				<h3 class="wbs__contact-title">{t('wbsPage.body.contactHeading')}</h3>
-				<p>{t('wbsPage.body.contactBody')}</p>
-				<p>
-					<a href={`mailto:${wbsEmail}`}>{wbsEmail}</a>
-				</p>
-			</aside>
-		</div>
-	</div>
+  <div class="container">
+    <SectionHeading title={t('wbsPage.body.heading')} align="start" />
+    <div class="wbs__grid">
+      <div class="wbs__body">
+        <p>{t('wbsPage.body.para1')}</p>
+        <p>{t('wbsPage.body.para2')}</p>
+      </div>
+      <aside class="wbs__contact">
+        <h3 class="wbs__contact-title">{t('wbsPage.body.contactHeading')}</h3>
+        <p>{t('wbsPage.body.contactBody')}</p>
+        <p>
+          <a href={`mailto:${wbsEmail}`}>{wbsEmail}</a>
+        </p>
+      </aside>
+    </div>
+  </div>
 </section>
 
 <style>
-	.wbs__grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-		gap: var(--space-8);
-	}
+  .wbs__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--space-8);
+  }
 
-	.wbs__body {
-		display: grid;
-		gap: var(--space-4);
-		max-width: 40rem;
-	}
+  .wbs__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 40rem;
+  }
 
-	.wbs__contact {
-		background-color: var(--color-surface-alt);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-6);
-	}
+  .wbs__contact {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
 
-	.wbs__contact-title {
-		font-size: var(--text-lg);
-		margin-bottom: var(--space-3);
-	}
+  .wbs__contact-title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+  }
 
-	.wbs__contact a {
-		color: var(--color-primary-text);
-		font-weight: 600;
-	}
+  .wbs__contact a {
+    color: var(--color-primary-text);
+    font-weight: 600;
+  }
 </style>

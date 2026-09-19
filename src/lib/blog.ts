@@ -25,27 +25,27 @@ export type AvailableLocales = Lang[];
 
 /** Post ternormalisasi: metadata + slug + locale + URL siap pakai. */
 export interface NormalizedPost {
-	/** Slug URL (sama antar locale). */
-	slug: string;
-	/** Locale file sumber. */
-	locale: Lang;
-	/** Lokale yang tersedia untuk slug ini. */
-	availableLocales: AvailableLocales;
-	/** Path URL sesuai locale (tanpa prefix utk id, /en/... utk en). */
-	url: string;
-	/** True bila konten yang dirender BUKAN bahasa halaman (fallback). */
-	isFallback: boolean;
-	/** Entry asli — untuk render() di halaman detail. */
-	entry: CollectionEntry<'blog'>;
-	// Metadata ringkas — di-forward dari entry.data agar komponen
-	// tidak perlu tahu bentuk entry mentah.
-	title: string;
-	description: string;
-	pubDate: Date;
-	updatedDate?: Date;
-	author: string;
-	image?: string;
-	tags: string[];
+  /** Slug URL (sama antar locale). */
+  slug: string;
+  /** Locale file sumber. */
+  locale: Lang;
+  /** Lokale yang tersedia untuk slug ini. */
+  availableLocales: AvailableLocales;
+  /** Path URL sesuai locale (tanpa prefix utk id, /en/... utk en). */
+  url: string;
+  /** True bila konten yang dirender BUKAN bahasa halaman (fallback). */
+  isFallback: boolean;
+  /** Entry asli — untuk render() di halaman detail. */
+  entry: CollectionEntry<'blog'>;
+  // Metadata ringkas — di-forward dari entry.data agar komponen
+  // tidak perlu tahu bentuk entry mentah.
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author: string;
+  image?: string;
+  tags: string[];
 }
 
 /** Urutan locale stabil (id dulu) untuk output deterministik. */
@@ -53,42 +53,42 @@ const LANG_ORDER: Lang[] = Object.keys(languages) as Lang[];
 
 /** Uraikan entry.id "{slug}::{locale}" → komponennya. */
 export function parseEntryId(id: string): { slug: string; locale: Lang } {
-	const [slug, locale] = id.split('::');
-	return { slug, locale: locale as Lang };
+  const [slug, locale] = id.split('::');
+  return { slug, locale: locale as Lang };
 }
 
 /** Ambil semua post koleksi blog, sudah terurai & terpasang locale. */
 export async function getAllPosts(): Promise<NormalizedPost[]> {
-	const entries = await getCollection('blog');
-	const pairs = entries.map((entry) => parseEntryId(entry.id));
+  const entries = await getCollection('blog');
+  const pairs = entries.map((entry) => parseEntryId(entry.id));
 
-	// Peta slug → daftar locale yang tersedia.
-	const bySlug = new Map<string, Set<Lang>>();
-	for (const { slug, locale } of pairs) {
-		if (!bySlug.has(slug)) bySlug.set(slug, new Set());
-		bySlug.get(slug)!.add(locale);
-	}
+  // Peta slug → daftar locale yang tersedia.
+  const bySlug = new Map<string, Set<Lang>>();
+  for (const { slug, locale } of pairs) {
+    if (!bySlug.has(slug)) bySlug.set(slug, new Set());
+    bySlug.get(slug)!.add(locale);
+  }
 
-	return entries.map((entry) => {
-		const { slug, locale } = parseEntryId(entry.id);
-		const available = bySlug.get(slug) ?? new Set<Lang>();
-		const availableLocales = LANG_ORDER.filter((l) => available.has(l));
-		return {
-			slug,
-			locale,
-			availableLocales,
-			url: '',
-			isFallback: false,
-			entry,
-			title: entry.data.title,
-			description: entry.data.description,
-			pubDate: entry.data.pubDate,
-			updatedDate: entry.data.updatedDate,
-			author: entry.data.author,
-			image: entry.data.image,
-			tags: entry.data.tags,
-		};
-	});
+  return entries.map((entry) => {
+    const { slug, locale } = parseEntryId(entry.id);
+    const available = bySlug.get(slug) ?? new Set<Lang>();
+    const availableLocales = LANG_ORDER.filter((l) => available.has(l));
+    return {
+      slug,
+      locale,
+      availableLocales,
+      url: '',
+      isFallback: false,
+      entry,
+      title: entry.data.title,
+      description: entry.data.description,
+      pubDate: entry.data.pubDate,
+      updatedDate: entry.data.updatedDate,
+      author: entry.data.author,
+      image: entry.data.image,
+      tags: entry.data.tags,
+    };
+  });
 }
 
 /**
@@ -100,30 +100,27 @@ export async function getAllPosts(): Promise<NormalizedPost[]> {
  * @returns post versi `lang`, atau versi id (dengan isFallback=true
  *          bila versi id juga bukan bahasa halaman — terjadi di /en).
  */
-export async function getPostBySlug(
-	slug: string,
-	lang: Lang,
-): Promise<NormalizedPost | undefined> {
-	const posts = (await getAllPosts()).filter((p) => p.slug === slug);
-	if (posts.length === 0) return undefined;
+export async function getPostBySlug(slug: string, lang: Lang): Promise<NormalizedPost | undefined> {
+  const posts = (await getAllPosts()).filter((p) => p.slug === slug);
+  if (posts.length === 0) return undefined;
 
-	// Pilih versi bahasa halaman; fallback ke defaultLang.
-	const exact = posts.find((p) => p.locale === lang);
-	const chosen = exact ?? posts.find((p) => p.locale === defaultLang) ?? posts[0];
-	chosen.isFallback = chosen.locale !== lang;
+  // Pilih versi bahasa halaman; fallback ke defaultLang.
+  const exact = posts.find((p) => p.locale === lang);
+  const chosen = exact ?? posts.find((p) => p.locale === defaultLang) ?? posts[0];
+  chosen.isFallback = chosen.locale !== lang;
 
-	// URL detail TIDAK dibuat untuk fallback di locale prefix — kalau
-	// tidak ada versi en, /en/blog/<slug> tidak boleh ter-generate.
-	if (!chosen.isFallback) {
-		chosen.url = lang === defaultLang ? `/blog/${slug}` : `/${lang}/blog/${slug}`;
-	}
-	return chosen;
+  // URL detail TIDAK dibuat untuk fallback di locale prefix — kalau
+  // tidak ada versi en, /en/blog/<slug> tidak boleh ter-generate.
+  if (!chosen.isFallback) {
+    chosen.url = lang === defaultLang ? `/blog/${slug}` : `/${lang}/blog/${slug}`;
+  }
+  return chosen;
 }
 
 /** Semua slug unik — untuk getStaticPaths halaman detail per locale. */
 export async function getAllSlugs(): Promise<string[]> {
-	const posts = await getAllPosts();
-	return [...new Set(posts.map((p) => p.slug))];
+  const posts = await getAllPosts();
+  return [...new Set(posts.map((p) => p.slug))];
 }
 
 /**
@@ -134,30 +131,30 @@ export async function getAllSlugs(): Promise<string[]> {
  * Listing diurutkan terbaru dulu.
  */
 export async function getPostsForListing(lang: Lang): Promise<NormalizedPost[]> {
-	const all = await getAllPosts();
+  const all = await getAllPosts();
 
-	// Kelompokkan per slug.
-	const bySlug = new Map<string, NormalizedPost[]>();
-	for (const post of all) {
-		if (!bySlug.has(post.slug)) bySlug.set(post.slug, []);
-		bySlug.get(post.slug)!.push(post);
-	}
+  // Kelompokkan per slug.
+  const bySlug = new Map<string, NormalizedPost[]>();
+  for (const post of all) {
+    if (!bySlug.has(post.slug)) bySlug.set(post.slug, []);
+    bySlug.get(post.slug)!.push(post);
+  }
 
-	const listing: NormalizedPost[] = [];
-	for (const [slug, versions] of bySlug) {
-		const exact = versions.find((p) => p.locale === lang);
-		const chosen = exact ?? versions.find((p) => p.locale === defaultLang) ?? versions[0];
-		chosen.isFallback = chosen.locale !== lang;
-		chosen.url =
-			lang === defaultLang
-				? `/blog/${slug}`
-				: chosen.isFallback
-					? `/blog/${slug}` // fallback → tunjuk halaman versi id
-					: `/${lang}/blog/${slug}`;
-		listing.push(chosen);
-	}
+  const listing: NormalizedPost[] = [];
+  for (const [slug, versions] of bySlug) {
+    const exact = versions.find((p) => p.locale === lang);
+    const chosen = exact ?? versions.find((p) => p.locale === defaultLang) ?? versions[0];
+    chosen.isFallback = chosen.locale !== lang;
+    chosen.url =
+      lang === defaultLang
+        ? `/blog/${slug}`
+        : chosen.isFallback
+          ? `/blog/${slug}` // fallback → tunjuk halaman versi id
+          : `/${lang}/blog/${slug}`;
+    listing.push(chosen);
+  }
 
-	return listing.sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf());
+  return listing.sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf());
 }
 
 /**
@@ -174,30 +171,27 @@ export async function getPostsForListing(lang: Lang): Promise<NormalizedPost[]> 
  * @param limit   Jumlah maksimum artikel terkait (default 4 = grid 2×2 desktop).
  */
 export async function getRelatedPosts(
-	current: NormalizedPost,
-	lang: Lang,
-	limit = 4,
+  current: NormalizedPost,
+  lang: Lang,
+  limit = 4
 ): Promise<NormalizedPost[]> {
-	// Listing per-locale: versi bahasa halaman (fallback ke id) + URL siap pakai.
-	const listing = await getPostsForListing(lang);
-	const others = listing.filter((p) => p.slug !== current.slug);
+  // Listing per-locale: versi bahasa halaman (fallback ke id) + URL siap pakai.
+  const listing = await getPostsForListing(lang);
+  const others = listing.filter((p) => p.slug !== current.slug);
 
-	// Normalisasi tag: huruf kecil + buang non-alphanumeric
-	// ('Medical Checkup' == 'medical-checkup', 'Gaya Hidup' == 'gaya hidup').
-	const norm = (tag: string) => tag.toLowerCase().replace(/[^a-z0-9]/g, '');
-	const currentTags = new Set(current.tags.map(norm));
+  // Normalisasi tag: huruf kecil + buang non-alphanumeric
+  // ('Medical Checkup' == 'medical-checkup', 'Gaya Hidup' == 'gaya hidup').
+  const norm = (tag: string) => tag.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const currentTags = new Set(current.tags.map(norm));
 
-	return others
-		.map((post) => ({
-			post,
-			overlap: post.tags.filter((tag) => currentTags.has(norm(tag))).length,
-		}))
-		.sort(
-			(a, b) =>
-				b.overlap - a.overlap || b.post.pubDate.valueOf() - a.post.pubDate.valueOf(),
-		)
-		.slice(0, limit)
-		.map(({ post }) => post);
+  return others
+    .map((post) => ({
+      post,
+      overlap: post.tags.filter((tag) => currentTags.has(norm(tag))).length,
+    }))
+    .sort((a, b) => b.overlap - a.overlap || b.post.pubDate.valueOf() - a.post.pubDate.valueOf())
+    .slice(0, limit)
+    .map(({ post }) => post);
 }
 
 /**
@@ -205,8 +199,8 @@ export async function getRelatedPosts(
  * Dipakai LangSwitcher (fallback ke listing) & hreflang per-artikel.
  */
 export function getOtherAvailableLocales(
-	post: Pick<NormalizedPost, 'availableLocales'>,
-	lang: Lang,
+  post: Pick<NormalizedPost, 'availableLocales'>,
+  lang: Lang
 ): AvailableLocales {
-	return post.availableLocales.filter((l) => l !== lang);
+  return post.availableLocales.filter((l) => l !== lang);
 }

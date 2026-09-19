@@ -19,7 +19,7 @@ export { defaultLang, getLangFromUrl, ui };
  * Identik dengan `tFactory(lang)` — hanya bentuk API-nya yang beda.
  */
 export function useTranslations(lang: Lang) {
-	return function t(key: UiKeys): string {
-		return tFactory(lang)(key);
-	};
+  return function t(key: UiKeys): string {
+    return tFactory(lang)(key);
+  };
 }

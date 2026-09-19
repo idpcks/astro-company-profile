@@ -11,51 +11,56 @@ import Button from '@/components/ui/Button.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<BaseLayout noindex lang="id" title="404 — Halaman Tidak Ditemukan" description="Halaman tidak ditemukan.">
-	<section class="section">
-		<div class="container notfound">
-			<p class="notfound__code" aria-hidden="true">404</p>
-			<h1 class="notfound__title">Halaman tidak ditemukan / Page not found</h1>
-			<p class="notfound__lead">
-				Maaf, halaman yang Anda cari tidak tersedia.
-				<br />
-				Sorry, the page you are looking for is not available.
-			</p>
-			<div class="notfound__actions">
-				<Button href="/">← Beranda</Button>
-				<Button href="/en" variant="outline">← Home (EN)</Button>
-			</div>
-		</div>
-	</section>
+<BaseLayout
+  noindex
+  lang="id"
+  title="404 — Halaman Tidak Ditemukan"
+  description="Halaman tidak ditemukan."
+>
+  <section class="section">
+    <div class="container notfound">
+      <p class="notfound__code" aria-hidden="true">404</p>
+      <h1 class="notfound__title">Halaman tidak ditemukan / Page not found</h1>
+      <p class="notfound__lead">
+        Maaf, halaman yang Anda cari tidak tersedia.
+        <br />
+        Sorry, the page you are looking for is not available.
+      </p>
+      <div class="notfound__actions">
+        <Button href="/">← Beranda</Button>
+        <Button href="/en" variant="outline">← Home (EN)</Button>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-	.notfound {
-		text-align: center;
-		max-width: 36rem;
-	}
+  .notfound {
+    text-align: center;
+    max-width: 36rem;
+  }
 
-	.notfound__code {
-		font-size: var(--text-5xl);
-		font-weight: 700;
-		color: var(--color-primary-text);
-		letter-spacing: 0.1em;
-	}
+  .notfound__code {
+    font-size: var(--text-5xl);
+    font-weight: 700;
+    color: var(--color-primary-text);
+    letter-spacing: 0.1em;
+  }
 
-	.notfound__title {
-		font-size: var(--text-2xl);
-		margin-top: var(--space-2);
-	}
+  .notfound__title {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-2);
+  }
 
-	.notfound__lead {
-		color: var(--color-muted);
-		margin-top: var(--space-3);
-	}
+  .notfound__lead {
+    color: var(--color-muted);
+    margin-top: var(--space-3);
+  }
 
-	.notfound__actions {
-		display: flex;
-		justify-content: center;
-		gap: var(--space-3);
-		margin-top: var(--space-8);
-	}
+  .notfound__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
 </style>

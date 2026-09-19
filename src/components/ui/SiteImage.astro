@@ -20,69 +20,69 @@
 import { Image } from 'astro:assets';
 
 export interface Props {
-	src: ImageMetadata | string;
-	alt: string;
-	loading?: 'lazy' | 'eager';
-	fetchpriority?: 'high' | 'low';
-	/** Wajib untuk src string (URL) — pemicu CLS bila diabaikan.
-	 *  Untuk src ImageMetadata: pasang keduanya untuk crop landscape
-	 *  eksplisit saat build (mis. hero 1200×900). */
-	width?: number;
-	height?: number;
-	widths?: number[];
-	sizes?: string;
-	format?: 'webp' | 'avif';
-	class?: string;
+  src: ImageMetadata | string;
+  alt: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low';
+  /** Wajib untuk src string (URL) — pemicu CLS bila diabaikan.
+   *  Untuk src ImageMetadata: pasang keduanya untuk crop landscape
+   *  eksplisit saat build (mis. hero 1200×900). */
+  width?: number;
+  height?: number;
+  widths?: number[];
+  sizes?: string;
+  format?: 'webp' | 'avif';
+  class?: string;
 }
 
 const {
-	src,
-	alt,
-	loading = 'lazy',
-	fetchpriority,
-	width,
-	height,
-	widths = [640, 768, 1024, 1280],
-	sizes = 'min(100vw, 1200px)',
-	format = 'webp',
-	class: className,
+  src,
+  alt,
+  loading = 'lazy',
+  fetchpriority,
+  width,
+  height,
+  widths = [640, 768, 1024, 1280],
+  sizes = 'min(100vw, 1200px)',
+  format = 'webp',
+  class: className,
 } = Astro.props;
 
 // Pengaman CLS: jalur URL tanpa dimensi = build error, buka jalan
 // gambar yang lari-lari ke production.
 if (typeof src === 'string' && (typeof width !== 'number' || typeof height !== 'number')) {
-	throw new Error(
-		`SiteImage: src string (URL) "${src}" butuh width & height bertipe number — cegah CLS. ` +
-			`Gunakan <SiteImage src="..." width={1200} height={630} />.`
-	);
+  throw new Error(
+    `SiteImage: src string (URL) "${src}" butuh width & height bertipe number — cegah CLS. ` +
+      `Gunakan <SiteImage src="..." width={1200} height={630} />.`
+  );
 }
 ---
 
 {
-	typeof src === 'string' ? (
-		<img
-			src={src}
-			alt={alt}
-			width={width}
-			height={height}
-			loading={loading}
-			fetchpriority={fetchpriority}
-			decoding="async"
-			class={className}
-		/>
-	) : (
-		<Image
-			src={src}
-			alt={alt}
-			loading={loading}
-			fetchpriority={fetchpriority}
-			widths={width !== undefined && height !== undefined ? undefined : widths}
-			sizes={width !== undefined && height !== undefined ? undefined : sizes}
-			width={width}
-			height={height}
-			format={format}
-			decoding="async"
-			class={className}
-		/>
-	)
+  typeof src === 'string' ? (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      decoding="async"
+      class={className}
+    />
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      widths={width !== undefined && height !== undefined ? undefined : widths}
+      sizes={width !== undefined && height !== undefined ? undefined : sizes}
+      width={width}
+      height={height}
+      format={format}
+      decoding="async"
+      class={className}
+    />
+  )
 }

@@ -7,15 +7,15 @@
  * tipe ContactMessage TIDAK berubah → komponen form tidak tersentuh.
  */
 export interface ContactMessage {
-	name: string;
-	email: string;
-	phone?: string;
-	message: string;
-	consent: boolean;
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  consent: boolean;
 }
 
 export interface SubmitResult {
-	ok: boolean;
+  ok: boolean;
 }
 
 /**
@@ -38,26 +38,29 @@ export const HONEYPOT_NAME = '_honey';
  *                  diabaikan tanpa dikirim, namun tetap terlihat sukses
  *                  (bot tidak belajar bahwa ia terdeteksi).
  */
-export async function submitContact(data: ContactMessage, honeypot?: string): Promise<SubmitResult> {
-	if (honeypot) {
-		return { ok: true };
-	}
+export async function submitContact(
+  data: ContactMessage,
+  honeypot?: string
+): Promise<SubmitResult> {
+  if (honeypot) {
+    return { ok: true };
+  }
 
-	const res = await fetch(FORM_ENDPOINT, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-		},
-		body: JSON.stringify({
-			name: data.name,
-			email: data.email,
-			phone: data.phone ?? '',
-			message: data.message,
-			_subject: `[Kontak Web] ${data.name}`,
-		}),
-	});
+  const res = await fetch(FORM_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      name: data.name,
+      email: data.email,
+      phone: data.phone ?? '',
+      message: data.message,
+      _subject: `[Kontak Web] ${data.name}`,
+    }),
+  });
 
-	const json = (await res.json().catch(() => null)) as { success?: string } | null;
-	return { ok: res.ok && json?.success === 'true' };
+  const json = (await res.json().catch(() => null)) as { success?: string } | null;
+  return { ok: res.ok && json?.success === 'true' };
 }

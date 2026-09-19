@@ -10,7 +10,7 @@ import { localePath, localized, tFactory, type Lang } from '@/i18n';
 import { CLINICS } from '@/data/clinics';
 
 interface Props {
-	lang: Lang;
+  lang: Lang;
 }
 
 const { lang } = Astro.props;
@@ -21,78 +21,78 @@ const corporateClinics = CLINICS.filter((clinic) => clinic.corporate);
 ---
 
 <PageHero
-	eyebrow={t('pagehero.eyebrow.layananBisnis')}
-	title={t('bisnisPage.hero.title')}
-	lead={t('bisnisPage.hero.lead')}
+  eyebrow={t('pagehero.eyebrow.layananBisnis')}
+  title={t('bisnisPage.hero.title')}
+  lead={t('bisnisPage.hero.lead')}
 />
 
 <section class="section">
-	<div class="container">
-		<SectionHeading title={t('bisnisPage.body.heading')} align="start" />
-		<div class="bisnis__body">
-			<p>{t('bisnisPage.body.para1')}</p>
-			<p>{t('bisnisPage.body.para2')}</p>
-			<p>{t('bisnisPage.body.para3')}</p>
-		</div>
+  <div class="container">
+    <SectionHeading title={t('bisnisPage.body.heading')} align="start" />
+    <div class="bisnis__body">
+      <p>{t('bisnisPage.body.para1')}</p>
+      <p>{t('bisnisPage.body.para2')}</p>
+      <p>{t('bisnisPage.body.para3')}</p>
+    </div>
 
-		<h3 class="bisnis__clinics-title">{t('bisnisPage.body.clinicsHeading')}</h3>
-		<ul class="bisnis__clinics">
-			{
-				corporateClinics.map((clinic) => (
-					<li>
-						<a href={localePath(`/klinik#${clinic.slug}`, lang)}>
-							{localized(clinic.name, lang)}
-							<span class="bisnis__city">— {localized(clinic.city, lang)}</span>
-						</a>
-					</li>
-				))
-			}
-		</ul>
-	</div>
+    <h3 class="bisnis__clinics-title">{t('bisnisPage.body.clinicsHeading')}</h3>
+    <ul class="bisnis__clinics">
+      {
+        corporateClinics.map((clinic) => (
+          <li>
+            <a href={localePath(`/klinik#${clinic.slug}`, lang)}>
+              {localized(clinic.name, lang)}
+              <span class="bisnis__city">— {localized(clinic.city, lang)}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </section>
 
 <CTASection lang={lang} />
 
 <style>
-	.bisnis__body {
-		display: grid;
-		gap: var(--space-4);
-		max-width: 42rem;
-	}
+  .bisnis__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 42rem;
+  }
 
-	.bisnis__clinics-title {
-		margin-top: var(--space-12);
-		font-size: var(--text-xl);
-	}
+  .bisnis__clinics-title {
+    margin-top: var(--space-12);
+    font-size: var(--text-xl);
+  }
 
-	.bisnis__clinics {
-		margin-top: var(--space-4);
-		padding: 0;
-		list-style: none;
-		display: grid;
-		gap: var(--space-2);
-		max-width: 42rem;
-	}
+  .bisnis__clinics {
+    margin-top: var(--space-4);
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--space-2);
+    max-width: 42rem;
+  }
 
-	.bisnis__clinics a {
-		display: block;
-		padding: var(--space-3) var(--space-4);
-		background-color: var(--color-surface-alt);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		color: var(--color-body);
-		text-decoration: none;
-		transition:
-			border-color var(--transition-base),
-			color var(--transition-base);
-	}
+  .bisnis__clinics a {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-body);
+    text-decoration: none;
+    transition:
+      border-color var(--transition-base),
+      color var(--transition-base);
+  }
 
-	.bisnis__clinics a:hover {
-		border-color: var(--color-primary-light);
-		color: var(--color-primary-text);
-	}
+  .bisnis__clinics a:hover {
+    border-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+  }
 
-	.bisnis__city {
-		color: var(--color-muted);
-	}
+  .bisnis__city {
+    color: var(--color-muted);
+  }
 </style>

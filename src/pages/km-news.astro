@@ -10,10 +10,6 @@ const lang: Lang = 'id';
 const t = tFactory(lang);
 ---
 
-<BaseLayout
-	lang={lang}
-	title={t('page.title.kmNews')}
-	description={t('page.description.kmNews')}
->
-	<KmNewsContent lang={lang} />
+<BaseLayout lang={lang} title={t('page.title.kmNews')} description={t('page.description.kmNews')}>
+  <KmNewsContent lang={lang} />
 </BaseLayout>

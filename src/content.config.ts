@@ -23,28 +23,28 @@ import { z } from 'astro/zod';
  * disediakan agar <Content /> di halaman en pakai lokal Markdown yang tepat.
  */
 const blog = defineCollection({
-	loader: glob({
-		pattern: ['*.md', '*.en.md'],
-		base: './src/content/blog',
-		generateId: ({ entry }) => {
-			// Konteks loader versi ini: { entry, base, data } — entry adalah
-			// path relatif dari base (mis. "artikel.en.md").
-			const fileName = String(entry).split('/').pop() ?? '';
-			const isEn = /\.en\.md$/.test(fileName);
-			const locale = isEn ? 'en' : 'id';
-			const baseSlug = fileName.replace(/\.en\.md$|\.md$/, '');
-			return `${baseSlug}::${locale}`;
-		},
-	}),
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		pubDate: z.coerce.date(),
-		updatedDate: z.coerce.date().optional(),
-		author: z.string().default('Admin'),
-		image: z.string().optional(),
-		tags: z.array(z.string()).default([]),
-	}),
+  loader: glob({
+    pattern: ['*.md', '*.en.md'],
+    base: './src/content/blog',
+    generateId: ({ entry }) => {
+      // Konteks loader versi ini: { entry, base, data } — entry adalah
+      // path relatif dari base (mis. "artikel.en.md").
+      const fileName = String(entry).split('/').pop() ?? '';
+      const isEn = /\.en\.md$/.test(fileName);
+      const locale = isEn ? 'en' : 'id';
+      const baseSlug = fileName.replace(/\.en\.md$|\.md$/, '');
+      return `${baseSlug}::${locale}`;
+    },
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    author: z.string().default('Admin'),
+    image: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+  }),
 });
 
 export const collections = { blog };

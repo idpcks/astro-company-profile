@@ -16,7 +16,7 @@ import type { Lang } from '@/i18n';
 import { localePath, tFactory } from '@/i18n';
 
 interface Props {
-	lang?: Lang;
+  lang?: Lang;
 }
 
 const { lang = 'id' } = Astro.props;
@@ -27,100 +27,102 @@ const phoneHref = `tel:${SITE.phone.replace(/\s/g, '')}`;
 ---
 
 <aside class="cta-card" aria-label={title}>
-	<h2 class="cta-card__title">{title}</h2>
-	<p class="cta-card__lead">{t('sidebar.cta.lead')}</p>
-	<p class="cta-card__hours">{SITE.hours[lang]}</p>
+  <h2 class="cta-card__title">{title}</h2>
+  <p class="cta-card__lead">{t('sidebar.cta.lead')}</p>
+  <p class="cta-card__hours">{SITE.hours[lang]}</p>
 
-	{waHref && (
-		<a class="cta-card__primary" href={waHref} target="_blank" rel="noopener">
-			{t('sidebar.cta.whatsapp')}
-		</a>
-	)}
+  {
+    waHref && (
+      <a class="cta-card__primary" href={waHref} target="_blank" rel="noopener">
+        {t('sidebar.cta.whatsapp')}
+      </a>
+    )
+  }
 
-	<div class="cta-card__secondary">
-		<a class="cta-card__link" href={phoneHref}>{t('sidebar.cta.call')}</a>
-		<span class="cta-card__dot" aria-hidden="true">·</span>
-		<a class="cta-card__link" href={localePath('/contact', lang)}>
-			{t('sidebar.cta.contact')}
-		</a>
-	</div>
+  <div class="cta-card__secondary">
+    <a class="cta-card__link" href={phoneHref}>{t('sidebar.cta.call')}</a>
+    <span class="cta-card__dot" aria-hidden="true">·</span>
+    <a class="cta-card__link" href={localePath('/contact', lang)}>
+      {t('sidebar.cta.contact')}
+    </a>
+  </div>
 </aside>
 
 <style>
-	.cta-card {
-		display: grid;
-		gap: var(--space-3);
-		padding: var(--space-6);
-		background-color: var(--color-primary-light);
-		border: 1px solid transparent;
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
-	}
+  .cta-card {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    background-color: var(--color-primary-light);
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
 
-	.cta-card__title {
-		margin: 0;
-		font-size: var(--text-lg);
-		font-weight: 700;
-		color: var(--color-ink);
-	}
+  .cta-card__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-ink);
+  }
 
-	.cta-card__lead {
-		margin: 0;
-		color: var(--color-muted);
-		font-size: var(--text-sm);
-		line-height: var(--leading-normal);
-	}
+  .cta-card__lead {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+  }
 
-	.cta-card__hours {
-		margin: 0;
-		font-size: var(--text-xs);
-		font-weight: 600;
-		color: var(--color-primary-text);
-	}
+  .cta-card__hours {
+    margin: 0;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-primary-text);
+  }
 
-	/* Aksi utama: tombol pill primary, selebar kartu */
-	.cta-card__primary {
-		display: block;
-		margin-top: var(--space-2);
-		padding: var(--space-3) var(--space-4);
-		border-radius: var(--radius-full);
-		background-color: var(--color-primary);
-		color: #ffffff;
-		font-weight: 600;
-		font-size: var(--text-sm);
-		text-align: center;
-		text-decoration: none;
-		transition: background-color var(--transition-base);
-	}
+  /* Aksi utama: tombol pill primary, selebar kartu */
+  .cta-card__primary {
+    display: block;
+    margin-top: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-align: center;
+    text-decoration: none;
+    transition: background-color var(--transition-base);
+  }
 
-	.cta-card__primary:hover {
-		background-color: var(--color-primary-dark);
-	}
+  .cta-card__primary:hover {
+    background-color: var(--color-primary-dark);
+  }
 
-	/* Aksi sekunder: tautan ringan — visual weight sengaja lebih kecil */
-	.cta-card__secondary {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-3);
-	}
+  /* Aksi sekunder: tautan ringan — visual weight sengaja lebih kecil */
+  .cta-card__secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+  }
 
-	.cta-card__link {
-		color: var(--color-muted);
-		font-size: var(--text-sm);
-		font-weight: 500;
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 3px;
-		transition: color var(--transition-base);
-	}
+  .cta-card__link {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color var(--transition-base);
+  }
 
-	.cta-card__link:hover {
-		color: var(--color-primary-text);
-	}
+  .cta-card__link:hover {
+    color: var(--color-primary-text);
+  }
 
-	.cta-card__dot {
-		font-size: var(--text-sm);
-		color: var(--color-border);
-	}
+  .cta-card__dot {
+    font-size: var(--text-sm);
+    color: var(--color-border);
+  }
 </style>

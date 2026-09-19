@@ -15,10 +15,10 @@ import type { HTMLAttributes } from 'astro/types';
 // bisa diteruskan ke elemen akhir lewat rest spread — komponen
 // wrapper yang baik harus transparan terhadap atribut.
 interface Props extends Omit<HTMLAttributes<'div'>, 'href'> {
-	href?: string;
-	/** Paksa efek hover pada kartu statis (tanpa href) */
-	hoverable?: boolean;
-	class?: string;
+  href?: string;
+  /** Paksa efek hover pada kartu statis (tanpa href) */
+  hoverable?: boolean;
+  class?: string;
 }
 
 const { href, hoverable = false, class: className, ...rest } = Astro.props;
@@ -28,37 +28,33 @@ const Tag = href ? 'a' : 'div';
 const isInteractive = Boolean(href) || hoverable;
 ---
 
-<Tag
-	href={href}
-	class:list={['card', { 'card--interactive': isInteractive }, className]}
-	{...rest}
->
-	<slot />
+<Tag href={href} class:list={['card', { 'card--interactive': isInteractive }, className]} {...rest}>
+  <slot />
 </Tag>
 
 <style>
-	.card {
-		display: block;
-		height: 100%; /* tinggi seragam saat dipakai di grid */
-		padding: var(--space-6);
-		background-color: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
-	}
+  .card {
+    display: block;
+    height: 100%; /* tinggi seragam saat dipakai di grid */
+    padding: var(--space-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
 
-	.card--interactive {
-		text-decoration: none;
-		color: inherit; /* <a> jangan mewarisi warna link biru */
-		transition:
-			transform var(--transition-base),
-			box-shadow var(--transition-base),
-			border-color var(--transition-base);
-	}
+  .card--interactive {
+    text-decoration: none;
+    color: inherit; /* <a> jangan mewarisi warna link biru */
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base),
+      border-color var(--transition-base);
+  }
 
-	.card--interactive:hover {
-		transform: translateY(-3px);
-		box-shadow: var(--shadow-md);
-		border-color: var(--color-primary-light);
-	}
+  .card--interactive:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-light);
+  }
 </style>

@@ -16,32 +16,32 @@ import Skeleton from '@/components/ui/Skeleton.astro';
 ---
 
 <Card class="skeleton-card" aria-hidden="true">
-	<Skeleton width="5rem" height="1.3rem" />
-	<Skeleton width="85%" height="1.5rem" />
-	<div class="skeleton-card__lines">
-		<Skeleton height="0.875rem" />
-		<Skeleton height="0.875rem" />
-		<Skeleton width="60%" height="0.875rem" />
-	</div>
-	<div class="skeleton-card__meta">
-		<Skeleton width="9rem" height="0.75rem" />
-	</div>
+  <Skeleton width="5rem" height="1.3rem" />
+  <Skeleton width="85%" height="1.5rem" />
+  <div class="skeleton-card__lines">
+    <Skeleton height="0.875rem" />
+    <Skeleton height="0.875rem" />
+    <Skeleton width="60%" height="0.875rem" />
+  </div>
+  <div class="skeleton-card__meta">
+    <Skeleton width="9rem" height="0.75rem" />
+  </div>
 </Card>
 
 <style>
-	.skeleton-card {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-3);
-	}
+  .skeleton-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
 
-	.skeleton-card__lines {
-		display: grid;
-		gap: var(--space-2);
-	}
+  .skeleton-card__lines {
+    display: grid;
+    gap: var(--space-2);
+  }
 
-	.skeleton-card__meta {
-		border-top: 1px solid var(--color-border);
-		padding-top: var(--space-3);
-	}
+  .skeleton-card__meta {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-3);
+  }
 </style>

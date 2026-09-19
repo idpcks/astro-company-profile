@@ -10,10 +10,6 @@ const lang: Lang = 'id';
 const t = tFactory(lang);
 ---
 
-<BaseLayout
-	lang={lang}
-	title={t('page.title.contact')}
-	description={t('page.description.contact')}
->
-	<ContactContent lang={lang} />
+<BaseLayout lang={lang} title={t('page.title.contact')} description={t('page.description.contact')}>
+  <ContactContent lang={lang} />
 </BaseLayout>

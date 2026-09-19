@@ -10,7 +10,7 @@ import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
-	lang: Lang;
+  lang: Lang;
 }
 
 const { lang } = Astro.props;
@@ -18,33 +18,33 @@ const t = tFactory(lang);
 ---
 
 <PageHero
-	eyebrow={t('pagehero.eyebrow.lelangPengadaan')}
-	title={t('page.title.lelangPengadaan')}
-	lead={t('page.description.lelangPengadaan')}
+  eyebrow={t('pagehero.eyebrow.lelangPengadaan')}
+  title={t('page.title.lelangPengadaan')}
+  lead={t('page.description.lelangPengadaan')}
 />
 
 <section class="section">
-	<div class="container">
-		<SectionHeading title={t('lelangPengadaanPage.note.title')} align="start" />
-		<div class="lelang__grid">
-			<Card>
-				<p class="lelang__note">{t('lelangPengadaanPage.note.body')}</p>
-			</Card>
-		</div>
-	</div>
+  <div class="container">
+    <SectionHeading title={t('lelangPengadaanPage.note.title')} align="start" />
+    <div class="lelang__grid">
+      <Card>
+        <p class="lelang__note">{t('lelangPengadaanPage.note.body')}</p>
+      </Card>
+    </div>
+  </div>
 </section>
 
 <CTASection lang={lang} />
 
 <style>
-	.lelang__grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-		gap: var(--space-6);
-	}
+  .lelang__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-6);
+  }
 
-	.lelang__note {
-		color: var(--color-muted);
-		font-size: var(--text-base);
-	}
+  .lelang__note {
+    color: var(--color-muted);
+    font-size: var(--text-base);
+  }
 </style>

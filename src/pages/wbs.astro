@@ -10,10 +10,6 @@ const lang: Lang = 'id';
 const t = tFactory(lang);
 ---
 
-<BaseLayout
-	lang={lang}
-	title={t('page.title.wbs')}
-	description={t('page.description.wbs')}
->
-	<WbsContent lang={lang} />
+<BaseLayout lang={lang} title={t('page.title.wbs')} description={t('page.description.wbs')}>
+  <WbsContent lang={lang} />
 </BaseLayout>

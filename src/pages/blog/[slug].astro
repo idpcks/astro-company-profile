@@ -13,13 +13,13 @@ import { render } from 'astro:content';
 import { getAllSlugs, getPostBySlug, getRelatedPosts, type NormalizedPost } from '@/lib/blog';
 
 export async function getStaticPaths() {
-	const slugs = await getAllSlugs();
-	const paths: { params: { slug: string }; props: { post: NormalizedPost } }[] = [];
-	for (const slug of slugs) {
-		const post = await getPostBySlug(slug, 'id');
-		if (post) paths.push({ params: { slug }, props: { post } });
-	}
-	return paths;
+  const slugs = await getAllSlugs();
+  const paths: { params: { slug: string }; props: { post: NormalizedPost } }[] = [];
+  for (const slug of slugs) {
+    const post = await getPostBySlug(slug, 'id');
+    if (post) paths.push({ params: { slug }, props: { post } });
+  }
+  return paths;
 }
 
 const { post } = Astro.props;
@@ -28,5 +28,5 @@ const relatedPosts = await getRelatedPosts(post, 'id');
 ---
 
 <BlogPostLayout post={post} lang="id" relatedPosts={relatedPosts} headings={headings}>
-	<Content />
+  <Content />
 </BlogPostLayout>

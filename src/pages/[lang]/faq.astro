@@ -4,7 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { tFactory, type Lang } from '@/i18n';
 
 export function getStaticPaths() {
-	return [{ params: { lang: 'en' } }];
+  return [{ params: { lang: 'en' } }];
 }
 
 const lang: Lang = 'en';
@@ -12,66 +12,66 @@ const t = tFactory(lang);
 
 // FAQPage schema untuk SEO (English)
 const faqSchema = {
-	'@context': 'https://schema.org',
-	'@type': 'FAQPage',
-	mainEntity: [
-		{
-			'@type': 'Question',
-			name: 'What services are available at RS Krakatau Medika?',
-			acceptedAnswer: {
-				'@type': 'Answer',
-				text: 'RS Krakatau Medika provides 24/7 emergency care, specialist clinics, inpatient care, central surgery, laboratory & radiology, and medical checkups.',
-			},
-		},
-		{
-			'@type': 'Question',
-			name: 'How do I make an appointment?',
-			acceptedAnswer: {
-				'@type': 'Answer',
-				text: 'You can make an appointment by calling (0254) 396333 or visiting the hospital registration desk directly.',
-			},
-		},
-		{
-			'@type': 'Question',
-			name: 'What are the outpatient clinic hours?',
-			acceptedAnswer: {
-				'@type': 'Answer',
-				text: 'Outpatient clinics operate Monday–Sunday 08.00–23.00 WIB. ER is available 24/7.',
-			},
-		},
-		{
-			'@type': 'Question',
-			name: 'Does RS Krakatau Medika accept BPJS Health Insurance?',
-			acceptedAnswer: {
-				'@type': 'Answer',
-				text: 'Yes, RS Krakatau Medika is a BPJS Health Insurance partner. Please bring your BPJS card during your visit.',
-			},
-		},
-		{
-			'@type': 'Question',
-			name: 'Where can I find information about satellite clinics?',
-			acceptedAnswer: {
-				'@type': 'Answer',
-				text: 'Information about clinics in Cilegon and Serang is available on the Clinics page. Visit the Clinics page for detailed addresses and operating hours.',
-			},
-		},
-		{
-			'@type': 'Question',
-			name: 'How do I contact RS Krakatau Medika for emergencies?',
-			acceptedAnswer: {
-				'@type': 'Answer',
-				text: 'For emergencies, contact the ER at (0254) 396333 or visit the hospital directly.',
-			},
-		},
-	],
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What services are available at RS Krakatau Medika?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'RS Krakatau Medika provides 24/7 emergency care, specialist clinics, inpatient care, central surgery, laboratory & radiology, and medical checkups.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I make an appointment?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'You can make an appointment by calling (0254) 396333 or visiting the hospital registration desk directly.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What are the outpatient clinic hours?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Outpatient clinics operate Monday–Sunday 08.00–23.00 WIB. ER is available 24/7.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does RS Krakatau Medika accept BPJS Health Insurance?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes, RS Krakatau Medika is a BPJS Health Insurance partner. Please bring your BPJS card during your visit.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Where can I find information about satellite clinics?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Information about clinics in Cilegon and Serang is available on the Clinics page. Visit the Clinics page for detailed addresses and operating hours.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I contact RS Krakatau Medika for emergencies?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'For emergencies, contact the ER at (0254) 396333 or visit the hospital directly.',
+      },
+    },
+  ],
 };
 ---
 
 <BaseLayout
-	lang={lang}
-	title={t('page.title.faq')}
-	description={t('page.description.faq')}
-	jsonLd={faqSchema}
+  lang={lang}
+  title={t('page.title.faq')}
+  description={t('page.description.faq')}
+  jsonLd={faqSchema}
 >
-	<FaqContent lang={lang} />
+  <FaqContent lang={lang} />
 </BaseLayout>

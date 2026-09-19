@@ -19,7 +19,7 @@ import { alternatePath, languages, tFactory, type Lang } from '@/i18n';
 import { getPostBySlug } from '@/lib/blog';
 
 interface Props {
-	class?: string;
+  class?: string;
 }
 
 const { class: className } = Astro.props;
@@ -43,47 +43,47 @@ const postSlug = isPostDetail ? cleanSegments[1] : undefined;
 // Kalau detail artikel & versi targetLang tidak ada → fallback ke listing.
 let href = alternatePath(pathname, targetLang);
 if (postSlug) {
-	const target = await getPostBySlug(postSlug, targetLang);
-	if (!target || target.isFallback) {
-		href = alternatePath('/blog', targetLang);
-	}
+  const target = await getPostBySlug(postSlug, targetLang);
+  if (!target || target.isFallback) {
+    href = alternatePath('/blog', targetLang);
+  }
 }
 ---
 
 <a
-	href={href}
-	hreflang={targetLang}
-	aria-label={t('lang.switch.aria')}
-	title={languages[targetLang]}
-	class:list={['lang-switcher', className]}
+  href={href}
+  hreflang={targetLang}
+  aria-label={t('lang.switch.aria')}
+  title={languages[targetLang]}
+  class:list={['lang-switcher', className]}
 >
-	{targetLang.toUpperCase()}
+  {targetLang.toUpperCase()}
 </a>
 
 <style>
-	/* Tinggi & gaya disamakan dengan ThemeToggle supaya klaster
+  /* Tinggi & gaya disamakan dengan ThemeToggle supaya klaster
 	   aksi header terlihat sebagai satu keluarga kontrol. */
-	.lang-switcher {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		height: 2.5rem;
-		padding-inline: 0.75rem;
-		font-size: var(--text-sm);
-		font-weight: 600;
-		color: var(--color-body);
-		text-decoration: none;
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-full);
-		transition:
-			color var(--transition-base),
-			border-color var(--transition-base),
-			background-color var(--transition-base);
-	}
+  .lang-switcher {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    padding-inline: 0.75rem;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-body);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    transition:
+      color var(--transition-base),
+      border-color var(--transition-base),
+      background-color var(--transition-base);
+  }
 
-	.lang-switcher:hover {
-		color: var(--color-primary-text);
-		border-color: var(--color-primary-text);
-		background-color: var(--color-primary-light);
-	}
+  .lang-switcher:hover {
+    color: var(--color-primary-text);
+    border-color: var(--color-primary-text);
+    background-color: var(--color-primary-light);
+  }
 </style>

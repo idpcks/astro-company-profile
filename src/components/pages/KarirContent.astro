@@ -10,7 +10,7 @@ import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
-	lang: Lang;
+  lang: Lang;
 }
 
 const { lang } = Astro.props;
@@ -18,33 +18,33 @@ const t = tFactory(lang);
 ---
 
 <PageHero
-	eyebrow={t('pagehero.eyebrow.karir')}
-	title={t('page.title.karir')}
-	lead={t('page.description.karir')}
+  eyebrow={t('pagehero.eyebrow.karir')}
+  title={t('page.title.karir')}
+  lead={t('page.description.karir')}
 />
 
 <section class="section">
-	<div class="container">
-		<SectionHeading title={t('karirPage.note.title')} align="start" />
-		<div class="karir__grid">
-			<Card>
-				<p class="karir__note">{t('karirPage.note.body')}</p>
-			</Card>
-		</div>
-	</div>
+  <div class="container">
+    <SectionHeading title={t('karirPage.note.title')} align="start" />
+    <div class="karir__grid">
+      <Card>
+        <p class="karir__note">{t('karirPage.note.body')}</p>
+      </Card>
+    </div>
+  </div>
 </section>
 
 <CTASection lang={lang} />
 
 <style>
-	.karir__grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-		gap: var(--space-6);
-	}
+  .karir__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-6);
+  }
 
-	.karir__note {
-		color: var(--color-muted);
-		font-size: var(--text-base);
-	}
+  .karir__note {
+    color: var(--color-muted);
+    font-size: var(--text-base);
+  }
 </style>

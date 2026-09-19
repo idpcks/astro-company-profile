@@ -9,36 +9,38 @@
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 * {
-	margin: 0;
+  margin: 0;
 }
 
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-	font-family: var(--font-sans);
-	font-size: var(--text-base);
-	line-height: var(--leading-normal);
-	color: var(--color-body);
-	background-color: var(--color-background);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-body);
+  background-color: var(--color-background);
 
-	/* Transisi halus saat tema berganti (warna token di-override
+  /* Transisi halus saat tema berganti (warna token di-override
 	   oleh [data-theme='dark'], bukan diganti-lewat-JS) */
-	transition: background-color var(--transition-base), color var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
 
-	/* Sticky footer: main selalu melar sampai Footer mentok bawah */
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
+  /* Sticky footer: main selalu melar sampai Footer mentok bawah */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-	flex: 1;
+  flex: 1;
 }
 
 /* ── Elemen dasar ── */
@@ -48,71 +50,71 @@ h3,
 h4,
 h5,
 h6 {
-	color: var(--color-ink);
-	line-height: var(--leading-tight);
-	text-wrap: balance; /* judul multi-baris tetap proporsional */
+  color: var(--color-ink);
+  line-height: var(--leading-tight);
+  text-wrap: balance; /* judul multi-baris tetap proporsional */
 }
 
 p {
-	text-wrap: pretty;
+  text-wrap: pretty;
 }
 
 img,
 svg {
-	display: block;
-	max-width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
 /* A11y: ring fokus jelas untuk navigasi keyboard.
    Pakai primary-text (bukan primary) agar terlihat di dua tema. */
 :focus-visible {
-	outline: 2px solid var(--color-primary-text);
-	outline-offset: 2px;
+  outline: 2px solid var(--color-primary-text);
+  outline-offset: 2px;
 }
 
 /* A11y: skip-link muncul hanya saat difokuskan Tab */
 .skip-link {
-	position: absolute;
-	left: var(--space-4);
-	top: calc(-100% - var(--space-4));
-	z-index: 100;
-	padding: var(--space-2) var(--space-4);
-	background: var(--color-primary);
-	color: #ffffff;
-	border-radius: var(--radius-md);
-	transition: top var(--transition-base);
+  position: absolute;
+  left: var(--space-4);
+  top: calc(-100% - var(--space-4));
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  transition: top var(--transition-base);
 }
 
 .skip-link:focus {
-	top: var(--space-4);
+  top: var(--space-4);
 }
 
 /* Teks khusus screen reader: tersembunyi secara visual, tetap
    terbaca oleh assistive technology. Standar utilities a11y. */
 .sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip-path: inset(50%);
-	white-space: nowrap;
-	border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── Utilitas layout (dipakai lintas komponen) ── */
 .container {
-	width: 100%;
-	max-width: var(--container-max);
-	margin-inline: auto;
-	padding-inline: var(--space-4);
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
 }
 
 .section {
-	padding-block: var(--section-y);
+  padding-block: var(--section-y);
 }
 
 .section--alt {
-	background-color: var(--color-surface-alt);
+  background-color: var(--color-surface-alt);
 }

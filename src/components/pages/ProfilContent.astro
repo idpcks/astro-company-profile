@@ -9,7 +9,7 @@ import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
-	lang: Lang;
+  lang: Lang;
 }
 
 const { lang } = Astro.props;
@@ -17,27 +17,27 @@ const t = tFactory(lang);
 ---
 
 <PageHero
-	eyebrow={t('pagehero.eyebrow.profil')}
-	title={t('profilPage.hero.title')}
-	lead={t('profilPage.hero.lead')}
+  eyebrow={t('pagehero.eyebrow.profil')}
+  title={t('profilPage.hero.title')}
+  lead={t('profilPage.hero.lead')}
 />
 
 <section class="section">
-	<div class="container">
-		<SectionHeading title={t('profilPage.body.heading')} align="start" />
-		<div class="profil__body">
-			<p>{t('profilPage.body.para1')}</p>
-			<p>{t('profilPage.body.para2')}</p>
-		</div>
-	</div>
+  <div class="container">
+    <SectionHeading title={t('profilPage.body.heading')} align="start" />
+    <div class="profil__body">
+      <p>{t('profilPage.body.para1')}</p>
+      <p>{t('profilPage.body.para2')}</p>
+    </div>
+  </div>
 </section>
 
 <CTASection lang={lang} />
 
 <style>
-	.profil__body {
-		display: grid;
-		gap: var(--space-4);
-		max-width: 42rem;
-	}
+  .profil__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 42rem;
+  }
 </style>

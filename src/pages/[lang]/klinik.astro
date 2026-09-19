@@ -7,17 +7,13 @@ import KlinikContent from '@/components/pages/KlinikContent.astro';
 import { tFactory, type Lang } from '@/i18n';
 
 export function getStaticPaths() {
-	return [{ params: { lang: 'en' } }];
+  return [{ params: { lang: 'en' } }];
 }
 
 const lang: Lang = 'en';
 const t = tFactory(lang);
 ---
 
-<BaseLayout
-	lang={lang}
-	title={t('page.title.klinik')}
-	description={t('page.description.klinik')}
->
-	<KlinikContent lang={lang} />
+<BaseLayout lang={lang} title={t('page.title.klinik')} description={t('page.description.klinik')}>
+  <KlinikContent lang={lang} />
 </BaseLayout>

@@ -19,9 +19,9 @@
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
-	/** Locale halaman — menentukan bahasa label aksesibilitas */
-	lang: Lang;
-	class?: string;
+  /** Locale halaman — menentukan bahasa label aksesibilitas */
+  lang: Lang;
+  class?: string;
 }
 
 const { lang, class: className } = Astro.props;
@@ -29,130 +29,131 @@ const t = tFactory(lang);
 ---
 
 <button
-	type="button"
-	class:list={['theme-toggle', className]}
-	data-theme-toggle
-	aria-label={t('theme.toggle')}
-	title={t('theme.toggle')}
+  type="button"
+  class:list={['theme-toggle', className]}
+  data-theme-toggle
+  aria-label={t('theme.toggle')}
+  title={t('theme.toggle')}
 >
-	<svg
-		class="theme-toggle__icon theme-toggle__icon--sun"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-		aria-hidden="true"
-	>
-		<circle cx="12" cy="12" r="4" />
-		<path
-			d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
-		/>
-	</svg>
-	<svg
-		class="theme-toggle__icon theme-toggle__icon--moon"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-		aria-hidden="true"
-	>
-		<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-	</svg>
+  <svg
+    class="theme-toggle__icon theme-toggle__icon--sun"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path
+      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+    ></path>
+  </svg>
+  <svg
+    class="theme-toggle__icon theme-toggle__icon--moon"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+  </svg>
 </button>
 
 <style>
-	.theme-toggle {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
-		flex-shrink: 0;
-		color: var(--color-body);
-		background-color: transparent;
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-full);
-		cursor: pointer;
-		transition:
-			color var(--transition-base),
-			border-color var(--transition-base),
-			background-color var(--transition-base);
-	}
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    color: var(--color-body);
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition:
+      color var(--transition-base),
+      border-color var(--transition-base),
+      background-color var(--transition-base);
+  }
 
-	.theme-toggle:hover {
-		color: var(--color-primary-text);
-		border-color: var(--color-primary-text);
-		background-color: var(--color-primary-light);
-	}
+  .theme-toggle:hover {
+    color: var(--color-primary-text);
+    border-color: var(--color-primary-text);
+    background-color: var(--color-primary-light);
+  }
 
-	.theme-toggle__icon {
-		width: 1.125rem;
-		height: 1.125rem;
-	}
+  .theme-toggle__icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
 
-	/* Ikon mengikuti tema aktif — tanpa JS */
-	.theme-toggle__icon--moon {
-		display: none;
-	}
+  /* Ikon mengikuti tema aktif — tanpa JS */
+  .theme-toggle__icon--moon {
+    display: none;
+  }
 
-	:global([data-theme='dark']) .theme-toggle__icon--moon {
-		display: block;
-	}
+  :global([data-theme='dark']) .theme-toggle__icon--moon {
+    display: block;
+  }
 
-	:global([data-theme='dark']) .theme-toggle__icon--sun {
-		display: none;
-	}
+  :global([data-theme='dark']) .theme-toggle__icon--sun {
+    display: none;
+  }
 </style>
 
 <script>
-	import type { TransitionBeforeSwapEvent } from 'astro:transitions/client';
+  import type { TransitionBeforeSwapEvent } from 'astro:transitions/client';
 
-	// Module script = deferred → DOM sudah siap saat dijalankan.
-	// Klik ditangani lewat DELEGASI di document (bukan binding per-tombol)
-	// supaya listener bertahan melewati navigasi ClientRouter: runScripts
-	// tidak menjalankan ulang bundle script yang sudah pernah dieksekusi
-	// (dedup), jadi binding per-tombol akan mati di halaman berikutnya.
-	// Flag di window mencegah listener ganda saat router menjalankan ulang
-	// bundle ini (state module tidak bertahan antar-eksekusi).
-	// astro:before-swap (TransitionBeforeSwapEvent — tipe resmi modul
-	// astro:transitions/client) menyalin tema ke dokumen baru SEBELUM swap:
-	// swapRootAttributes menghapus atribut runtime <html> (termasuk
-	// data-theme), dan tanpa salinan ini snapshot halaman gelap bisa tampak
-	// terang sesaat selama cross-fade.
-	function applyTheme(theme: 'light' | 'dark') {
-		document.documentElement.dataset.theme = theme;
-		try {
-			localStorage.setItem('themechoice', theme);
-		} catch {
-			/* localStorage bisa gagal (mode privat) — tema tetap berganti untuk sesi ini */
-		}
-	}
+  // Module script = deferred → DOM sudah siap saat dijalankan.
+  // Klik ditangani lewat DELEGASI di document (bukan binding per-tombol)
+  // supaya listener bertahan melewati navigasi ClientRouter: runScripts
+  // tidak menjalankan ulang bundle script yang sudah pernah dieksekusi
+  // (dedup), jadi binding per-tombol akan mati di halaman berikutnya.
+  // Flag di window mencegah listener ganda saat router menjalankan ulang
+  // bundle ini (state module tidak bertahan antar-eksekusi).
+  // astro:before-swap (TransitionBeforeSwapEvent — tipe resmi modul
+  // astro:transitions/client) menyalin tema ke dokumen baru SEBELUM swap:
+  // swapRootAttributes menghapus atribut runtime <html> (termasuk
+  // data-theme), dan tanpa salinan ini snapshot halaman gelap bisa tampak
+  // terang sesaat selama cross-fade.
+  function applyTheme(theme: 'light' | 'dark') {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem('themechoice', theme);
+    } catch {
+      /* localStorage bisa gagal (mode privat) — tema tetap berganti untuk sesi ini */
+    }
+  }
 
-	function currentTheme(): 'light' | 'dark' {
-		return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-	}
+  function currentTheme(): 'light' | 'dark' {
+    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  }
 
-	interface ThemeWindow {
-		__themeControllerBound?: boolean;
-	}
-	const themeWindow = window as unknown as ThemeWindow;
+  interface ThemeWindow {
+    __themeControllerBound?: boolean;
+  }
+  const themeWindow = window as unknown as ThemeWindow;
 
-	if (!themeWindow.__themeControllerBound) {
-		themeWindow.__themeControllerBound = true;
+  if (!themeWindow.__themeControllerBound) {
+    themeWindow.__themeControllerBound = true;
 
-		document.addEventListener('click', (event) => {
-			const toggle =
-				event.target instanceof Element ? event.target.closest('[data-theme-toggle]') : null;
-			if (!toggle) return;
-			applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
-		});
+    document.addEventListener('click', (event) => {
+      const toggle =
+        event.target instanceof Element ? event.target.closest('[data-theme-toggle]') : null;
+      if (!toggle) return;
+      applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+    });
 
-		document.addEventListener('astro:before-swap', (event: Event) => {
-			(event as TransitionBeforeSwapEvent).newDocument.documentElement.dataset.theme = currentTheme();
-		});
-	}
+    document.addEventListener('astro:before-swap', (event: Event) => {
+      (event as TransitionBeforeSwapEvent).newDocument.documentElement.dataset.theme =
+        currentTheme();
+    });
+  }
 </script>

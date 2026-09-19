@@ -23,48 +23,58 @@ import imgCompanyBuilding from '@/assets/images/img_companybuilding.webp';
 import '@/styles/global.css';
 
 interface Props {
-	/** Locale halaman — diisi oleh wrapper halaman (root = id, [lang] = en) */
-	lang?: Lang;
-	/** Judul halaman — nama brand ditambahkan otomatis. */
-	title?: string;
-	/** Deskripsi untuk meta — default dari kamus per locale. */
-	description?: string;
-	/**
-	 * Gambar untuk Open Graph / Twitter Card (opsional).
-	 * Bisa ImageMetadata (diproses astro:assets jadi 1200×630) atau
-	 * string path URL (dipakai apa adanya). Default: crop foto gedung RS.
-	 */
-	ogImage?: ImageMetadata | string;
-	/**
-	 * JSON-LD Structured Data tambahan (opsional) — dirender sebagai
-	 * node TERPISAH di samping LocalBusiness default (misal BreadcrumbList,
-	 * Article). Bukan merge: dua entitas schema tidak boleh satu node.
-	 */
-	jsonLd?: Record<string, unknown>;
-	/** Tipe Open Graph — default "website"; artikel blog mengirim "article". */
-	pageType?: 'website' | 'article';
-	/** Meta khusus artikel (dipakai saat pageType="article"). */
-	article?: {
-		publishedTime: string;
-		modifiedTime?: string;
-		author: string;
-	};
-	/**
-	 * Padanan hreflang eksplisit per-URL (opsional).
-	 * Format: path TANPA prefix locale + locale.
-	 * Dipakai halaman detail artikel agar hreflang menunjuk terjemahan
-	 * yang benar-benar ada (slug disamakan antar locale).
-	 */
-	alternates?: { path: string; lang: Lang }[];
-	/**
-	 * Halaman yang TIDAK boleh diindeks (404, 500, demo internal).
-	 * Saat true: robots jadi "noindex, follow" dan hreflang dimatikan
-	 * (padanan locale-nya belum tentu ada → menghindari hreflang broken).
-	 */
-	noindex?: boolean;
+  /** Locale halaman — diisi oleh wrapper halaman (root = id, [lang] = en) */
+  lang?: Lang;
+  /** Judul halaman — nama brand ditambahkan otomatis. */
+  title?: string;
+  /** Deskripsi untuk meta — default dari kamus per locale. */
+  description?: string;
+  /**
+   * Gambar untuk Open Graph / Twitter Card (opsional).
+   * Bisa ImageMetadata (diproses astro:assets jadi 1200×630) atau
+   * string path URL (dipakai apa adanya). Default: crop foto gedung RS.
+   */
+  ogImage?: ImageMetadata | string;
+  /**
+   * JSON-LD Structured Data tambahan (opsional) — dirender sebagai
+   * node TERPISAH di samping LocalBusiness default (misal BreadcrumbList,
+   * Article). Bukan merge: dua entitas schema tidak boleh satu node.
+   */
+  jsonLd?: Record<string, unknown>;
+  /** Tipe Open Graph — default "website"; artikel blog mengirim "article". */
+  pageType?: 'website' | 'article';
+  /** Meta khusus artikel (dipakai saat pageType="article"). */
+  article?: {
+    publishedTime: string;
+    modifiedTime?: string;
+    author: string;
+  };
+  /**
+   * Padanan hreflang eksplisit per-URL (opsional).
+   * Format: path TANPA prefix locale + locale.
+   * Dipakai halaman detail artikel agar hreflang menunjuk terjemahan
+   * yang benar-benar ada (slug disamakan antar locale).
+   */
+  alternates?: { path: string; lang: Lang }[];
+  /**
+   * Halaman yang TIDAK boleh diindeks (404, 500, demo internal).
+   * Saat true: robots jadi "noindex, follow" dan hreflang dimatikan
+   * (padanan locale-nya belum tentu ada → menghindari hreflang broken).
+   */
+  noindex?: boolean;
 }
 
-const { lang = 'id', title, description, ogImage, jsonLd, pageType = 'website', article, alternates, noindex = false } = Astro.props;
+const {
+  lang = 'id',
+  title,
+  description,
+  ogImage,
+  jsonLd,
+  pageType = 'website',
+  article,
+  alternates,
+  noindex = false,
+} = Astro.props;
 const t = tFactory(lang);
 
 // Judul: halaman menimpa lewat prop title (sudah diterjemahkan di
@@ -85,16 +95,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 let shareImageURL: URL;
 const source = ogImage ?? imgCompanyBuilding;
 if (typeof source === 'string') {
-	shareImageURL = new URL(source, Astro.site);
+  shareImageURL = new URL(source, Astro.site);
 } else {
-	const { src } = await getImage({
-		src: source,
-		width: 1200,
-		height: 630,
-		fit: 'cover',
-		format: 'webp',
-	});
-	shareImageURL = new URL(src, Astro.site);
+  const { src } = await getImage({
+    src: source,
+    width: 1200,
+    height: 630,
+    fit: 'cover',
+    format: 'webp',
+  });
+  shareImageURL = new URL(src, Astro.site);
 }
 
 // URL dasar organisasi untuk JSON-LD LocalBusiness
@@ -103,167 +113,161 @@ const phoneIntl = `+62${SITE.phone.replace(/\D/g, '').replace(/^0/, '')}`;
 
 // Structured Data (Schema.org) — LocalBusiness untuk RSKM.
 const localBusiness: Record<string, unknown> = {
-	'@context': 'https://schema.org',
-	'@type': ['Hospital', 'MedicalOrganization'],
-	name: SITE.name,
-	image: shareImageURL.href,
-	url: orgURL.href,
-	telephone: phoneIntl,
-	email: SITE.email,
-	priceRange: '$$',
-	description: metaDescription,
-	address: {
-		'@type': 'PostalAddress',
-		streetAddress: 'Jl. Semang Raya No. 1, Kotabumi, Kec. Purwakarta',
-		addressLocality: 'Cilegon',
-		addressRegion: 'Banten',
-		postalCode: '42435',
-		addressCountry: 'ID',
-	},
-	geo: {
-		'@type': 'GeoCoordinates',
-		latitude: SITE.geo.lat,
-		longitude: SITE.geo.lng,
-	},
-	openingHoursSpecification: [
-		{
-			'@type': 'OpeningHoursSpecification',
-			name: 'Poliklinik',
-			dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-			opens: '08:00',
-			closes: '23:00',
-		},
-		{
-			'@type': 'OpeningHoursSpecification',
-			name: 'IGD',
-			dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-			opens: '00:00',
-			closes: '23:59',
-		},
-	],
-	sameAs: SOCIAL_LINKS.map((link) => link.href),
+  '@context': 'https://schema.org',
+  '@type': ['Hospital', 'MedicalOrganization'],
+  name: SITE.name,
+  image: shareImageURL.href,
+  url: orgURL.href,
+  telephone: phoneIntl,
+  email: SITE.email,
+  priceRange: '$$',
+  description: metaDescription,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Jl. Semang Raya No. 1, Kotabumi, Kec. Purwakarta',
+    addressLocality: 'Cilegon',
+    addressRegion: 'Banten',
+    postalCode: '42435',
+    addressCountry: 'ID',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: SITE.geo.lat,
+    longitude: SITE.geo.lng,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      name: 'Poliklinik',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '08:00',
+      closes: '23:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      name: 'IGD',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  sameAs: SOCIAL_LINKS.map((link) => link.href),
 };
 ---
 
 <!doctype html>
 <html lang={lang === 'en' ? 'en' : 'id'}>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<!-- Tema dipasang SEBELUM paint pertama: baca pilihan tersimpan
+    <!-- Tema dipasang SEBELUM paint pertama: baca pilihan tersimpan
 		     (localStorage 'themechoice'), default light. Tanpa ini, halaman
 		     bertema gelap akan kedip putih dulu setiap kali load (FOUC).
 		     is:inline = Astro tidak memproses/membundel script ini. -->
-		<script is:inline>
-			(function () {
-				var stored = null;
-				try {
-					stored = localStorage.getItem('themechoice');
-				} catch (e) {
-					/* localStorage tidak tersedia */
-				}
-				document.documentElement.dataset.theme =
-					stored === 'light' || stored === 'dark' ? stored : 'light';
-			})();
-		</script>
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('themechoice');
+        } catch (e) {
+          /* localStorage tidak tersedia */
+        }
+        document.documentElement.dataset.theme =
+          stored === 'light' || stored === 'dark' ? stored : 'light';
+      })();
+    </script>
 
-		<meta name="generator" content={Astro.generator} />
-		<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
-		<title>{pageTitle}</title>
-		<meta name="description" content={metaDescription} />
-		<link rel="canonical" href={canonicalURL} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" sizes="32x32" />
-		<link rel="apple-touch-icon" href="/icons/icon-180.png" />
-		<link rel="manifest" href="/manifest.webmanifest" />
-		<meta name="theme-color" content="#0f766e" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#0f766e" />
 
-		<!-- hreflang: padanan halaman ini di locale lain (SEO multibahasa).
+    <!-- hreflang: padanan halaman ini di locale lain (SEO multibahasa).
 		     x-default menunjuk versi locale default (id).
 		     Dimatikan total saat noindex — padanan locale halaman error/demo
 		     belum tentu ada, dan hreflang pada halaman tak-terindeks tak perlu. -->
-		{!noindex &&
-			(alternates
-				? alternates.map(({ path, lang: altLang }) => (
-						<link
-							rel="alternate"
-							hreflang={altLang}
-							href={new URL(localePath(path, altLang), Astro.site)}
-						/>
-					))
-				: Object.entries(languages).map(([code]) => (
-						<link
-							rel="alternate"
-							hreflang={code}
-							href={new URL(
-								alternatePath(Astro.url.pathname, code as Lang),
-								Astro.site,
-							)}
-						/>
-					)))}
-		{!noindex && !alternates && (
-			<link
-				rel="alternate"
-				hreflang="x-default"
-				href={new URL(alternatePath(Astro.url.pathname, 'id'), Astro.site)}
-			/>
-		)}
+    {
+      !noindex &&
+        (alternates
+          ? alternates.map(({ path, lang: altLang }) => (
+              <link
+                rel="alternate"
+                hreflang={altLang}
+                href={new URL(localePath(path, altLang), Astro.site)}
+              />
+            ))
+          : Object.entries(languages).map(([code]) => (
+              <link
+                rel="alternate"
+                hreflang={code}
+                href={new URL(alternatePath(Astro.url.pathname, code as Lang), Astro.site)}
+              />
+            )))
+    }
+    {
+      !noindex && !alternates && (
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href={new URL(alternatePath(Astro.url.pathname, 'id'), Astro.site)}
+        />
+      )
+    }
 
-		<!-- ClientRouter = navigasi antar-halaman ala SPA (View Transitions);
+    <!-- ClientRouter = navigasi antar-halaman ala SPA (View Transitions);
 		     wajib ada supaya event astro:before-preparation / astro:before-swap
 		     dikirim ke LoadingIndicator. threshold={false} → indicator SELALU
 		     tampil saat berpindah halaman (default 200ms membuatnya nyaris
 		     tak terlihat di navigasi cepat). -->
-		<ClientRouter />
-		<LoadingIndicator
-			color="var(--color-primary)"
-			height="3px"
-			threshold={false}
-		/>
+    <ClientRouter />
+    <LoadingIndicator color="var(--color-primary)" height="3px" threshold={false} />
 
-		<!-- Open Graph: preview saat link dibagikan ke sosial media / chat -->
-		<meta property="og:type" content={pageType} />
-		<meta property="og:site_name" content={SITE.name} />
-		<meta property="og:title" content={pageTitle} />
-		<meta property="og:description" content={metaDescription} />
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:image" content={shareImageURL} />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content={SITE.name} />
-		<meta property="og:locale" content={lang === 'en' ? 'en_US' : 'id_ID'} />
-		<meta
-			property="og:locale:alternate"
-			content={lang === 'en' ? 'id_ID' : 'en_US'}
-		/>
-		{
-			pageType === 'article' && article && (
-				<>
-					<meta property="article:published_time" content={article.publishedTime} />
-					{article.modifiedTime && (
-						<meta property="article:modified_time" content={article.modifiedTime} />
-					)}
-					<meta property="article:author" content={article.author} />
-				</>
-			)
-		}
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={pageTitle} />
-		<meta name="twitter:description" content={metaDescription} />
-		<meta name="twitter:image" content={shareImageURL} />
+    <!-- Open Graph: preview saat link dibagikan ke sosial media / chat -->
+    <meta property="og:type" content={pageType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={shareImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={SITE.name} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'id_ID'} />
+    <meta property="og:locale:alternate" content={lang === 'en' ? 'id_ID' : 'en_US'} />
+    {
+      pageType === 'article' && article && (
+        <>
+          <meta property="article:published_time" content={article.publishedTime} />
+          {article.modifiedTime && (
+            <meta property="article:modified_time" content={article.modifiedTime} />
+          )}
+          <meta property="article:author" content={article.author} />
+        </>
+      )
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={shareImageURL} />
 
-		<!-- Structured Data: LocalBusiness RSKM (+ node tambahan dari halaman).
+    <!-- Structured Data: LocalBusiness RSKM (+ node tambahan dari halaman).
 		     Dilewati saat noindex — skema organisasi tak berguna di 404/demo. -->
-		{!noindex && <JsonLd data={[localBusiness, ...(jsonLd ? [jsonLd] : [])]} />}
-	</head>
-	<body>
-		<a class="skip-link" href="#main">{t('header.topbar.skip')}</a>
-		<Header lang={lang} />
-		<main id="main">
-			<slot />
-		</main>
-		<Footer lang={lang} />
-		<WebVitals />
-	</body>
+    {!noindex && <JsonLd data={[localBusiness, ...(jsonLd ? [jsonLd] : [])]} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t('header.topbar.skip')}</a>
+    <Header lang={lang} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <WebVitals />
+  </body>
 </html>
