@@ -229,6 +229,7 @@ Situs ini mendukung dua tema. Mekanismenya **token override**, bukan CSS per-kom
 - Nilai warna terang = default di `:root`; nilai gelap = blok `:root[data-theme='dark']` di `src/styles/tokens.css`.
 - Tema aktif = atribut `data-theme="light|dark"` di `<html>`, dipasang oleh script inline di `<head>` (BaseLayout) **sebelum paint pertama** supaya tidak ada kedipan putih saat reload (FOUC). Pilihan user disimpan di `localStorage`, key `themechoice`.
 - Tombol pengganti tema: `components/ui/ThemeToggle.astro` (dipasang di Header). Perpindahan ikon sun/moon murni lewat CSS (`[data-theme='dark']`), tanpa JS tambahan.
+- Transisi tema: klik tombol memicu reveal lingkaran dari titik klik (View Transition API: `document.startViewTransition` + animasi `clip-path: circle()` di `ThemeToggle.astro`). Browser tanpa dukungan otomatis fallback ke ganti tema instan. CSS transisi ada di blok `<style is:global>` `ThemeToggle.astro`, di-scope lewat class `vt-theme-circle-*` di `<html>` yang hanya dipasang selama animasi berjalan - navigasi antar halaman tetap memakai cross-fade bawaan ClientRouter.
 
 **Aturan menulis warna:**
 

@@ -1,5 +1,9 @@
 # Astro Starter Kit: Basics
 
+## Preview
+
+![Preview tampilan situs RS Krakatau Medika](preview.png)
+
 ```sh
 bun create astro@latest -- --template basics
 ```

@@ -5,20 +5,32 @@ import Compress from '@playform/compress';
 import sitemap from '@astrojs/sitemap';
 import { loadEnv } from 'vite';
 
-// .env / .env.development / .env.production — lihat file .env.example.
+// .env / .env.development / .env.production - lihat file .env.example.
 // loadEnv memberi prioritas ke variabel di shell, lalu file env.
 const { ASTRO_SITE } = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), '');
 
 // https://astro.build/config
 export default defineConfig({
     // Site URL untuk sitemap & canonical. Default = domain produksi;
-    // overridden oleh .env (dev → localhost, prod → domain).
+    // overridden oleh .env (dev -> localhost, prod -> domain).
     site: ASTRO_SITE || 'https://www.krakataumedika.co.id/',
     server: {
         host: true,
     },
+    // Workaround crash watcher Vite/chokidar di Windows:
+    // event liar di luar root (mis. 'E:\System Volume Information',
+    // folder sistem yang Access-Denied) membunuh dev server dengan
+    // EINVAL lstat. Abaikan path tersebut secara eksplisit
+    // lewat opsi watcher Vite.
+    vite: {
+        server: {
+            watch: {
+                ignored: ['**/System Volume Information/**'],
+            },
+        },
+    },
     build: {
-        // Critical CSS: inline semua CSS ke <head> tiap halaman → hilangkan
+        // Critical CSS: inline semua CSS ke <head> tiap halaman -> hilangkan
         // satu request render-blocking (CSS bundle 11 KB satu-satunya).
         inlineStylesheets: 'always',
     },
@@ -56,8 +68,8 @@ export default defineConfig({
        }),
     ],
     i18n: {
-        // Locale default (id) TIDAK berprefix → tetap di "/", "/about", dst.
-        // Locale kedua (en) berprefix → "/en", "/en/about", dst.
+        // Locale default (id) TIDAK berprefix -> tetap di "/", "/about", dst.
+        // Locale kedua (en) berprefix -> "/en", "/en/about", dst.
         defaultLocale: 'id',
         locales: ['id', 'en'],
         routing: {

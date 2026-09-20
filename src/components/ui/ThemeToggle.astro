@@ -1,25 +1,29 @@
 ---
 /**
- * ThemeToggle — tombol ganti tema gelap/terang.
+ * ThemeToggle - tombol ganti tema gelap/terang.
  *
  * ARSITEKTUR TEMA:
  *  - Tema = atribut [data-theme='light'|'dark'] di <html>.
  *  - Nilainya dipasang script inline di BaseLayout SEBELUM paint
- *    pertama (baca localStorage) → tidak ada kedipan putih (FOUC).
+ *    pertama (baca localStorage) -> tidak ada kedipan putih (FOUC).
  *  - Tombol ini hanya MENGGANTI nilai + menyimpan pilihan
  *    (localStorage key: 'themechoice').
  *  - Semua warna mengikuti token di tokens.css.
  *
- * I18N: label dari kamus ui.ts lewat prop `lang` — komponen ui/
+ * I18N: label dari kamus ui.ts lewat prop `lang` - komponen ui/
  * tidak membaca URL sendiri, halaman/layout yang menentukan locale.
  *
  * IKON: matahari (tema terang) / bulan (tema gelap). Perpindahan
- * ikon murni CSS via [data-theme] — JS tidak perlu mengganti ikon.
+ * ikon murni CSS via [data-theme] - JS tidak perlu mengganti ikon.
+ *
+ * TRANSISI SIRKULAR: klik memicu document.startViewTransition();
+ * snapshot tema lama baru dianimasikan clip-path circle dari titik
+ * klik (View Transition API). CSS-nya di blok <style is:global>.
  */
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
-  /** Locale halaman — menentukan bahasa label aksesibilitas */
+  /** Locale halaman - menentukan bahasa label aksesibilitas */
   lang: Lang;
   class?: string;
 }
@@ -94,7 +98,7 @@ const t = tFactory(lang);
     height: 1.125rem;
   }
 
-  /* Ikon mengikuti tema aktif — tanpa JS */
+  /* Ikon mengikuti tema aktif - tanpa JS */
   .theme-toggle__icon--moon {
     display: none;
   }
@@ -107,28 +111,72 @@ const t = tFactory(lang);
     display: none;
   }
 </style>
+<style is:global>
+  /* == Transisi sirkular ganti tema (View Transition API) ==
+     Blok ini HANYA aktif saat class vt-theme-circle-reveal terpasang di
+     <html> (dipasang JS tepat sebelum animasi, dilepas setelah selesai),
+     jadi cross-fade bawaan ClientRouter untuk navigasi antar halaman
+     tidak terpengaruh. Pseudo-elemen ::view-transition-* tidak bisa
+     di-scope per-komponen karena bukan bagian DOM komponen.
+
+     Layer lama/new sama-sama di-nonanimasikan; layer BARU (tema tujuan)
+     selalu dianimasikan clip-path circle lewat Web Animations API dari
+     script di bawah — lingkaran tema tujuan mengembang dari titik klik,
+     untuk kedua arah (terang→gelap maupun gelap→terang).
+  */
+  html.vt-theme-circle-reveal ::view-transition-old(root),
+  html.vt-theme-circle-reveal ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  /* Snapshot layer new difoto tepat setelah callback selesai - sebelum
+     .ready resolve. Transisi warna CSS (global.css) harus sudah OFF di
+     momen itu, kalau tidak snapshot new memotret frame pertama transisi
+     (= tampilan tema lama) dan lingkaran reveal tidak terlihat. */
+  html.vt-theme-no-anim,
+  html.vt-theme-no-anim *,
+  html.vt-theme-no-anim *::before,
+  html.vt-theme-no-anim *::after {
+    transition: none !important;
+  }
+
+  html.vt-theme-circle-reveal ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  html.vt-theme-circle-reveal ::view-transition-new(root) {
+    z-index: 9999;
+  }
+</style>
 
 <script>
   import type { TransitionBeforeSwapEvent } from 'astro:transitions/client';
 
-  // Module script = deferred → DOM sudah siap saat dijalankan.
+  // Module script = deferred -> DOM sudah siap saat dijalankan.
   // Klik ditangani lewat DELEGASI di document (bukan binding per-tombol)
   // supaya listener bertahan melewati navigasi ClientRouter: runScripts
   // tidak menjalankan ulang bundle script yang sudah pernah dieksekusi
   // (dedup), jadi binding per-tombol akan mati di halaman berikutnya.
   // Flag di window mencegah listener ganda saat router menjalankan ulang
   // bundle ini (state module tidak bertahan antar-eksekusi).
-  // astro:before-swap (TransitionBeforeSwapEvent — tipe resmi modul
+  // astro:before-swap (TransitionBeforeSwapEvent - tipe resmi modul
   // astro:transitions/client) menyalin tema ke dokumen baru SEBELUM swap:
   // swapRootAttributes menghapus atribut runtime <html> (termasuk
   // data-theme), dan tanpa salinan ini snapshot halaman gelap bisa tampak
   // terang sesaat selama cross-fade.
+  interface ThemeWindow {
+    __themeControllerBound?: boolean;
+  }
+
+  const themeWindow = window as unknown as ThemeWindow;
+
   function applyTheme(theme: 'light' | 'dark') {
     document.documentElement.dataset.theme = theme;
     try {
       localStorage.setItem('themechoice', theme);
     } catch {
-      /* localStorage bisa gagal (mode privat) — tema tetap berganti untuk sesi ini */
+      /* localStorage bisa gagal (mode privat) - tema tetap berganti utk sesi ini */
     }
   }
 
@@ -136,10 +184,63 @@ const t = tFactory(lang);
     return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
   }
 
-  interface ThemeWindow {
-    __themeControllerBound?: boolean;
+  const TRANSITION_DURATION = 500;
+  // Token anti-balapan: klik ganda yang sangat cepat memulai transisi
+  // baru sebelum cleanup transisi lama; token lama tak boleh melepas
+  // class milik transisi yang masih berjalan.
+  let revealSeq = 0;
+
+  function cleanupRevealClass(token: number) {
+    if (token !== revealSeq) return;
+    document.documentElement.classList.remove('vt-theme-circle-reveal');
   }
-  const themeWindow = window as unknown as ThemeWindow;
+
+  function animateThemeReveal(x: number, y: number) {
+    // Fallback browser tanpa View Transition API: ganti tema langsung.
+    if (typeof document.startViewTransition !== 'function') {
+      applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      return;
+    }
+
+    // Radius = jarak ke pojok viewport terjauh, agar lingkaran menutup
+    // seluruh layar di ujung animasi.
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+    const token = ++revealSeq;
+    const root = document.documentElement;
+
+    document
+      .startViewTransition(() => {
+        // Class dipasang DI CALLBACK (sebelum snapshot): transisi warna
+        // dimatikan + animasi sudah aktif saat pseudo-element lahir.
+        root.classList.add('vt-theme-no-anim', 'vt-theme-circle-reveal');
+        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      })
+      .ready.then(() => {
+        root
+          .animate(
+            {
+              clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`],
+            },
+            {
+              duration: TRANSITION_DURATION,
+              easing: 'ease-in-out',
+              pseudoElement: '::view-transition-new(root)',
+            }
+          )
+          .finished.finally(() => {
+            root.classList.remove('vt-theme-no-anim');
+            cleanupRevealClass(token);
+          });
+      })
+      .catch(() => {
+        // Animasi gagal/dibatalkan (mis. tab hidden) - pastikan wajib pulih.
+        root.classList.remove('vt-theme-no-anim');
+        cleanupRevealClass(token);
+      });
+  }
 
   if (!themeWindow.__themeControllerBound) {
     themeWindow.__themeControllerBound = true;
@@ -148,7 +249,16 @@ const t = tFactory(lang);
       const toggle =
         event.target instanceof Element ? event.target.closest('[data-theme-toggle]') : null;
       if (!toggle) return;
-      applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      // Klik via keyboard datang dengan koordinat 0,0 - geser pusat
+      // lingkaran ke tengah tombol supaya reveal tetap terlihat wajar.
+      let x = event.clientX;
+      let y = event.clientY;
+      if (x === 0 && y === 0) {
+        const rect = toggle.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + rect.height / 2;
+      }
+      animateThemeReveal(x, y);
     });
 
     document.addEventListener('astro:before-swap', (event: Event) => {
