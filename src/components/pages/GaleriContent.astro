@@ -258,12 +258,8 @@ const VIDEOS: GalleryItem[] = [
    */
   .galeri__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-      'hero hero t1'
-      'hero hero t2'
-      't3   t4   t5';
-    gap: var(--space-2);
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
   }
 
   .galeri__item {
@@ -274,24 +270,37 @@ const VIDEOS: GalleryItem[] = [
     overflow: hidden;
   }
 
-  .galeri__item:nth-child(1) {
-    grid-area: hero;
-    aspect-ratio: auto;
-  }
-  .galeri__item:nth-child(2) {
-    grid-area: t1;
-  }
-  .galeri__item:nth-child(3) {
-    grid-area: t2;
-  }
-  .galeri__item:nth-child(4) {
-    grid-area: t3;
-  }
-  .galeri__item:nth-child(5) {
-    grid-area: t4;
-  }
-  .galeri__item:nth-child(6) {
-    grid-area: t5;
+  /* ≥ 40rem: pola L terbalik — foto utama (2x2) + thumbnail kolom kanan
+     dan baris bawah. Di layar sempit grid jatuh ke satu kolom. */
+  @media (min-width: 40rem) {
+    .galeri__grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas:
+        'hero hero t1'
+        'hero hero t2'
+        't3   t4   t5';
+      gap: var(--space-6);
+    }
+
+    .galeri__item:nth-child(1) {
+      grid-area: hero;
+      aspect-ratio: auto;
+    }
+    .galeri__item:nth-child(2) {
+      grid-area: t1;
+    }
+    .galeri__item:nth-child(3) {
+      grid-area: t2;
+    }
+    .galeri__item:nth-child(4) {
+      grid-area: t3;
+    }
+    .galeri__item:nth-child(5) {
+      grid-area: t4;
+    }
+    .galeri__item:nth-child(6) {
+      grid-area: t5;
+    }
   }
 
   .galeri__link {
@@ -324,7 +333,7 @@ const VIDEOS: GalleryItem[] = [
   .galeri__videos {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .galeri__video {
@@ -383,12 +392,6 @@ const VIDEOS: GalleryItem[] = [
   @media (min-width: 64rem) {
     .galeri__videos {
       grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  @media (min-width: 48rem) {
-    .galeri__grid {
-      gap: var(--space-6);
     }
   }
 </style>
