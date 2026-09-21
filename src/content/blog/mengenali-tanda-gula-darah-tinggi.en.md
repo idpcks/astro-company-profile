@@ -7,14 +7,14 @@ image: 'https://picsum.photos/id/1043/1200/630'
 tags: ['Health', 'Education']
 ---
 
-Diabetes is often called a "silent disease" because its symptoms develop
-slowly. Many patients only realize something is wrong once complications
+Doctors often call diabetes a "silent disease" because its symptoms
+develop slowly. You may not realize anything is wrong until complications
 appear. Yet there are early signs you can spot in everyday life.
 
 ## Warning signs to watch for
 
-The following complaints are often dismissed as trivial, but they can be
-signals of blood sugar that is starting to spiral out of control:
+You might dismiss these complaints as trivial, but they can be signals of
+blood sugar that is starting to spiral out of control:
 
 - Frequent thirst and urination, especially at night.
 - Persistent tiredness even without added activity.
@@ -26,17 +26,16 @@ signals of blood sugar that is starting to spiral out of control:
 When blood sugar runs high, the kidneys work overtime to flush the excess
 glucose out through urine. The body loses fluid, which triggers excessive
 thirst. Meanwhile, the body's cells lack energy even with normal food
-intake — that is why sufferers feel constantly fatigued.
+intake. That is why you feel constantly fatigued.
 
 ## When should you get checked?
 
-If you experience two or more of these signs for several weeks, it is wise
-to test your fasting blood sugar and HbA1c. The tests are quick, require
-only a small blood sample, and the results can be the basis for early
-treatment.
+If you experience two or more of these signs for several weeks, test your
+fasting blood sugar and HbA1c. The tests are quick, require only a small
+blood sample, and the results can be the basis for early treatment.
 
-> Early detection is far cheaper — in both cost and health — than treating
-> complications.
+> Early detection costs less than treating complications, both in money
+> and in health.
 
 Our Internal Medicine Outpatient Clinic serves diabetes consultations on
 every working day. Don't wait for symptoms to worsen before getting

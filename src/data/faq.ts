@@ -56,8 +56,8 @@ export const FAQ_ITEMS: FaqItem[] = [
 			en: 'Where can I find information about satellite clinics?',
 		},
 		answer: {
-			id: 'Informasi tentang klinik di Cilegon dan Serang tersedia di halaman Klinik. Kunjungi halaman Klinik untuk detail alamat dan jam operasional.',
-			en: 'Information about clinics in Cilegon and Serang is available on the Clinics page. Visit the Clinics page for detailed addresses and operating hours.',
+			id: 'Alamat dan jam operasional klinik di Cilegon dan Serang tersedia di halaman Klinik.',
+			en: 'Addresses and operating hours for the clinics in Cilegon and Serang are on the Clinics page.',
 		},
 	},
 	{
@@ -66,8 +66,8 @@ export const FAQ_ITEMS: FaqItem[] = [
 			en: 'How do I contact RS Krakatau Medika for emergencies?',
 		},
 		answer: {
-			id: 'Untuk keadaan darurat, silakan hubungi IGD darurat di (0254) 396333 atau kunjungi rumah sakit langsung.',
-			en: 'For emergencies, contact the ER at (0254) 396333 or visit the hospital directly.',
+			id: 'Untuk keadaan darurat, hubungi IGD di (0254) 396333 atau langsung datang ke rumah sakit.',
+			en: 'For emergencies, call the ER at (0254) 396333 or come to the hospital directly.',
 		},
 	},
 ];

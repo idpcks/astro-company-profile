@@ -1,6 +1,6 @@
 ---
 title: 'Pentingnya Medical Checkup Rutin, Bahkan Saat Merasa Sehat'
-description: 'Medical checkup bukan hanya untuk yang sakit. Inilah pemeriksaan yang dianjurkan sesuai usia dan faktor risiko.'
+description: 'Medical checkup perlu dilakukan semua usia, termasuk yang merasa sehat. Berikut pemeriksaan yang dianjurkan sesuai usia dan faktor risiko.'
 pubDate: 2026-07-03
 author: 'dr. Raditya Nugraha'
 image: 'https://picsum.photos/id/1040/1200/630'
@@ -13,8 +13,8 @@ saat kami mengedukasi pasien tentang pemeriksaan kesehatan berkala.
 ## Merasa sehat bukan berarti sehat
 
 Hipertensi, kolesterol tinggi, dan awal diabetes hampir tidak bergejala.
-Ketiganya adalah tiga faktor risiko utama penyakit jantung dan stroke di
-Indonesia — dan ketiganya bisa terdeteksi dengan pemeriksaan sederhana.
+Ketiganya adalah faktor risiko utama penyakit jantung dan stroke di
+Indonesia. Ketiganya bisa terdeteksi dengan pemeriksaan sederhana.
 
 ## Apa saja yang diperiksa?
 
@@ -25,8 +25,8 @@ Paket medical checkup dasar biasanya mencakup:
 3. Fungsi ginjal dan hati.
 4. Pemeriksaan urine rutin.
 
-Untuk usia di atas 40 tahun, biasanya ditambah EKG, foto rontgen dada,
-dan konsultasi pola hidup.
+Untuk usia di atas 40 tahun, dokter biasanya menambahkan EKG, foto rontgen
+dada, dan konsultasi pola hidup.
 
 ## Seberapa sering?
 
@@ -35,4 +35,4 @@ seperti riwayat keluarga, merokok, atau obesitas, dokter mungkin menganjurkan
 interval yang lebih rapat.
 
 Medical Checkup Center kami menyediakan paket dari dasar hingga lengkap,
-dengan hasil yang dibahas langsung bersama dokter — bukan sekadar dilampirkan.
+dengan hasil yang dibahas langsung bersama dokter pada saat konsultasi.

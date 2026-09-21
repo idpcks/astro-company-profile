@@ -15,8 +15,8 @@ export const SITE = {
   tagline: 'Mitra kesehatan keluarga Anda',
   /** Deskripsi untuk meta description & Hero — per locale */
   description: {
-    id: 'Rumah sakit swasta dengan layanan IGD 24 jam, dokter spesialis, dan fasilitas modern untuk melayani keluarga Anda.',
-    en: 'A private hospital with 24/7 emergency care, specialist doctors, and modern facilities for your family.',
+    id: 'Rumah sakit swasta di Cilegon dengan IGD 24 jam, dokter spesialis, dan fasilitas modern.',
+    en: 'A private hospital in Cilegon with 24/7 emergency care, specialist doctors, and modern facilities.',
   },
   /** `url` sudah tidak dipakai — canonical & OG sekarang mengikuti
    *  Astro.site (= `site` di astro.config.mjs, env-driven). */

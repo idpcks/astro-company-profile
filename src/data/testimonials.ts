@@ -16,16 +16,16 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote: {
-      id: 'Anak saya dirawat di kelas 2 dan perawatannya luar biasa. Kamarnya bersih dan fasilitasnya modern.',
-      en: 'My child stayed in a class-2 room and the care was outstanding. Clean rooms, modern facilities.',
+      id: 'Anak saya dirawat di kelas 2. Kamarnya bersih dan suster rutin mengecek kondisinya.',
+      en: 'My child stayed in a class-2 room. It was clean and the nurse checked on her regularly.',
     },
     name: 'Budi Santoso',
     context: { id: 'Orang tua pasien', en: "Patient's parent" },
   },
   {
     quote: {
-      id: 'Daftarnya gampang lewat telepon, hasil medical checkup keluar cepat dan dijelaskan dengan detail.',
-      en: 'Booking by phone was easy, the checkup results came quickly and were explained in detail.',
+      id: 'Daftarnya gampang lewat telepon, hasil medical checkup keluar cepat dan dokter menjelaskannya dengan detail.',
+      en: 'Booking by phone was easy, the checkup results came quickly and the doctor explained them in detail.',
     },
     name: 'Dewi Lestari',
     context: { id: 'Peserta Medical Checkup', en: 'Checkup Patient' },

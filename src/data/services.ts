@@ -10,8 +10,8 @@ export const SERVICES: Service[] = [
     title: { id: 'IGD 24 Jam', en: '24/7 Emergency' },
     icon: 'emergency',
     description: {
-      id: 'Siaga penuh 24 jam dengan dokter jaga dan ambulans untuk kondisi gawat darurat.',
-      en: 'On standby around the clock with resident doctors and ambulances for emergencies.',
+      id: 'Dokter jaga dan ambulans siaga 24 jam untuk kondisi gawat darurat.',
+      en: 'Resident doctors and ambulances on standby 24/7 for emergencies.',
     },
   },
   {
@@ -26,8 +26,8 @@ export const SERVICES: Service[] = [
     title: { id: 'Rawat Inap', en: 'Inpatient Care' },
     icon: 'inpatient',
     description: {
-      id: 'Kamar nyaman dari kelas 3 hingga Suite dengan perawatan berkualitas.',
-      en: 'Comfortable rooms from class 3 to Suite with quality care.',
+      id: 'Ruang rawat inap kelas 3 hingga Suite dengan pemantauan dokter dan perawat.',
+      en: 'Inpatient rooms from class 3 to Suite with monitoring by doctors and nurses.',
     },
   },
   {

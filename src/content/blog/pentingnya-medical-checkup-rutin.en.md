@@ -1,6 +1,6 @@
 ---
 title: 'Why Routine Medical Checkups Matter, Even When You Feel Healthy'
-description: 'Medical checkups are not only for the sick. Here is what screening is recommended for your age and risk factors.'
+description: 'Medical checkups matter at every age, even when you feel healthy. Here is the screening recommended for your age and risk factors.'
 pubDate: 2026-07-03
 author: 'dr. Raditya Nugraha'
 image: 'https://picsum.photos/id/1040/1200/630'
@@ -14,7 +14,7 @@ most often when educating patients about periodic health screenings.
 
 Hypertension, high cholesterol, and early diabetes are nearly symptomless.
 All three are the leading risk factors for heart disease and stroke in
-Indonesia — and all three can be detected with simple tests.
+Indonesia. Simple tests can detect all three.
 
 ## What gets examined?
 
@@ -35,5 +35,4 @@ factors such as family history, smoking, or obesity, your doctor may
 advise shorter intervals.
 
 Our Medical Checkup Center offers packages from basic to comprehensive,
-with results reviewed directly by a doctor — not merely handed over as an
-attachment.
+with results reviewed with you directly by a doctor during follow-up.

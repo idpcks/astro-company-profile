@@ -1,6 +1,6 @@
 ---
 title: 'Menjaga Kesehatan Jantung dengan Kebiasaan Sehari-hari'
-description: 'Kesehatan jantung ditentukan kebiasaan kecil yang diulang setiap hari. Mulai dari lima kebiasaan ini.'
+description: 'Kebiasaan kecil yang diulang setiap hari menentukan kesehatan jantung. Mulai dari lima kebiasaan ini.'
 pubDate: 2026-06-15
 author: 'dr. Sinta Maharani, Sp.JP'
 image: 'https://picsum.photos/id/1031/1200/630'
@@ -8,16 +8,14 @@ tags: ['Jantung', 'Gaya Hidup']
 ---
 
 Penyakit jantung masih menjadi penyebab kematian tertinggi di Indonesia.
-Kabar baiknya: sebagian besar faktor risikonya bisa diubah melalui
-kebiasaan sehari-hari.
+Sebagian besar faktor risikonya bisa Anda ubah lewat kebiasaan sehari-hari.
 
 ## Lima kebiasaan yang bisa dimulai hari ini
 
 ### 1. Bergerak 30 menit setiap hari
 
 Tidak harus di gym. Jalan cepat, naik tangga, atau berkebun sudah cukup
-untuk melatih jantung. Total 150 menit per minggu adalah target yang
-dianjurkan.
+untuk melatih jantung. Usahakan total 150 menit per minggu.
 
 ### 2. Kurangi garam dan gorengan
 
@@ -38,7 +36,7 @@ Satu tahun setelahnya, risiko penyakit jantung koroner turun separuh.
 ### 5. Kelola stres
 
 Stres yang tak dikelola memicu tekanan darah tinggi. Olahraga, ibadah,
-hobi, dan bicara dengan orang terdekat adalah "obat" yang sering diremehkan.
+hobi, dan bicara dengan orang terdekat adalah "obat" yang sering kita sepelekan.
 
 ## Pemeriksaan jantung: kapan perlu?
 

@@ -1,22 +1,21 @@
 ---
 title: 'Protecting Your Heart with Everyday Habits'
-description: 'Heart health is decided by small habits repeated daily. Start with these five.'
+description: 'Small habits repeated daily decide your heart health. Start with these five.'
 pubDate: 2026-06-15
 author: 'dr. Sinta Maharani, Sp.JP'
 image: 'https://picsum.photos/id/1031/1200/630'
 tags: ['Heart', 'Lifestyle']
 ---
 
-Heart disease remains the leading cause of death in Indonesia. The good
-news: most of its risk factors can be changed through everyday habits.
+Heart disease remains the leading cause of death in Indonesia. You can
+change most of its risk factors through everyday habits.
 
 ## Five habits you can start today
 
 ### 1. Move for 30 minutes every day
 
 It doesn't have to be the gym. Brisk walking, taking the stairs, or
-gardening are enough to train your heart. A total of 150 minutes per week
-is the recommended target.
+gardening are enough to train your heart. Aim for 150 minutes per week.
 
 ### 2. Cut back on salt and fried food
 
@@ -36,7 +35,7 @@ year later, the risk of coronary heart disease has dropped by half.
 ### 5. Manage stress
 
 Unmanaged stress triggers high blood pressure. Exercise, worship, hobbies,
-and talking with loved ones are "medicine" that is often underestimated.
+and talking with loved ones are "medicine" most of us underestimate.
 
 ## Cardiac screening: when is it needed?
 
