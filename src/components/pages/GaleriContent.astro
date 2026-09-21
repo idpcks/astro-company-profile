@@ -5,9 +5,13 @@
  * foto asli saat materi tersedia. Caption per-locale ditulis di sini
  * (pola sama dengan AboutContent), bukan di data/.
  *
- * Tata letak: 1 foto utama (2x2) + 5 thumbnail yang membentuk huruf L
+ * Tata letak foto: 1 foto utama (2x2) + 5 thumbnail yang membentuk huruf L
  * terbalik (kolom kanan + baris bawah). Dirancang untuk tepat 6 foto.
  * Klik foto mana pun membuka lightbox PhotoSwipe.
+ *
+ * Video: daftar dummy PADA kunci ― tampil sebagai list terpisah di bawah
+ * grid foto; klik item membuka slide video di lightbox PhotoSwipe yang sama
+ * (pola data-pswp-video-src). Ganti src poster/video dengan materi asli nanti.
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
@@ -119,6 +123,56 @@ const GALLERY: GalleryItem[] = [
     caption: { id: 'Peralatan medis modern', en: 'Modern medical equipment' },
   },
 ];
+
+// Video dummy — klip stok gratis Mixkit (lisensi Mixkit, tanpa atribusi;
+// https://assets.mixkit.co/videos/{id}/{id}-{res}.mp4). Ganti dengan materi
+// asli saat tersedia.
+const VIDEOS: GalleryItem[] = [
+  {
+    type: 'video',
+    thumbnail: 'https://assets.mixkit.co/videos/4779/4779-thumb-360-0.jpg',
+    video: {
+      src: 'https://assets.mixkit.co/videos/4779/4779-720.mp4',
+      poster: 'https://assets.mixkit.co/videos/4779/4779-thumb-360-0.jpg',
+      width: 1280,
+      height: 720,
+    },
+    caption: { id: 'Profil singkat RSKM', en: 'RSKM profile overview' },
+  },
+  {
+    type: 'video',
+    thumbnail: 'https://assets.mixkit.co/videos/5959/5959-thumb-360-0.jpg',
+    video: {
+      src: 'https://assets.mixkit.co/videos/5959/5959-720.mp4',
+      poster: 'https://assets.mixkit.co/videos/5959/5959-thumb-360-0.jpg',
+      width: 1280,
+      height: 720,
+    },
+    caption: { id: 'Wawancara dengan dokter', en: 'Interview with a doctor' },
+  },
+  {
+    type: 'video',
+    thumbnail: 'https://assets.mixkit.co/videos/5568/5568-thumb-360-0.jpg',
+    video: {
+      src: 'https://assets.mixkit.co/videos/5568/5568-720.mp4',
+      poster: 'https://assets.mixkit.co/videos/5568/5568-thumb-360-0.jpg',
+      width: 1280,
+      height: 720,
+    },
+    caption: { id: 'Tur fasilitas rawat inap', en: 'Facilities tour — inpatient ward' },
+  },
+  {
+    type: 'video',
+    thumbnail: 'https://assets.mixkit.co/videos/4753/4753-thumb-360-0.jpg',
+    video: {
+      src: 'https://assets.mixkit.co/videos/4753/4753-720.mp4',
+      poster: 'https://assets.mixkit.co/videos/4753/4753-thumb-360-0.jpg',
+      width: 1280,
+      height: 720,
+    },
+    caption: { id: 'Edukasi: hidup sehat', en: 'Health education: healthy living' },
+  },
+];
 ---
 
 <PageHero
@@ -152,6 +206,43 @@ const GALLERY: GalleryItem[] = [
             </a>
             {i === 0 && <figcaption class="galeri__caption">{item.caption[lang]}</figcaption>}
           </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <SectionHeading title={t('galeriPage.video.title')} align="start" />
+    <div class="galeri__videos" data-pswp-gallery>
+      {
+        VIDEOS.map((item) => (
+          <a
+            class="galeri__video"
+            href={item.video?.poster ?? item.video?.src}
+            data-pswp-type="video"
+            data-pswp-video-src={item.video?.src}
+            data-poster={item.video?.poster}
+            data-pswp-width={item.video?.width}
+            data-pswp-height={item.video?.height}
+            data-caption={item.caption[lang]}
+            title={item.caption[lang]}
+          >
+            <SiteImage
+              src={item.thumbnail}
+              alt={item.caption[lang]}
+              width={480}
+              height={270}
+              loading="lazy"
+              class="galeri__video-image"
+            />
+            <span class="galeri__video-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5.5v13a.6.6 0 0 0 .92.51l10.2-6.5a.6.6 0 0 0 0-1.02L8.92 5A.6.6 0 0 0 8 5.5Z" />
+              </svg>
+            </span>
+          </a>
         ))
       }
     </div>
@@ -230,6 +321,71 @@ const GALLERY: GalleryItem[] = [
     pointer-events: none;
   }
 
+  .galeri__videos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .galeri__video {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+
+  .galeri__video-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .galeri__video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.45);
+    color: #fff;
+    transition:
+      transform 400ms cubic-bezier(0.32, 0.72, 0, 1),
+      background-color 400ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .galeri__video-play svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .galeri__video:hover .galeri__video-play {
+    transform: scale(1.08);
+    background-color: rgb(0 0 0 / 0.6);
+  }
+
+  @media (min-width: 40rem) {
+    .galeri__videos {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .galeri__videos {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
   @media (min-width: 48rem) {
     .galeri__grid {
       gap: var(--space-6);
@@ -256,6 +412,14 @@ const GALLERY: GalleryItem[] = [
   .pswp__galeri-caption:empty {
     display: none;
   }
+
+  /* Slide video: isi video mengikuti boks content PhotoSwipe. */
+  .pswp__content video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+  }
 </style>
 
 <script>
@@ -267,6 +431,23 @@ const GALLERY: GalleryItem[] = [
     children: 'a',
     pswpModule: () => import('photoswipe'),
     bgOpacity: 0.92,
+  });
+
+  // PhotoSwipe 5.4 tidak membaca data-pswp-video-src secara bawaan; slide
+  // video disajikan lewat filter: ubah anchor tipe video jadi konten HTML
+  // berisi <video>. autoplay muted agar langsung tampak berputar (browser
+  // memblokir autoplay bersuara), user bisa unmute via kontrol.
+  lightbox.addFilter('domItemData', (itemData, element, linkEl) => {
+    if (linkEl?.dataset.pswpType === 'video' && linkEl.dataset.pswpVideoSrc) {
+      const src = linkEl.dataset.pswpVideoSrc;
+      const poster = linkEl.dataset.poster ?? '';
+      itemData.type = 'video';
+      itemData.html =
+        '<video controls playsinline autoplay muted preload="metadata"' +
+        (poster ? ` poster="${poster}"` : '') +
+        ` src="${src}"></video>`;
+    }
+    return itemData;
   });
 
   // Tampilkan caption foto aktif di bagian bawah lightbox.

@@ -174,6 +174,7 @@ const id = {
   'galeriPage.note.title': 'Galeri sedang disiapkan',
   'galeriPage.note.body':
     'Kami sedang mengumpulkan dan mengkurasi foto fasilitas serta kegiatan rumah sakit. Konten galeri akan tersedia di halaman ini segera.',
+  'galeriPage.video.title': 'Video',
 
   // Halaman WBS
   'wbsPage.hero.title': 'Sistem Pelaporan Pelanggaran (WBS)',
@@ -473,6 +474,7 @@ const en: Record<UiKeys, string> = {
   'galeriPage.note.title': 'Gallery coming soon',
   'galeriPage.note.body':
     'We are gathering and curating photos of our facilities and hospital activities. Gallery content will be available on this page soon.',
+  'galeriPage.video.title': 'Videos',
 
   // WBS page
   'wbsPage.hero.title': 'Whistleblowing System (WBS)',
