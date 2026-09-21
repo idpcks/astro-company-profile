@@ -4,6 +4,10 @@
  * Grid foto dummy (Picsum) untuk melihat tata letak galeri — DIGANTI
  * foto asli saat materi tersedia. Caption per-locale ditulis di sini
  * (pola sama dengan AboutContent), bukan di data/.
+ *
+ * Tata letak: 1 foto utama (2x2) + 5 thumbnail yang membentuk huruf L
+ * terbalik (kolom kanan + baris bawah). Dirancang untuk tepat 6 foto.
+ * Klik foto mana pun membuka lightbox PhotoSwipe.
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
@@ -19,35 +23,99 @@ const { lang } = Astro.props;
 const t = tFactory(lang);
 
 interface GalleryItem {
-  src: string;
-  caption: { id: string; en: string };
+  /** Jenis media galeri. */
+  type: 'image' | 'video';
+
+  /** Gambar thumbnail yang tampil di grid. */
+  thumbnail: string;
+
+  image?: {
+    /** URL gambar resolusi penuh. */
+    src: string;
+    /** Dimensi asli gambar untuk PhotoSwipe. */
+    width: number;
+    height: number;
+  };
+
+  video?: {
+    /** URL video. */
+    src: string;
+    /** Poster yang ditampilkan sebelum video diputar. */
+    poster?: string;
+    /** Dimensi asli video untuk PhotoSwipe. */
+    width: number;
+    height: number;
+  };
+
+  /** Caption per locale. */
+  caption: {
+    id: string;
+    en: string;
+  };
 }
 
-// Foto dummy deterministik (picsum.photos) — ganti `src` dengan foto
-// asli lokal + `alt` deskriptif saat galeri resmi tersedia.
+// Foto dummy deterministik (picsum.photos) — ganti `thumbnail` & `full`
+// dengan foto asli lokal + alt deskriptif saat galeri resmi tersedia.
+// Urutan penting: item pertama menjadi foto utama.
 const GALLERY: GalleryItem[] = [
   {
-    src: 'https://picsum.photos/id/1015/800/600',
+    type: 'image',
+    thumbnail: 'https://picsum.photos/id/1015/800/600',
+    image: {
+      src: 'https://picsum.photos/id/1015/1600/1200',
+      width: 1600,
+      height: 1200,
+    },
     caption: { id: 'Gedung dan fasilitas RSKM', en: 'RSKM building and facilities' },
   },
   {
-    src: 'https://picsum.photos/id/1016/800/600',
+    type: 'image',
+    thumbnail: 'https://picsum.photos/id/1016/800/600',
+    image: {
+      src: 'https://picsum.photos/id/1016/1600/1200',
+      width: 1600,
+      height: 1200,
+    },
     caption: { id: 'Konsultasi dokter', en: 'Doctor consultation' },
   },
   {
-    src: 'https://picsum.photos/id/1018/800/600',
+    type: 'image',
+    thumbnail: 'https://picsum.photos/id/1018/800/600',
+    image: {
+      src: 'https://picsum.photos/id/1018/1600/1200',
+      width: 1600,
+      height: 1200,
+    },
     caption: { id: 'Tim perawat RSKM', en: 'RSKM nursing team' },
   },
   {
-    src: 'https://picsum.photos/id/1019/800/600',
+    type: 'image',
+    thumbnail: 'https://picsum.photos/id/1019/800/600',
+    image: {
+      src: 'https://picsum.photos/id/1019/1600/1200',
+      width: 1600,
+      height: 1200,
+    },
     caption: { id: 'Ruang rawat inap', en: 'Inpatient room' },
   },
   {
-    src: 'https://picsum.photos/id/1020/800/600',
+    type: 'image',
+    thumbnail: 'https://picsum.photos/id/1020/800/600',
+    image: {
+      src: 'https://picsum.photos/id/1020/1600/1200',
+      width: 1600,
+      height: 1200,
+    },
     caption: { id: 'Kegiatan edukasi kesehatan', en: 'Health education activity' },
   },
   {
-    src: 'https://picsum.photos/id/1021/800/600',
+    type: 'image',
+    thumbnail: 'https://picsum.photos/id/1021/800/600',
+    image: {
+      src: 'https://picsum.photos/id/1021/1600/1200',
+      width: 1600,
+      height: 1200,
+    },
     caption: { id: 'Peralatan medis modern', en: 'Modern medical equipment' },
   },
 ];
@@ -62,19 +130,27 @@ const GALLERY: GalleryItem[] = [
 <section class="section">
   <div class="container">
     <SectionHeading title={t('galeriPage.note.title')} align="start" />
-    <div class="galeri__grid">
+    <div class="galeri__grid" data-pswp-gallery>
       {
-        GALLERY.map((item) => (
+        GALLERY.map((item, i) => (
           <figure class="galeri__item">
-            <SiteImage
-              src={item.src}
-              alt={item.caption[lang]}
-              width={800}
-              height={600}
-              loading="lazy"
-              class="galeri__image"
-            />
-            <figcaption class="galeri__caption">{item.caption[lang]}</figcaption>
+            <a
+              class="galeri__link"
+              href={item.image?.src}
+              data-pswp-width={item.image?.width}
+              data-pswp-height={item.image?.height}
+              data-caption={item.caption[lang]}
+            >
+              <SiteImage
+                src={item.thumbnail}
+                alt={item.caption[lang]}
+                width={800}
+                height={600}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                class="galeri__image"
+              />
+            </a>
+            {i === 0 && <figcaption class="galeri__caption">{item.caption[lang]}</figcaption>}
           </figure>
         ))
       }
@@ -85,25 +161,131 @@ const GALLERY: GalleryItem[] = [
 <CTASection lang={lang} />
 
 <style>
+  /*
+   * Pola L terbalik: foto utama di kiri-atas (2x2), thumbnail mengisi
+   * kolom kanan (t1, t2) dan baris bawah (t3, t4, t5).
+   */
   .galeri__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: var(--space-6);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      'hero hero t1'
+      'hero hero t2'
+      't3   t4   t5';
+    gap: var(--space-2);
   }
 
   .galeri__item {
+    position: relative;
     margin: 0;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .galeri__item:nth-child(1) {
+    grid-area: hero;
+    aspect-ratio: auto;
+  }
+  .galeri__item:nth-child(2) {
+    grid-area: t1;
+  }
+  .galeri__item:nth-child(3) {
+    grid-area: t2;
+  }
+  .galeri__item:nth-child(4) {
+    grid-area: t3;
+  }
+  .galeri__item:nth-child(5) {
+    grid-area: t4;
+  }
+  .galeri__item:nth-child(6) {
+    grid-area: t5;
+  }
+
+  .galeri__link {
+    position: absolute;
+    inset: 0;
+    display: block;
+    cursor: zoom-in;
   }
 
   .galeri__image {
+    display: block;
     width: 100%;
-    height: auto;
-    border-radius: var(--radius-md);
+    height: 100%;
+    object-fit: cover;
   }
 
   .galeri__caption {
-    margin-top: var(--space-2);
-    color: var(--color-muted);
+    position: absolute;
+    left: var(--space-2);
+    bottom: var(--space-2);
+    max-width: calc(100% - var(--space-2) * 2);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-md);
+    background: rgb(0 0 0 / 0.7);
+    color: #fff;
     font-size: var(--text-sm);
+    pointer-events: none;
+  }
+
+  @media (min-width: 48rem) {
+    .galeri__grid {
+      gap: var(--space-6);
+    }
   }
 </style>
+
+<!-- Caption lightbox dirender PhotoSwipe di luar komponen ini, jadi butuh style global. -->
+<style is:global>
+  .pswp__galeri-caption {
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    max-width: min(90vw, 32rem);
+    padding: 0.375rem 0.875rem;
+    border-radius: 0.5rem;
+    background: rgb(0 0 0 / 0.75);
+    color: #fff;
+    font-size: 0.9375rem;
+    text-align: center;
+    pointer-events: none;
+  }
+  .pswp__galeri-caption:empty {
+    display: none;
+  }
+</style>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '[data-pswp-gallery]',
+    children: 'a',
+    pswpModule: () => import('photoswipe'),
+    bgOpacity: 0.92,
+  });
+
+  // Tampilkan caption foto aktif di bagian bawah lightbox.
+  lightbox.on('uiRegister', () => {
+    lightbox.pswp?.ui?.registerElement({
+      name: 'galeri-caption',
+      order: 9,
+      isButton: false,
+      appendTo: 'root',
+      html: '',
+      onInit: (el, pswp) => {
+        el.classList.add('pswp__galeri-caption');
+        pswp.on('change', () => {
+          const link = pswp.currSlide?.data.element as HTMLAnchorElement | undefined;
+          el.textContent = link?.dataset.caption ?? '';
+        });
+      },
+    });
+  });
+
+  lightbox.init();
+</script>
