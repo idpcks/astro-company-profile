@@ -167,6 +167,7 @@ const id = {
   'pagehero.eyebrow.lelangPengadaan': 'Pengadaan',
   'pagehero.eyebrow.laporanKeuangan': 'Keuangan',
   'pagehero.eyebrow.karir': 'Karir',
+  'pagehero.eyebrow.faq': 'Bantuan & FAQ',
 
   // Halaman Galeri
   'galeriPage.hero.title': 'Galeri Foto & Kegiatan',
@@ -332,6 +333,13 @@ const id = {
   'faq.empty.title': 'Tidak ada pertanyaan',
   'faq.empty.description': 'Belum ada pertanyaan yang diajukan.',
   'faq.empty.action': 'Ajukan pertanyaan',
+  'faq.search.placeholder': 'Cari pertanyaan atau kata kunci (mis. BPJS, IGD, jadwal)...',
+  'faq.search.clear': 'Reset pencarian',
+  'faq.support.title': 'Masih Punya Pertanyaan?',
+  'faq.support.body':
+    'Tim layanan pelanggan dan staf medis RS Krakatau Medika siap membantu menjawab kebutuhan Anda 24/7.',
+  'faq.support.contactBtn': 'Formulir Kontak',
+  'faq.support.waBtn': 'WhatsApp RSKM',
   'karir.empty.title': 'Belum ada lowongan',
   'karir.empty.description': 'Belum ada lowongan kerja yang saat ini dibuka.',
   'karir.empty.action': 'Lihat semua lowongan',
@@ -506,6 +514,7 @@ const en: Record<UiKeys, string> = {
   'pagehero.eyebrow.lelangPengadaan': 'Procurement',
   'pagehero.eyebrow.laporanKeuangan': 'Finance',
   'pagehero.eyebrow.karir': 'Careers',
+  'pagehero.eyebrow.faq': 'Help & FAQ',
 
   // Gallery page
   'galeriPage.hero.title': 'Gallery & Activities',
@@ -670,6 +679,13 @@ const en: Record<UiKeys, string> = {
   'faq.empty.title': 'No questions',
   'faq.empty.description': 'No questions have been added yet.',
   'faq.empty.action': 'Ask a question',
+  'faq.search.placeholder': 'Search questions or keywords (e.g. BPJS, ER, schedule)...',
+  'faq.search.clear': 'Reset search',
+  'faq.support.title': 'Still Have Questions?',
+  'faq.support.body':
+    'RS Krakatau Medika customer support team and medical staff are ready to assist you 24/7.',
+  'faq.support.contactBtn': 'Contact Form',
+  'faq.support.waBtn': 'WhatsApp RSKM',
   'karir.empty.title': 'No job openings',
   'karir.empty.description': 'We don’t have any job openings at the moment.',
   'karir.empty.action': 'View all openings',

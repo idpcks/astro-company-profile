@@ -1,10 +1,15 @@
 ---
 /**
  * Konten halaman FAQ — dipakai bersama oleh root (id) & [lang] (en).
- * FAQ schema JSON-LD disuntikkan melalui BaseLayout.
+ * FAQ schema JSON-LD disuntikkan melalui BaseLayout di src/pages/faq.astro.
  */
-import { localized, tFactory, type Lang } from '@/i18n';
+import CTASection from '@/components/sections/CTASection.astro';
+import Button from '@/components/ui/Button.astro';
+import EmptyState from '@/components/ui/EmptyState.astro';
+import PageHero from '@/components/ui/PageHero.astro';
 import { FAQ_ITEMS } from '@/data/faq';
+import { SOCIAL_LINKS } from '@/data/site';
+import { localized, localePath, tFactory, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -16,46 +21,302 @@ const t = tFactory(lang);
 // SOT di src/data/faq.ts — teks yang dirender IDENTIK dengan JSON-LD
 // FAQPage di halaman (syarat kebijakan structured data Google).
 const faqItems = FAQ_ITEMS.map((item) => ({
-	question: localized(item.question, lang),
-	answer: localized(item.answer, lang),
+  question: localized(item.question, lang),
+  answer: localized(item.answer, lang),
 }));
+
+// Tautan WhatsApp resmi RSKM dari data/site.ts
+const whatsappLink = SOCIAL_LINKS.find((link) => link.label === 'WhatsApp');
 ---
+
+<PageHero
+  eyebrow={t('pagehero.eyebrow.faq')}
+  title={t('page.title.faq')}
+  lead={t('page.description.faq')}
+/>
 
 <section class="section">
   <div class="container faq">
-    <h1 class="faq__title">{t('page.title.faq')}</h1>
-
-    <div class="faq__list">
-      {
-        faqItems.map((item) => (
-          <div class="faq-item">
-            <h3 class="faq-item__question">{item.question}</h3>
-            <p class="faq-item__answer">{item.answer}</p>
+    {
+      faqItems.length === 0 ? (
+        <EmptyState
+          icon="help-circle"
+          title={t('faq.empty.title')}
+          description={t('faq.empty.description')}
+          actionText={t('faq.empty.action')}
+          actionHref={localePath('/contact', lang)}
+        />
+      ) : (
+        <>
+          {/* Kolom Pencarian Cepat */}
+          <div class="faq__search-wrapper">
+            <div class="faq__search-box">
+              <span class="faq__search-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </span>
+              <input
+                type="search"
+                class="faq__search-input"
+                placeholder={t('faq.search.placeholder')}
+                aria-label={t('faq.search.placeholder')}
+                data-faq-search-input
+              />
+              <button
+                type="button"
+                class="faq__search-clear"
+                aria-label={t('faq.search.clear')}
+                title={t('faq.search.clear')}
+                data-faq-search-clear
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
           </div>
-        ))
-      }
-    </div>
 
-		<p class="faq__note">
-			{lang === 'en'
-				? 'If you have a question not listed above, please contact us at '
-				: 'Jika Anda memiliki pertanyaan yang tidak tercantum di atas, silakan hubungi kami di '}
-			<a href="mailto:info@krakataumedika.co.id">info@krakataumedika.co.id</a>.
-		</p>
-	</div>
+          {/* Daftar Accordion FAQ */}
+          <div class="faq__list" data-faq-list>
+            {faqItems.map((item, index) => (
+              <details class="faq-item" data-faq-item id={`faq-item-${index + 1}`}>
+                <summary class="faq-item__summary">
+                  <h2 class="faq-item__question">{item.question}</h2>
+                  <span class="faq-item__chevron" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </span>
+                </summary>
+                <div class="faq-item__content">
+                  <p class="faq-item__answer">{item.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+
+          {/* Fallback Jika Pencarian Tidak Menemukan Hasil */}
+          <div class="faq__no-results" data-faq-no-results hidden>
+            <EmptyState
+              icon="search"
+              title={t('search.empty.title')}
+              description={t('search.empty.description')}
+              actionText={t('search.empty.action')}
+              actionHref="#reset-faq"
+            />
+          </div>
+
+          {/* Kartu Bantuan Lanjutan (Support Card) */}
+          <div class="faq__support">
+            <div class="faq__support-content">
+              <h3 class="faq__support-title">{t('faq.support.title')}</h3>
+              <p class="faq__support-body">{t('faq.support.body')}</p>
+            </div>
+            <div class="faq__support-actions">
+              <Button href={localePath('/contact', lang)} variant="primary">
+                {t('faq.support.contactBtn')}
+              </Button>
+              {whatsappLink && (
+                <Button
+                  href={whatsappLink.href}
+                  variant="outline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="faq__support-btn-wa"
+                >
+                  <svg
+                    class="faq__wa-icon"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.978-.276-.101-.476-.15-.676.15-.2.301-.776.978-.952 1.18-.176.2-.351.225-.652.075-.301-.15-1.27-.468-2.42-1.493-.895-.798-1.5-1.784-1.675-2.084-.176-.3-.019-.462.132-.612.135-.135.301-.351.451-.527.15-.175.2-.3.301-.5.101-.2.05-.376-.025-.526-.075-.15-.677-1.633-.927-2.235-.244-.587-.492-.507-.677-.517-.175-.01-.376-.01-.577-.01-.2 0-.526.075-.802.376-.276.301-1.052 1.028-1.052 2.508 0 1.48 1.077 2.909 1.228 3.11.15.2 2.12 3.238 5.136 4.542.717.311 1.277.496 1.713.634.72.229 1.376.197 1.895.12.578-.087 1.78-.727 2.03-1.43.251-.702.251-1.304.176-1.43-.075-.125-.276-.2-.577-.35zM12.04 2C6.51 2 2.02 6.49 2.02 12.02c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.52c1.48.91 3.22 1.44 5.22 1.44 5.53 0 10.02-4.49 10.02-10.02C22.06 6.49 17.57 2 12.04 2z" />
+                  </svg>
+                  {t('faq.support.waBtn')}
+                </Button>
+              )}
+            </div>
+          </div>
+        </>
+      )
+    }
+  </div>
 </section>
+
+<CTASection lang={lang} />
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const searchInput = document.querySelector<HTMLInputElement>('[data-faq-search-input]');
+    const clearBtn = document.querySelector<HTMLButtonElement>('[data-faq-search-clear]');
+    const faqList = document.querySelector<HTMLElement>('[data-faq-list]');
+    const noResults = document.querySelector<HTMLElement>('[data-faq-no-results]');
+    const faqItems = document.querySelectorAll<HTMLDetailsElement>('[data-faq-item]');
+    const resetLink = noResults?.querySelector<HTMLAnchorElement>('a[href="#reset-faq"]');
+
+    if (!searchInput || !faqItems.length) return;
+
+    function filterFaq(query: string) {
+      const q = query.trim().toLowerCase();
+      let matchCount = 0;
+
+      if (clearBtn) {
+        clearBtn.hidden = !q;
+      }
+
+      faqItems.forEach((item) => {
+        const text = (item.textContent || '').toLowerCase();
+        const isMatch = !q || text.includes(q);
+        item.hidden = !isMatch;
+
+        if (isMatch) {
+          matchCount++;
+          // Buka accordion secara otomatis bila hasil pencarian cocok
+          if (q) {
+            item.open = true;
+          }
+        }
+      });
+
+      if (noResults && faqList) {
+        const isSearchEmpty = matchCount === 0 && Boolean(q);
+        noResults.hidden = !isSearchEmpty;
+        faqList.hidden = isSearchEmpty;
+      }
+    }
+
+    searchInput.addEventListener('input', () => {
+      filterFaq(searchInput.value);
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      searchInput.value = '';
+      filterFaq('');
+      searchInput.focus();
+    });
+
+    resetLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      searchInput.value = '';
+      filterFaq('');
+      searchInput.focus();
+    });
+  });
+</script>
 
 <style>
   .faq {
-    max-width: 48rem;
+    max-width: 52rem;
     margin: 0 auto;
   }
 
-  .faq__title {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-6);
+  /* Kotak Pencarian */
+  .faq__search-wrapper {
+    margin-bottom: var(--space-8);
   }
 
+  .faq__search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .faq__search-box:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+  }
+
+  .faq__search-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-muted);
+    margin-right: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .faq__search-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .faq__search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: var(--text-base);
+    color: var(--color-ink);
+    padding: var(--space-1) 0;
+    outline: none;
+  }
+
+  .faq__search-input::placeholder {
+    color: var(--color-muted);
+  }
+
+  .faq__search-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: none;
+    background-color: var(--color-surface-alt);
+    color: var(--color-muted);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-base),
+      color var(--transition-base);
+  }
+
+  .faq__search-clear:hover {
+    background-color: var(--color-border);
+    color: var(--color-ink);
+  }
+
+  .faq__search-clear svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  /* Daftar Accordion */
   .faq__list {
     display: grid;
     gap: var(--space-4);
@@ -65,30 +326,146 @@ const faqItems = FAQ_ITEMS.map((item) => ({
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-5);
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+    overflow: hidden;
+  }
+
+  .faq-item:hover {
+    border-color: var(--color-primary-light);
+  }
+
+  :global(.faq-item[open]) {
+    border-color: var(--color-primary-light);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Hilangkan marker bawaan browser untuk <summary> */
+  .faq-item__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: background-color var(--transition-base);
+  }
+
+  .faq-item__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__summary:hover {
+    background-color: var(--color-surface-alt);
   }
 
   .faq-item__question {
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--color-ink);
-    margin-bottom: var(--space-2);
+    margin: 0;
+    line-height: var(--leading-tight);
+    flex: 1;
+  }
+
+  .faq-item__chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface-alt);
+    color: var(--color-primary-text);
+    flex-shrink: 0;
+    transition:
+      transform var(--transition-base),
+      background-color var(--transition-base);
+  }
+
+  .faq-item__chevron svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  :global(.faq-item[open]) .faq-item__chevron {
+    transform: rotate(180deg);
+    background-color: var(--color-primary-light);
+  }
+
+  .faq-item__content {
+    padding: var(--space-4) var(--space-6) var(--space-6);
+    border-top: 1px solid var(--color-border);
   }
 
   .faq-item__answer {
     color: var(--color-body);
     line-height: var(--leading-normal);
+    margin: 0;
+    font-size: var(--text-base);
   }
 
-  .faq__note {
-    margin-top: var(--space-8);
-    color: var(--color-muted);
-    font-size: var(--text-sm);
+  /* State Pencarian Kosong */
+  .faq__no-results {
+    margin-top: var(--space-4);
+  }
+
+  /* Kartu Bantuan Lanjutan */
+  .faq__support {
+    margin-top: var(--space-12);
+    padding: var(--space-8);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl, var(--radius-lg));
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    gap: var(--space-6);
   }
 
-  .faq__note a {
-    color: var(--color-primary-text);
-    text-decoration: underline;
+  .faq__support-title {
+    font-size: var(--text-2xl);
+    color: var(--color-ink);
+    margin: 0 0 var(--space-2);
+  }
+
+  .faq__support-body {
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    max-width: 34rem;
+    margin: 0 auto;
+    line-height: var(--leading-normal);
+  }
+
+  .faq__support-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .faq__wa-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-right: var(--space-2);
+  }
+
+  @media (min-width: 48rem) {
+    .faq__support {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: start;
+    }
+
+    .faq__support-body {
+      margin: 0;
+    }
   }
 </style>
