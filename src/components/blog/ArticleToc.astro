@@ -26,7 +26,7 @@ interface Props {
 }
 
 const { headings, lang = 'id' } = Astro.props;
-const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const items = headings.filter((h: Heading) => h.depth >= 2 && h.depth <= 3);
 const t = tFactory(lang);
 const title = t('toc.title');
 ---
@@ -39,7 +39,7 @@ const title = t('toc.title');
         {title}
       </h2>
       <ol class="toc__list">
-        {items.map((h) => (
+        {items.map((h: Heading) => (
           <li class:list={['toc__item', { 'toc__item--sub': h.depth === 3 }]}>
             <a class="toc__link" href={`#${h.slug}`}>
               {h.text}
