@@ -64,7 +64,7 @@ const FALLBACK_ICON = 'circle-help';
   }
 
   /* Override kecil untuk Card: susunan konten jadi kolom */
-  .service-card {
+  :global(.service-card) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -82,7 +82,7 @@ const FALLBACK_ICON = 'circle-help';
     color: var(--color-primary-text);
   }
 
-  .service-card__icon svg {
+  .service-card__icon :global(svg) {
     width: 1.5rem;
     height: 1.5rem;
   }

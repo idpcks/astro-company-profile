@@ -297,7 +297,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 
   .site-nav__item:hover .site-nav__dropdown,
   .site-nav__item:focus-within .site-nav__dropdown,
-  .site-nav__item.is-open .site-nav__dropdown {
+  :global(.site-nav__item.is-open) .site-nav__dropdown {
     display: block;
   }
 
@@ -370,7 +370,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
       overflow-y: auto;
     }
 
-    .site-nav.is-open {
+    :global(.site-nav.is-open) {
       display: flex;
     }
 

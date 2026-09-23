@@ -53,13 +53,13 @@ const t = tFactory(lang);
     gap: var(--space-6);
   }
 
-  .testimonial-card {
+  :global(.testimonial-card) {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
   }
 
-  .testimonial-card__quote {
+  :global(.testimonial-card__quote) {
     width: 2rem;
     height: 2rem;
     color: var(--color-primary-light);

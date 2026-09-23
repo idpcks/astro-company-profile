@@ -26,18 +26,21 @@
       value <= targets[label].good ? '✓ good' : '✗ perbaiki';
 
     onLCP((m) =>
+      // eslint-disable-next-line no-console
       console.info(
         `[WebVitals] LCP ${m.value.toFixed(0)}ms (${verdict('LCP', m.value)}) — elemen utama`
       )
     );
 
     onINP((m) =>
+      // eslint-disable-next-line no-console
       console.info(
         `[WebVitals] INP ${m.value.toFixed(0)}ms (${verdict('INP', m.value)}) — responsiveness`
       )
     );
 
     onCLS((m) =>
+      // eslint-disable-next-line no-console
       console.info(
         `[WebVitals] CLS ${m.value.toFixed(3)} (${verdict('CLS', m.value)}) — layout shift`
       )

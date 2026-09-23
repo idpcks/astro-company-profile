@@ -170,7 +170,7 @@ const localBusiness: Record<string, unknown> = {
         var stored = null;
         try {
           stored = localStorage.getItem('themechoice');
-        } catch (e) {
+        } catch (_e) {
           /* localStorage tidak tersedia */
         }
         document.documentElement.dataset.theme =

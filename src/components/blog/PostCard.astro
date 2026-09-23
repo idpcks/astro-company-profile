@@ -50,7 +50,7 @@ const { title, description, tags, pubDate, author, url, image } = post;
 </Card>
 
 <style>
-  .post-card {
+  :global(.post-card) {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -81,7 +81,7 @@ const { title, description, tags, pubDate, author, url, image } = post;
     flex: 1; /* meta selalu di dasar kartu walau judul beda panjang */
   }
 
-  .post-card__meta {
+  :global(.post-card__meta) {
     border-top: 1px solid var(--color-border);
     padding-top: var(--space-3);
   }

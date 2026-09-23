@@ -33,7 +33,7 @@ const isInteractive = Boolean(href) || hoverable;
 </Tag>
 
 <style>
-  .card {
+  :global(.card) {
     display: block;
     height: 100%; /* tinggi seragam saat dipakai di grid */
     padding: var(--space-6);
@@ -43,7 +43,7 @@ const isInteractive = Boolean(href) || hoverable;
     box-shadow: var(--shadow-sm);
   }
 
-  .card--interactive {
+  :global(.card--interactive) {
     text-decoration: none;
     color: inherit; /* <a> jangan mewarisi warna link biru */
     transition:
@@ -52,7 +52,7 @@ const isInteractive = Boolean(href) || hoverable;
       border-color var(--transition-base);
   }
 
-  .card--interactive:hover {
+  :global(.card--interactive:hover) {
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
     border-color: var(--color-primary-light);

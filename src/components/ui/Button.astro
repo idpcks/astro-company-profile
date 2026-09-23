@@ -56,7 +56,7 @@ const Tag = href ? 'a' : 'button';
 </Tag>
 
 <style>
-  .button {
+  :global(.button) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -74,63 +74,63 @@ const Tag = href ? 'a' : 'button';
   }
 
   /* ── Ukuran ── */
-  .button--md {
+  :global(.button--md) {
     padding: 0.625rem 1.375rem;
     font-size: var(--text-sm);
   }
 
-  .button--lg {
+  :global(.button--lg) {
     padding: var(--space-3) var(--space-6);
     font-size: var(--text-base);
   }
 
   /* ── Varian ── */
-  .button--primary {
+  :global(.button--primary) {
     background-color: var(--color-primary);
     color: #ffffff;
   }
 
-  .button--primary:hover {
+  :global(.button--primary:hover) {
     background-color: var(--color-primary-dark);
   }
 
-  .button--emergency {
+  :global(.button--emergency) {
     background-color: var(--color-emergency);
     color: #ffffff;
   }
 
-  .button--emergency:hover {
+  :global(.button--emergency:hover) {
     background-color: var(--color-emergency-dark);
   }
 
-  .button--outline {
+  :global(.button--outline) {
     background-color: transparent;
     border-color: var(--color-primary-text);
     color: var(--color-primary-text);
   }
 
-  .button--outline:hover {
+  :global(.button--outline:hover) {
     background-color: var(--color-primary-light);
   }
 
   /* Untuk tombol di atas background gelap (band CTA) */
-  .button--light {
+  :global(.button--light) {
     background-color: #ffffff;
     color: var(--color-primary-dark);
   }
 
-  .button--light:hover {
+  :global(.button--light:hover) {
     background-color: var(--color-primary-light);
   }
 
   /* Tombol transparan untuk di atas background gelap */
-  .button--ghost {
+  :global(.button--ghost) {
     background-color: transparent;
     border-color: rgb(255 255 255 / 0.6);
     color: #ffffff;
   }
 
-  .button--ghost:hover {
+  :global(.button--ghost:hover) {
     background-color: rgb(255 255 255 / 0.12);
   }
 </style>
