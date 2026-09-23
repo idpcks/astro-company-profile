@@ -4,8 +4,11 @@
  *
  * BILINGUAL: id & en berbagi slug yang sama, jadi getStaticPaths
  * mengiterasi SEMUA slug unik. Lookup post dilakukan DI DALAM
- * getStaticPaths dan dikirim via props — pola standar Astro; sekaligus
- * melewatkan slug yang (belum) punya file versi id.
+ * getStaticPaths dan dikirim via props — pola standar Astro.
+ * Guard isFallback: slug yang tidak punya file versi id (hanya
+ * .en.md) DILEWATI — tanpa ini halaman /blog/<slug> ter-generate
+ * dengan konten EN di locale default = duplikat konten lintas locale
+ * (SEO). Halaman EN-nya tetap ada di /en/blog/<slug>.
  * render(entry) dari 'astro:content' — entry asli ada di post.entry.
  */
 import BlogPostLayout from '@/layouts/BlogPostLayout.astro';
@@ -17,7 +20,10 @@ export async function getStaticPaths() {
   const paths: { params: { slug: string }; props: { post: NormalizedPost } }[] = [];
   for (const slug of slugs) {
     const post = await getPostBySlug(slug, 'id');
-    if (post) paths.push({ params: { slug }, props: { post } });
+    // isFallback → versi id tidak ada (konten yang dipilih versi EN)
+    // → jangan generate /blog/<slug>. Sama seperti guard di [lang]/blog.
+    if (!post || post.isFallback) continue;
+    paths.push({ params: { slug }, props: { post } });
   }
   return paths;
 }

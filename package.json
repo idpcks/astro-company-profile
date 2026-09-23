@@ -14,7 +14,8 @@
     "lint:fix": "eslint . --ext .astro,.js,.mjs,.ts --fix",
     "format": "prettier --write \"src/**/*.{astro,js,ts,css}\"",
     "format:check": "prettier --check \"src/**/*.{astro,js,ts,css}\"",
-    "check": "bun run lint && bun run format:check",
+    "check:astro": "astro check",
+    "check": "bun run lint && bun run format:check && bun run check:astro",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
