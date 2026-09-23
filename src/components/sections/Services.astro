@@ -6,6 +6,7 @@
  * Konsep ICONS: string `icon` dari data → markup SVG inline; ikon
  * tak dikenal jatuh ke fallback agar data salah tidak merusak render.
  */
+import { Icon } from 'astro-icon/components';
 import Card from '@/components/ui/Card.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { localized, tFactory, type Lang } from '@/i18n';
@@ -18,21 +19,17 @@ interface Props {
 const { lang } = Astro.props;
 const t = tFactory(lang);
 
-// Markup isi <svg> (24x24, stroke-based, lucide-style).
+// Nama ikon Lucide (dataset @iconify-json/lucide, terverifikasi eksis).
 const ICONS: Record<string, string> = {
-  emergency: '<path d="M22 12h-4l-3 9L9 3l-3 9H2" />',
-  clinic: '<rect x="4" y="3" width="16" height="18" rx="2" /><path d="M12 8v6M9 11h6" />',
-  inpatient:
-    '<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /><path d="M2 17h20" /><path d="M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3" />',
-  surgery:
-    '<circle cx="6" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><path d="M20 4 8.12 15.88" /><path d="M14.47 14.48 20 20" /><path d="M8.12 8.12 12 12" />',
-  diagnostic:
-    '<path d="M10 2v7.5L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9.5V2" /><path d="M8.5 2h7" /><path d="M7 16h10" />',
-  checkup:
-    '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" />',
+  emergency: 'activity',
+  clinic: 'stethoscope',
+  inpatient: 'bed',
+  surgery: 'scissors',
+  diagnostic: 'flask-conical',
+  checkup: 'heart-pulse',
 };
 
-const FALLBACK_ICON = '<path d="M12 5v14M5 12h14" />';
+const FALLBACK_ICON = 'circle-help';
 ---
 
 <section class="section" id="layanan">
@@ -48,16 +45,7 @@ const FALLBACK_ICON = '<path d="M12 5v14M5 12h14" />';
         SERVICES.map((service) => (
           <Card hoverable class="service-card">
             <span class="service-card__icon" aria-hidden="true">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <Fragment set:html={ICONS[service.icon] ?? FALLBACK_ICON} />
-              </svg>
+              <Icon name={`lucide:${ICONS[service.icon] ?? FALLBACK_ICON}`} />
             </span>
             <h3 class="service-card__title">{localized(service.title, lang)}</h3>
             <p class="service-card__description">{localized(service.description, lang)}</p>

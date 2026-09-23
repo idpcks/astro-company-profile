@@ -17,29 +17,31 @@ const t = tFactory(lang);
   <div class="container reviews">
     <h1 class="reviews__title">{t('page.title.reviews')}</h1>
 
-		<div class="reviews__list">
-			{
-				TESTIMONIALS.map((review) => (
-					<div class="reviews__item">
-						<h3 class="reviews__name">{review.name}</h3>
-						<p class="reviews__context">{localized(review.context, lang)}</p>
-						<blockquote class="reviews__quote">
-							<p>{localized(review.quote, lang)}</p>
-						</blockquote>
-					</div>
-				))
-			}
-		</div>
+    <div class="reviews__list">
+      {
+        TESTIMONIALS.map((review) => (
+          <div class="reviews__item">
+            <h3 class="reviews__name">{review.name}</h3>
+            <p class="reviews__context">{localized(review.context, lang)}</p>
+            <blockquote class="reviews__quote">
+              <p>{localized(review.quote, lang)}</p>
+            </blockquote>
+          </div>
+        ))
+      }
+    </div>
 
-		<p class="reviews__note">
-			{lang === 'en'
-				? 'If you would like to share your experience, please send your testimonial through our '
-				: 'Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui '}
-			<a href={localePath('/contact', lang)}>
-				{lang === 'en' ? 'contact page' : 'halaman kontak'}
-			</a>.
-		</p>
-	</div>
+    <p class="reviews__note">
+      {
+        lang === 'en'
+          ? 'If you would like to share your experience, please send your testimonial through our '
+          : 'Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui '
+      }
+      <a href={localePath('/contact', lang)}>
+        {lang === 'en' ? 'contact page' : 'halaman kontak'}
+      </a>.
+    </p>
+  </div>
 </section>
 
 <style>

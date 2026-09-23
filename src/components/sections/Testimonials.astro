@@ -4,6 +4,7 @@
  * I18N: heading dari kamus, kutipan/konteks per locale via localized().
  * Komposisi: Card (surface) + Badge (label konteks).
  */
+import { Icon } from 'astro-icon/components';
 import Badge from '@/components/ui/Badge.astro';
 import Card from '@/components/ui/Card.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
@@ -30,14 +31,7 @@ const t = tFactory(lang);
       {
         TESTIMONIALS.map((testimonial) => (
           <Card class="testimonial-card">
-            <svg
-              class="testimonial-card__quote"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M10 8c-3.3 0-6 2.7-6 6v6h6v-6H6.5C6.5 11.5 8 10 10 10V8Zm10 0c-3.3 0-6 2.7-6 6v6h6v-6h-3.5c0-2.5 1.5-4 3.5-4V8Z" />
-            </svg>
+            <Icon name="lucide:quote" class="testimonial-card__quote" aria-hidden="true" />
             <blockquote class="testimonial-card__quote-text">
               <p>“{localized(testimonial.quote, lang)}”</p>
             </blockquote>

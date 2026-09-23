@@ -47,8 +47,7 @@ const id = {
     'Klinik RS Krakatau Medika di berbagai kota: alamat, telepon, jam layanan, dan layanan yang tersedia.',
   'page.description.layananBisnis':
     'Layanan kesehatan untuk perusahaan dan industri: medical checkup karyawan, kontrak pelayanan, dan kerja sama klinik.',
-  'page.description.profil':
-    'Profil RS Krakatau Medika: komitmen, fasilitas, dan layanan kami.',
+  'page.description.profil': 'Profil RS Krakatau Medika: komitmen, fasilitas, dan layanan kami.',
   'page.description.visiMisi':
     'Visi, misi, dan nilai yang menjadi arah serta fondasi pelayanan RS Krakatau Medika.',
   'page.description.kmNews': 'Kabar dan berita terbaru RS Krakatau Medika.',
@@ -117,24 +116,23 @@ const id = {
 
   // CTASection
   'cta.title': 'Butuh info layanan atau jadwal poliklinik?',
-  'cta.lead':
-    'Hubungi kami untuk jadwal poliklinik, layanan, atau pertanyaan seputar kesehatan.',
+  'cta.lead': 'Hubungi kami untuk jadwal poliklinik, layanan, atau pertanyaan seputar kesehatan.',
   'cta.contact': 'Hubungi Kami',
   'cta.phone': 'Telepon',
 
-	// Footer
-	'footer.menu': 'Menu',
-	'footer.contact': 'Kontak',
-	'footer.hours': 'Jam Layanan',
-	'footer.social': 'Sosial media',
-	'footer.links': 'Tautan',
-	'footer.legal': 'Legal & Bantuan',
-	'footer.link.faq': 'FAQ',
-	'footer.link.privacy': 'Kebijakan Privasi',
-	'footer.link.terms': 'Syarat & Ketentuan',
-	'footer.link.reviews': 'Ulasan Pasien',
-	'footer.rights': 'Semua hak dilindungi.',
-	'footer.emergencyLabel': 'IGD',
+  // Footer
+  'footer.menu': 'Menu',
+  'footer.contact': 'Kontak',
+  'footer.hours': 'Jam Layanan',
+  'footer.social': 'Sosial media',
+  'footer.links': 'Tautan',
+  'footer.legal': 'Legal & Bantuan',
+  'footer.link.faq': 'FAQ',
+  'footer.link.privacy': 'Kebijakan Privasi',
+  'footer.link.terms': 'Syarat & Ketentuan',
+  'footer.link.reviews': 'Ulasan Pasien',
+  'footer.rights': 'Semua hak dilindungi.',
+  'footer.emergencyLabel': 'IGD',
 
   // Share widget (social share buttons)
   'share.title': 'Bagikan halaman ini',
@@ -222,8 +220,7 @@ const id = {
   'aboutPage.hero.lead':
     'Sejak 2005, kami melayani pasien dengan IGD 24 jam, dokter spesialis, dan rawat inap.',
   'profilPage.hero.title': 'Profil Perusahaan',
-  'profilPage.hero.lead':
-    'Identitas, komitmen, dan perjalanan RS Krakatau Medika sejak berdiri.',
+  'profilPage.hero.lead': 'Identitas, komitmen, dan perjalanan RS Krakatau Medika sejak berdiri.',
   'aboutPage.visionMisi.eyebrow': 'Visi & Misi',
   'aboutPage.visionMisi.title': 'Arah dan tujuan kami',
   'aboutPage.vision': 'Visi',
@@ -283,8 +280,7 @@ const id = {
 
   // Halaman /karir
   'karirPage.note.title': 'Lowongan Pekerjaan',
-  'karirPage.note.body':
-    'Lowongan kerja di RS Krakatau Medika akan kami unggah di halaman ini.',
+  'karirPage.note.body': 'Lowongan kerja di RS Krakatau Medika akan kami unggah di halaman ini.',
 
   // Blog komponen
   'post.updated': 'Diperbarui:',
@@ -304,7 +300,7 @@ const id = {
     'Placeholder shimmer tampil saat konten "dimuat", lalu ditukar dengan konten asli tanpa layout shift.',
   'demo.trigger': 'Simulasikan Loading',
   'demo.loading': 'Memuat konten…',
-    'demo.done': 'Konten dimuat ✓',
+  'demo.done': 'Konten dimuat ✓',
 
   // Empty state — reusable komponen EmptyState.astro (SOT)
   'emptyState.title': 'Tidak ada data',
@@ -469,19 +465,19 @@ const en: Record<UiKeys, string> = {
   'cta.contact': 'Contact Us',
   'cta.phone': 'Call',
 
-	// Footer
-	'footer.menu': 'Menu',
-	'footer.contact': 'Contact',
-	'footer.hours': 'Service Hours',
-	'footer.social': 'Social media',
-	'footer.links': 'Links',
-	'footer.legal': 'Legal & Help',
-	'footer.link.faq': 'FAQ',
-	'footer.link.privacy': 'Privacy Policy',
-	'footer.link.terms': 'Terms of Service',
-	'footer.link.reviews': 'Patient Reviews',
-	'footer.rights': 'All rights reserved.',
-	'footer.emergencyLabel': 'ER',
+  // Footer
+  'footer.menu': 'Menu',
+  'footer.contact': 'Contact',
+  'footer.hours': 'Service Hours',
+  'footer.social': 'Social media',
+  'footer.links': 'Links',
+  'footer.legal': 'Legal & Help',
+  'footer.link.faq': 'FAQ',
+  'footer.link.privacy': 'Privacy Policy',
+  'footer.link.terms': 'Terms of Service',
+  'footer.link.reviews': 'Patient Reviews',
+  'footer.rights': 'All rights reserved.',
+  'footer.emergencyLabel': 'ER',
 
   // Share widget (social share buttons)
   'share.title': 'Share this page',
@@ -619,8 +615,7 @@ const en: Record<UiKeys, string> = {
 
   // /lelang-pengadaan
   'lelangPengadaanPage.note.title': 'Tender Notices',
-  'lelangPengadaanPage.note.body':
-    'Tender and procurement announcements will appear on this page.',
+  'lelangPengadaanPage.note.body': 'Tender and procurement announcements will appear on this page.',
 
   // /laporan-keuangan
   'laporanKeuanganPage.note.title': 'Financial Reports',
@@ -629,8 +624,7 @@ const en: Record<UiKeys, string> = {
 
   // /karir
   'karirPage.note.title': 'Job Openings',
-  'karirPage.note.body':
-    'Job openings at RS Krakatau Medika will be posted on this page.',
+  'karirPage.note.body': 'Job openings at RS Krakatau Medika will be posted on this page.',
 
   // Blog
   'post.updated': 'Updated:',

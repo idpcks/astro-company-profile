@@ -3,6 +3,7 @@
  * Konten halaman FAQ — dipakai bersama oleh root (id) & [lang] (en).
  * FAQ schema JSON-LD disuntikkan melalui BaseLayout di src/pages/faq.astro.
  */
+import { Icon } from 'astro-icon/components';
 import CTASection from '@/components/sections/CTASection.astro';
 import Button from '@/components/ui/Button.astro';
 import EmptyState from '@/components/ui/EmptyState.astro';
@@ -52,17 +53,7 @@ const whatsappLink = SOCIAL_LINKS.find((link) => link.label === 'WhatsApp');
           <div class="faq__search-wrapper">
             <div class="faq__search-box">
               <span class="faq__search-icon" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.3-4.3" />
-                </svg>
+                <Icon name="lucide:search" />
               </span>
               <input
                 type="search"
@@ -79,17 +70,7 @@ const whatsappLink = SOCIAL_LINKS.find((link) => link.label === 'WhatsApp');
                 data-faq-search-clear
                 hidden
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
+                <Icon name="lucide:x" />
               </button>
             </div>
           </div>
@@ -101,16 +82,7 @@ const whatsappLink = SOCIAL_LINKS.find((link) => link.label === 'WhatsApp');
                 <summary class="faq-item__summary">
                   <h2 class="faq-item__question">{item.question}</h2>
                   <span class="faq-item__chevron" aria-hidden="true">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="m6 9 6 6 6-6" />
-                    </svg>
+                    <Icon name="lucide:chevron-down" />
                   </span>
                 </summary>
                 <div class="faq-item__content">

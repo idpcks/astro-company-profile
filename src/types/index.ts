@@ -21,6 +21,12 @@ export interface NavItem {
   label: { id: string; en: string };
   /** Halaman tujuan — wajib untuk item tanpa children */
   href?: string;
+  /**
+   * Key ikon Lucide untuk item level atas (opsional), mis. "home".
+   * Dipetakan ke <Icon name={`lucide:${icon}`} /> oleh komponen,
+   * bukan disimpan sebagai path/markup di data.
+   */
+  icon?: string;
   /** Anak menu (dropdown) — opsional */
   children?: NavLink[];
 }
@@ -76,8 +82,8 @@ export interface Testimonial {
 
 /** Satu item FAQ — dipakai halaman /faq (render + JSON-LD FAQPage). */
 export interface FaqItem {
-	/** Pertanyaan, per locale */
-	question: { id: string; en: string };
-	/** Jawaban singkat, per locale */
-	answer: { id: string; en: string };
+  /** Pertanyaan, per locale */
+  question: { id: string; en: string };
+  /** Jawaban singkat, per locale */
+  answer: { id: string; en: string };
 }

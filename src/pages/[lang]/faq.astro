@@ -14,16 +14,16 @@ const t = tFactory(lang);
 // FAQPage schema untuk SEO (English) — teks diambil dari SOT
 // src/data/faq.ts agar IDENTIK dengan konten terlihat.
 const faqSchema = {
-	'@context': 'https://schema.org',
-	'@type': 'FAQPage',
-	mainEntity: FAQ_ITEMS.map((item) => ({
-		'@type': 'Question',
-		name: localized(item.question, lang),
-		acceptedAnswer: {
-			'@type': 'Answer',
-			text: localized(item.answer, lang),
-		},
-	})),
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    '@type': 'Question',
+    name: localized(item.question, lang),
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: localized(item.answer, lang),
+    },
+  })),
 };
 ---
 

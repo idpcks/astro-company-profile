@@ -6,6 +6,7 @@
 import Button from '@/components/ui/Button.astro';
 import { localePath, tFactory, type Lang } from '@/i18n';
 import { SITE } from '@/data/site';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   lang: Lang;
@@ -24,9 +25,11 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
       <p class="cta__lead">{t('cta.lead')}</p>
       <div class="cta__actions">
         <Button href={localePath('/contact', lang)} variant="light" size="lg">
+          <Icon name="lucide:contact" class="cta__icon" aria-hidden="true" />
           {t('cta.contact')}
         </Button>
         <Button href={`tel:${phoneTel}`} variant="ghost" size="lg">
+          <Icon name="lucide:phone" class="cta__icon" aria-hidden="true" />
           {t('cta.phone')}
           {SITE.phone}
         </Button>
