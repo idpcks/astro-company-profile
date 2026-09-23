@@ -1,13 +1,11 @@
 ---
 /**
  * Isi halaman /lelang-pengadaan — dipakai bersama oleh root (id) & [lang] (en).
- * Minimal: hero + catatan bahwa pengumuman lelang segera hadir.
  */
 import CTASection from '@/components/sections/CTASection.astro';
-import Card from '@/components/ui/Card.astro';
+import EmptyState from '@/components/ui/EmptyState.astro';
 import PageHero from '@/components/ui/PageHero.astro';
-import SectionHeading from '@/components/ui/SectionHeading.astro';
-import { tFactory, type Lang } from '@/i18n';
+import { localePath, tFactory, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -25,26 +23,14 @@ const t = tFactory(lang);
 
 <section class="section">
   <div class="container">
-    <SectionHeading title={t('lelangPengadaanPage.note.title')} align="start" />
-    <div class="lelang__grid">
-      <Card>
-        <p class="lelang__note">{t('lelangPengadaanPage.note.body')}</p>
-      </Card>
-    </div>
+    <EmptyState
+      icon="file-text"
+      title={t('lelangPengadaan.empty.title')}
+      description={t('lelangPengadaan.empty.description')}
+      actionText={t('lelangPengadaan.empty.action')}
+      actionHref={localePath('/contact', lang)}
+    />
   </div>
 </section>
 
 <CTASection lang={lang} />
-
-<style>
-  .lelang__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: var(--space-6);
-  }
-
-  .lelang__note {
-    color: var(--color-muted);
-    font-size: var(--text-base);
-  }
-</style>

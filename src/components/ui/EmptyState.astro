@@ -1,0 +1,217 @@
+---
+/**
+ * EmptyState — komponen UI reusable untuk menampilkan kondisi kosong (data kosong /
+ * pencarian tanpa hasil / konten segera hadir) secara konsisten dan semantik.
+ *
+ * Murni presentasional (Single Source of Truth) sesuai docs/STRUCTURE.md:
+ * seluruh teks diteruskan melalui props atau terjemahan i18n pemanggil.
+ */
+import Button from '@/components/ui/Button.astro';
+
+export type EmptyStateIcon =
+  | 'inbox'
+  | 'briefcase'
+  | 'newspaper'
+  | 'file-text'
+  | 'book-open'
+  | 'image'
+  | 'help-circle'
+  | 'building'
+  | 'message-square'
+  | 'activity'
+  | 'search';
+
+interface Props {
+  /** Judul pesan kondisi kosong */
+  title: string;
+  /** Deskripsi penjelasan atau panduan tindak lanjut */
+  description?: string;
+  /** Ikon preset yang merepresentasikan konteks */
+  icon?: EmptyStateIcon;
+  /** Label teks tombol tindakan opsional */
+  actionText?: string;
+  /** Tautan tujuan tombol tindakan opsional */
+  actionHref?: string;
+  /** Varian visual tombol (default: 'outline') */
+  actionVariant?: 'primary' | 'emergency' | 'outline' | 'light' | 'ghost';
+  /** Ukuran visual komponen: 'sm' | 'md' | 'lg' */
+  size?: 'sm' | 'md' | 'lg';
+  /** Class tambahan dari pemakai */
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  icon = 'inbox',
+  actionText,
+  actionHref,
+  actionVariant = 'outline',
+  size = 'md',
+  class: className,
+} = Astro.props;
+
+// Ikon stroke-based (24x24, Lucide-style)
+const PRESET_ICONS: Record<EmptyStateIcon, string> = {
+  inbox:
+    '<path d="M22 12h-6l-2 3h-4l-2-3H2" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />',
+  briefcase:
+    '<rect width="20" height="14" x="2" y="7" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />',
+  newspaper:
+    '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" /><path d="M18 14h-8" /><path d="M15 18h-5" /><path d="M10 6h8v4h-8V6Z" />',
+  'file-text':
+    '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" />',
+  'book-open':
+    '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />',
+  image:
+    '<rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />',
+  'help-circle':
+    '<circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" />',
+  building:
+    '<rect width="16" height="20" x="4" y="2" rx="2" ry="2" /><path d="M9 22v-4h6v4" /><path d="M8 6h.01" /><path d="M16 6h.01" /><path d="M8 10h.01" /><path d="M16 10h.01" /><path d="M8 14h.01" /><path d="M16 14h.01" />',
+  'message-square':
+    '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />',
+  activity: '<path d="M22 12h-4l-3 9L9 3l-3 9H2" />',
+  search: '<circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />',
+};
+
+const iconSvg = PRESET_ICONS[icon] ?? PRESET_ICONS.inbox;
+---
+
+<div class:list={['empty-state', `empty-state--${size}`, className]}>
+  <div class="empty-state__icon-wrapper">
+    <slot name="icon">
+      <svg
+        class="empty-state__icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <Fragment set:html={iconSvg} />
+      </svg>
+    </slot>
+  </div>
+
+  <h3 class="empty-state__title">{title}</h3>
+
+  {description && <p class="empty-state__description">{description}</p>}
+
+  {
+    (actionHref && actionText) || Astro.slots.has('default') ? (
+      <div class="empty-state__actions">
+        {actionHref && actionText && (
+          <Button href={actionHref} variant={actionVariant} size={size === 'lg' ? 'lg' : 'md'}>
+            {actionText}
+          </Button>
+        )}
+        <slot />
+      </div>
+    ) : null
+  }
+</div>
+
+<style>
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--color-surface);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-xl, var(--radius-lg));
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .empty-state--sm {
+    padding: var(--space-6) var(--space-4);
+    max-width: 28rem;
+  }
+
+  .empty-state--md {
+    padding: var(--space-12) var(--space-6);
+    max-width: 38rem;
+  }
+
+  .empty-state--lg {
+    padding: var(--space-16) var(--space-8);
+    max-width: 48rem;
+  }
+
+  .empty-state__icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-4);
+    transition: transform var(--transition-base);
+  }
+
+  .empty-state--sm .empty-state__icon-wrapper {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .empty-state--md .empty-state__icon-wrapper {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .empty-state--lg .empty-state__icon-wrapper {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .empty-state__icon {
+    width: 50%;
+    height: 50%;
+  }
+
+  .empty-state:hover .empty-state__icon-wrapper {
+    transform: scale(1.05);
+  }
+
+  .empty-state__title {
+    color: var(--color-ink);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    margin: 0 0 var(--space-2);
+  }
+
+  .empty-state--sm .empty-state__title {
+    font-size: var(--text-lg);
+  }
+
+  .empty-state--lg .empty-state__title {
+    font-size: var(--text-2xl);
+  }
+
+  .empty-state__description {
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    max-width: 32rem;
+    margin: 0;
+  }
+
+  .empty-state--sm .empty-state__description {
+    font-size: var(--text-sm);
+  }
+
+  .empty-state__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+</style>

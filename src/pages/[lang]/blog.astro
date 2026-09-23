@@ -7,10 +7,11 @@
  * Pola ini membiarkan terjemahan masuk bertahap tanpa listing kosong.
  */
 import PostCard from '@/components/blog/PostCard.astro';
+import EmptyState from '@/components/ui/EmptyState.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getPostsForListing } from '@/lib/blog';
-import { tFactory, type Lang } from '@/i18n';
+import { localePath, tFactory, type Lang } from '@/i18n';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }];
@@ -31,9 +32,23 @@ const posts = await getPostsForListing(lang);
 
   <section class="section">
     <div class="container">
-      <div class="blog-list">
-        {posts.map((post) => <PostCard post={post} lang={lang} />)}
-      </div>
+      {
+        posts.length > 0 ? (
+          <div class="blog-list">
+            {posts.map((post) => (
+              <PostCard post={post} lang={lang} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon="book-open"
+            title={t('blog.empty.title')}
+            description={t('blog.empty.description')}
+            actionText={t('blog.empty.action')}
+            actionHref={localePath('/', lang)}
+          />
+        )
+      }
     </div>
   </section>
 </BaseLayout>
