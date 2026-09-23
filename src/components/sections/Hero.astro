@@ -172,30 +172,6 @@ const trustItems = [t('hero.trust.doctors'), t('hero.trust.facilities'), t('hero
     color: #5eead4;
   }
 
-  /* Strip darurat: kartu merah tipis di bawah hero */
-  .hero__emergency {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    margin-top: var(--space-12);
-    padding: var(--space-4) var(--space-6);
-    background-color: var(--color-emergency-light);
-    border: 1px solid var(--color-emergency);
-    border-radius: var(--radius-lg);
-    text-align: start;
-  }
-
-  .hero__emergency-title {
-    color: var(--color-emergency-text);
-    font-weight: 700;
-  }
-
-  .hero__emergency p {
-    font-size: var(--text-sm);
-  }
-
   @media (max-width: 768px) {
     .hero__overlay {
       background: linear-gradient(180deg, rgb(15 23 42 / 0.8) 0%, rgb(15 23 42 / 0.55) 100%);
@@ -205,11 +181,6 @@ const trustItems = [t('hero.trust.doctors'), t('hero.trust.facilities'), t('hero
   @media (max-width: 640px) {
     .hero__title {
       font-size: var(--text-4xl);
-    }
-
-    .hero__emergency {
-      flex-direction: column;
-      align-items: flex-start;
     }
   }
 </style>

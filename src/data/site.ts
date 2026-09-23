@@ -52,7 +52,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
 export const USEFUL_LINKS: SocialLink[] = [
   {
     label: 'Jadwal Praktek Dokter',
-    href: 'http://rskm.ihc.id/cari-dokter.html',
+    href: 'https://rskm.ihc.id/cari-dokter.html',
   },
   { label: 'Website', href: 'https://www.krakataumedika.co.id/' },
   {

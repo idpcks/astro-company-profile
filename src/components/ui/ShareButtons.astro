@@ -242,26 +242,29 @@ const NETWORKS = [
 </style>
 
 <script>
-  const copyButton = document.querySelector<HTMLButtonElement>('[data-share-copy]');
+  document.addEventListener('astro:page-load', () => {
+    const copyButton = document.querySelector<HTMLButtonElement>('[data-share-copy]');
 
-  copyButton?.addEventListener('click', async () => {
-    if (copyButton.dataset.copied) return;
-    const targetUrl = copyButton.dataset.url || location.href;
-    const copiedLabel = copyButton.dataset.copiedLabel ?? 'Link copied!';
+    copyButton?.addEventListener('click', async () => {
+      if (copyButton.dataset.copied) return;
+      const targetUrl = copyButton.dataset.url || location.href;
+      const copiedLabel = copyButton.dataset.copiedLabel ?? 'Link copied!';
 
-    try {
-      await navigator.clipboard.writeText(targetUrl);
-      copyButton.dataset.copied = 'true';
-      copyButton.setAttribute('aria-label', copiedLabel);
-      copyButton.title = copiedLabel;
-      window.setTimeout(() => {
-        delete copyButton.dataset.copied;
-        const originalLabel = copyButton.dataset.label ?? '';
-        copyButton.setAttribute('aria-label', originalLabel);
-        copyButton.title = originalLabel;
-      }, 2000);
-    } catch {
-      /* clipboard diblokir → biarkan tombol tanpa feedback */
-    }
+      try {
+        await navigator.clipboard.writeText(targetUrl);
+        copyButton.dataset.copied = 'true';
+        copyButton.setAttribute('aria-label', copiedLabel);
+        copyButton.title = copiedLabel;
+        window.setTimeout(() => {
+          delete copyButton.dataset.copied;
+          const originalLabel = copyButton.dataset.label ?? '';
+          copyButton.setAttribute('aria-label', originalLabel);
+          copyButton.title = originalLabel;
+        }, 2000);
+      } catch {
+        /* clipboard diblokir → biarkan tombol tanpa feedback */
+      }
+    });
   });
 </script>
+

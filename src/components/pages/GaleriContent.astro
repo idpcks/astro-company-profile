@@ -429,47 +429,57 @@ const VIDEOS: GalleryItem[] = [
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
 
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: '[data-pswp-gallery]',
-    children: 'a',
-    pswpModule: () => import('photoswipe'),
-    bgOpacity: 0.92,
-  });
+  let lightbox: PhotoSwipeLightbox | null = null;
 
-  // PhotoSwipe 5.4 tidak membaca data-pswp-video-src secara bawaan; slide
-  // video disajikan lewat filter: ubah anchor tipe video jadi konten HTML
-  // berisi <video>. autoplay muted agar langsung tampak berputar (browser
-  // memblokir autoplay bersuara), user bisa unmute via kontrol.
-  lightbox.addFilter('domItemData', (itemData, element, linkEl) => {
-    if (linkEl?.dataset.pswpType === 'video' && linkEl.dataset.pswpVideoSrc) {
-      const src = linkEl.dataset.pswpVideoSrc;
-      const poster = linkEl.dataset.poster ?? '';
-      itemData.type = 'video';
-      itemData.html =
-        '<video controls playsinline autoplay muted preload="metadata"' +
-        (poster ? ` poster="${poster}"` : '') +
-        ` src="${src}"></video>`;
+  document.addEventListener('astro:page-load', () => {
+    // Bersihkan instance sebelumnya jika ada (navigasi SPA kembali ke halaman ini)
+    if (lightbox) {
+      lightbox.destroy();
+      lightbox = null;
     }
-    return itemData;
-  });
 
-  // Tampilkan caption foto aktif di bagian bawah lightbox.
-  lightbox.on('uiRegister', () => {
-    lightbox.pswp?.ui?.registerElement({
-      name: 'galeri-caption',
-      order: 9,
-      isButton: false,
-      appendTo: 'root',
-      html: '',
-      onInit: (el, pswp) => {
-        el.classList.add('pswp__galeri-caption');
-        pswp.on('change', () => {
-          const link = pswp.currSlide?.data.element as HTMLAnchorElement | undefined;
-          el.textContent = link?.dataset.caption ?? '';
-        });
-      },
+    lightbox = new PhotoSwipeLightbox({
+      gallery: '[data-pswp-gallery]',
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+      bgOpacity: 0.92,
     });
-  });
 
-  lightbox.init();
+    // PhotoSwipe 5.4 tidak membaca data-pswp-video-src secara bawaan; slide
+    // video disajikan lewat filter: ubah anchor tipe video jadi konten HTML
+    // berisi <video>. autoplay muted agar langsung tampak berputar (browser
+    // memblokir autoplay bersuara), user bisa unmute via kontrol.
+    lightbox.addFilter('domItemData', (itemData, _element, linkEl) => {
+      if (linkEl?.dataset.pswpType === 'video' && linkEl.dataset.pswpVideoSrc) {
+        const src = linkEl.dataset.pswpVideoSrc;
+        const poster = linkEl.dataset.poster ?? '';
+        itemData.type = 'video';
+        itemData.html =
+          '<video controls playsinline autoplay muted preload="metadata"' +
+          (poster ? ` poster="${poster}"` : '') +
+          ` src="${src}"></video>`;
+      }
+      return itemData;
+    });
+
+    // Tampilkan caption foto aktif di bagian bawah lightbox.
+    lightbox.on('uiRegister', () => {
+      lightbox!.pswp?.ui?.registerElement({
+        name: 'galeri-caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'root',
+        html: '',
+        onInit: (el, pswp) => {
+          el.classList.add('pswp__galeri-caption');
+          pswp.on('change', () => {
+            const link = pswp.currSlide?.data.element as HTMLAnchorElement | undefined;
+            el.textContent = link?.dataset.caption ?? '';
+          });
+        },
+      });
+    });
+
+    lightbox.init();
+  });
 </script>

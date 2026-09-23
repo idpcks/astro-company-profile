@@ -200,8 +200,10 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
     consent: boolean;
   }
 
-  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
-  if (form) {
+  document.addEventListener('astro:page-load', () => {
+    const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+    if (!form) return;
+
     const statusEl = form.querySelector<HTMLParagraphElement>('[data-form-status]');
     const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
     const honeyInput = form.querySelector<HTMLInputElement>(`input[name="${HONEYPOT_NAME}"]`);
@@ -289,8 +291,8 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
     });
 
     // Konfirmasi di modal → tutup lalu kirim.
-    document
-      .querySelector<HTMLButtonElement>('[data-dialog-confirm]')
+    dialog
+      ?.querySelector<HTMLButtonElement>('[data-dialog-confirm]')
       ?.addEventListener('click', () => {
         if (!pendingData) return;
         const data = pendingData;
@@ -300,8 +302,8 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
       });
 
     // Batal → tutup, kembalikan fokus ke form, jangan kirim apa pun.
-    document
-      .querySelector<HTMLButtonElement>('[data-dialog-cancel]')
+    dialog
+      ?.querySelector<HTMLButtonElement>('[data-dialog-cancel]')
       ?.addEventListener('click', () => {
         pendingData = null;
         dialog?.close();
@@ -314,7 +316,7 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
         dialog.close();
       }
     });
-  }
+  });
 </script>
 
 <style>
@@ -445,7 +447,7 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
     color: var(--color-primary-text);
   }
 
-  .contact-form__status--error {
+  :global(.contact-form__status--error) {
     color: var(--color-emergency-text);
   }
 
