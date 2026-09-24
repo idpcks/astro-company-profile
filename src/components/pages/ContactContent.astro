@@ -78,6 +78,8 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
         data-msg-success={t('contactPage.form.success')}
         data-msg-error={t('contactPage.form.error')}
         data-msg-invalid={t('contactPage.form.invalid')}
+        data-msg-email={t('contactPage.form.emailInvalid')}
+        data-msg-phone={t('contactPage.form.phoneInvalid')}
         data-msg-consent={t('contactPage.form.consentError')}
       >
         {
@@ -109,12 +111,21 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
             required
             autocomplete="email"
             maxlength="120"
+            pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
           />
         </div>
 
         <div class="contact-form__field">
           <label for="phone">{t('contactPage.form.phone')}</label>
-          <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="24" />
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            inputmode="tel"
+            maxlength="24"
+            pattern="^(\+62|62|0)8[1-9][0-9]{7,11}$"
+          />
         </div>
 
         <div class="contact-form__field">
@@ -266,13 +277,24 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
       }
     };
 
+    // Pesan error spesifik per-field: email/phone punya pesan sendiri
+    // (format), field lain & wajib diisi → pesan umum. Konsentrasi (PDP)
+    // ditangani lewat setCustomValidity → validitasnya ikut :invalid.
+    const fieldErrorMessage = () => {
+      const invalid = form.querySelector<HTMLElement>(':invalid');
+      const name = invalid?.getAttribute('name');
+      if (name === 'email') return form.dataset.msgEmail ?? form.dataset.msgInvalid ?? '';
+      if (name === 'phone') return form.dataset.msgPhone ?? form.dataset.msgInvalid ?? '';
+      return form.dataset.msgInvalid ?? '';
+    };
+
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       if (!statusEl || !submitBtn || !dialog) return;
 
       syncConsentValidity();
       if (!form.checkValidity()) {
-        show(form.dataset.msgInvalid ?? '', true);
+        show(fieldErrorMessage(), true);
         // Pindahkan fokus ke isian pertama yang tidak valid.
         form.querySelector<HTMLElement>(':invalid')?.focus();
         return;
@@ -403,10 +425,14 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
     transition: border-color var(--transition-base);
   }
 
-  .contact-form__field input:focus,
-  .contact-form__field textarea:focus {
+  /* Ring fokus yang terlihat DIATAS ring global :focus-visible non-input.
+     Input/border dihilangkan default browser → pasang ring teal sendiri.
+     Gunakan :focus-visible (bukan :focus) supaya ring tak muncul saat klik. */
+  .contact-form__field input:focus-visible,
+  .contact-form__field textarea:focus-visible {
     outline: none;
     border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
   }
 
   .contact-form__field textarea {
