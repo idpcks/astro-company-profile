@@ -1,0 +1,19 @@
+---
+/**
+ * /struktur-organisasi — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StrukturOrganisasiContent from '@/components/pages/StrukturOrganisasiContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('page.title.strukturOrganisasi')}
+  description={t('page.description.strukturOrganisasi')}
+>
+  <StrukturOrganisasiContent lang={lang} />
+</BaseLayout>

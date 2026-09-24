@@ -1,0 +1,42 @@
+---
+/**
+ * Isi halaman /struktur-organisasi — Struktur Organisasi (submenu "Tentang Kami").
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+  eyebrow={t('pagehero.eyebrow.strukturOrganisasi')}
+  title={t('strukturOrganisasiPage.hero.title')}
+  lead={t('strukturOrganisasiPage.hero.lead')}
+/>
+
+<section class="section">
+  <div class="container">
+    <SectionHeading title={t('strukturOrganisasiPage.body.heading')} align="start" />
+    <div class="struktur-organisasi__body">
+      <p>{t('strukturOrganisasiPage.body.para1')}</p>
+      <p>{t('strukturOrganisasiPage.body.para2')}</p>
+    </div>
+  </div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+  .struktur-organisasi__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 42rem;
+  }
+</style>

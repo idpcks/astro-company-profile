@@ -1,0 +1,15 @@
+---
+/**
+ * /sejarah — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SejarahContent from '@/components/pages/SejarahContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout lang={lang} title={t('page.title.sejarah')} description={t('page.description.sejarah')}>
+  <SejarahContent lang={lang} />
+</BaseLayout>

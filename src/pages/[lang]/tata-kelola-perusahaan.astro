@@ -1,0 +1,23 @@
+---
+/**
+ * /en/tata-kelola-perusahaan — halaman tata-kelola-perusahaan dalam bahasa Inggris.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TataKelolaContent from '@/components/pages/TataKelolaContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }];
+}
+
+const lang: Lang = 'en';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('page.title.tataKelolaPerusahaan')}
+  description={t('page.description.tataKelolaPerusahaan')}
+>
+  <TataKelolaContent lang={lang} />
+</BaseLayout>

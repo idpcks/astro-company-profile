@@ -22,16 +22,30 @@ export const NAV_ITEMS: NavItem[] = [
       { label: { id: 'Profil', en: 'Profile' }, href: '/profil' },
       { label: { id: 'Sejarah Perusahaan', en: 'Company History' }, href: '/sejarah' },
       { label: { id: 'Visi & Misi', en: 'Vision & Mission' }, href: '/visi-misi' },
-      { label: { id: 'Struktur Organisasi', en: 'Organizational Structure' }, href: '/struktur-organisasi' },
+      {
+        label: { id: 'Struktur Organisasi', en: 'Organizational Structure' },
+        href: '/struktur-organisasi',
+      },
       { label: { id: 'Manajemen', en: 'Management' }, href: '/manajemen' },
-      { label: { id: 'Tata Kelola Perusahaan', en: 'Corporate Governance' }, href: '/tata-kelola-perusahaan' },
+      {
+        label: { id: 'Tata Kelola Perusahaan', en: 'Corporate Governance' },
+        href: '/tata-kelola-perusahaan',
+      },
       // Di footer, WBS tampil lewat grup "Mitra & Transparansi".
-      { label: { id: 'Whistleblowing System (WBS)', en: 'Whistleblowing System (WBS)' }, href: '/wbs', showIn: ['header'] },
+      {
+        label: { id: 'Whistleblowing System (WBS)', en: 'Whistleblowing System (WBS)' },
+        href: '/wbs',
+        showIn: ['header'],
+      },
       { label: { id: 'Penghargaan', en: 'Awards' }, href: '/penghargaan' },
       { label: { id: 'Akreditasi', en: 'Accreditation' }, href: '/akreditasi' },
       // Halaman induk: Kerjasama, CSR, dan Lelang Pengadaan sebagai tab/seksi.
       // Di footer, masing-masing seksi ditautkan langsung lewat grup "Mitra & Transparansi".
-      { label: { id: 'Kemitraan & Pengadaan', en: 'Partnership & Procurement' }, href: '/kemitraan', showIn: ['header'] },
+      {
+        label: { id: 'Kemitraan & Pengadaan', en: 'Partnership & Procurement' },
+        href: '/kemitraan',
+        showIn: ['header'],
+      },
       { label: { id: 'Laporan Keuangan', en: 'Financial Reports' }, href: '/laporan-keuangan' },
     ],
   },
@@ -76,11 +90,17 @@ export const NAV_ITEMS: NavItem[] = [
     icon: 'handshake',
     showIn: ['footer'],
     children: [
-      { label: { id: 'Lelang Pengadaan', en: 'Tender Procurement' }, href: '/kemitraan#lelang-pengadaan' },
+      {
+        label: { id: 'Lelang Pengadaan', en: 'Tender Procurement' },
+        href: '/kemitraan#lelang-pengadaan',
+      },
       { label: { id: 'Kerjasama', en: 'Partnership' }, href: '/kemitraan#kerjasama' },
       { label: { id: 'CSR', en: 'CSR' }, href: '/kemitraan#csr' },
       { label: { id: 'Layanan Bisnis', en: 'Business Services' }, href: '/layanan-bisnis' },
-      { label: { id: 'Whistleblowing System (WBS)', en: 'Whistleblowing System (WBS)' }, href: '/wbs' },
+      {
+        label: { id: 'Whistleblowing System (WBS)', en: 'Whistleblowing System (WBS)' },
+        href: '/wbs',
+      },
     ],
   },
 ];
@@ -90,8 +110,6 @@ export function getNavItems(placement: NavPlacement, items: NavItem[] = NAV_ITEM
   return items
     .filter((item) => !item.showIn || item.showIn.includes(placement))
     .map((item) =>
-      item.children
-        ? { ...item, children: getNavItems(placement, item.children) }
-        : item,
+      item.children ? { ...item, children: getNavItems(placement, item.children) } : item
     );
 }

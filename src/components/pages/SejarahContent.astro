@@ -1,0 +1,43 @@
+---
+/**
+ * Isi halaman /sejarah — Sejarah Perusahaan (submenu "Tentang Kami").
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+  eyebrow={t('pagehero.eyebrow.sejarah')}
+  title={t('sejarahPage.hero.title')}
+  lead={t('sejarahPage.hero.lead')}
+/>
+
+<section class="section">
+  <div class="container">
+    <SectionHeading title={t('sejarahPage.body.heading')} align="start" />
+    <div class="sejarah__body">
+      <p>{t('sejarahPage.body.para1')}</p>
+      <p>{t('sejarahPage.body.para2')}</p>
+      <p>{t('sejarahPage.body.para3')}</p>
+    </div>
+  </div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+  .sejarah__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 42rem;
+  }
+</style>

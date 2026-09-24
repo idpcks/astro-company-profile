@@ -1,0 +1,42 @@
+---
+/**
+ * Isi halaman /tata-kelola-perusahaan — Tata Kelola Perusahaan (submenu "Tentang Kami").
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+  eyebrow={t('pagehero.eyebrow.tataKelolaPerusahaan')}
+  title={t('tataKelolaPage.hero.title')}
+  lead={t('tataKelolaPage.hero.lead')}
+/>
+
+<section class="section">
+  <div class="container">
+    <SectionHeading title={t('tataKelolaPage.body.heading')} align="start" />
+    <div class="tata-kelola__body">
+      <p>{t('tataKelolaPage.body.para1')}</p>
+      <p>{t('tataKelolaPage.body.para2')}</p>
+    </div>
+  </div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+  .tata-kelola__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 42rem;
+  }
+</style>

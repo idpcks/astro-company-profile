@@ -1,0 +1,42 @@
+---
+/**
+ * Isi halaman /manajemen — Manajemen (submenu "Tentang Kami").
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+  eyebrow={t('pagehero.eyebrow.manajemen')}
+  title={t('manajemenPage.hero.title')}
+  lead={t('manajemenPage.hero.lead')}
+/>
+
+<section class="section">
+  <div class="container">
+    <SectionHeading title={t('manajemenPage.body.heading')} align="start" />
+    <div class="manajemen__body">
+      <p>{t('manajemenPage.body.para1')}</p>
+      <p>{t('manajemenPage.body.para2')}</p>
+    </div>
+  </div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+  .manajemen__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 42rem;
+  }
+</style>

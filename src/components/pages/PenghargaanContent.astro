@@ -1,0 +1,41 @@
+---
+/**
+ * Isi halaman /penghargaan — Penghargaan (submenu "Tentang Kami").
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+  eyebrow={t('pagehero.eyebrow.penghargaan')}
+  title={t('penghargaanPage.hero.title')}
+  lead={t('penghargaanPage.hero.lead')}
+/>
+
+<section class="section">
+  <div class="container">
+    <SectionHeading title={t('penghargaanPage.body.heading')} align="start" />
+    <div class="penghargaan__body">
+      <p>{t('penghargaanPage.body.para1')}</p>
+    </div>
+  </div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+  .penghargaan__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 42rem;
+  }
+</style>

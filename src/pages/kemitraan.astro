@@ -1,0 +1,19 @@
+---
+/**
+ * /kemitraan — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import KemitraanContent from '@/components/pages/KemitraanContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('page.title.kemitraan')}
+  description={t('page.description.kemitraan')}
+>
+  <KemitraanContent lang={lang} />
+</BaseLayout>

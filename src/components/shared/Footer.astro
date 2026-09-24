@@ -6,6 +6,7 @@
  */
 import { localized, localePath, tFactory, type Lang } from '@/i18n';
 import { SITE, SOCIAL_LINKS, USEFUL_LINKS } from '@/data/site';
+import { getNavItems } from '@/data/nav';
 
 interface Props {
   lang: Lang;
@@ -17,6 +18,16 @@ const t = tFactory(lang);
 const year = new Date().getFullYear();
 const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 const phoneTel = SITE.phone.replace(/\s/g, '');
+
+/**
+ * Grup nav untuk footer. Item level atas yang punya `children` dirender
+ * sebagai kolom berjudul; item tanpa children (link tunggal seperti
+ * Beranda/Layanan/Kontak) di-skip karena sudah ada di header.
+ * getNavItems('footer') sekaligus menerapkan batasan showIn per item.
+ */
+const footerGroups = getNavItems('footer').filter(
+  (item) => item.children && item.children.length > 0
+);
 ---
 
 <footer class="footer">
@@ -36,6 +47,23 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
         }
       </ul>
     </div>
+
+    {
+      footerGroups.map((group) => (
+        <div>
+          <h3 class="footer__heading">{localized(group.label, lang)}</h3>
+          <ul class="footer__social" aria-label={localized(group.label, lang)}>
+            {(group.children ?? []).map((child) =>
+              child.href ? (
+                <li>
+                  <a href={localePath(child.href, lang)}>{localized(child.label, lang)}</a>
+                </li>
+              ) : null
+            )}
+          </ul>
+        </div>
+      ))
+    }
 
     <div>
       <h3 class="footer__heading">{t('footer.links')}</h3>

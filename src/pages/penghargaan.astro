@@ -1,0 +1,19 @@
+---
+/**
+ * /penghargaan — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PenghargaanContent from '@/components/pages/PenghargaanContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('page.title.penghargaan')}
+  description={t('page.description.penghargaan')}
+>
+  <PenghargaanContent lang={lang} />
+</BaseLayout>

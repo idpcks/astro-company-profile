@@ -1,0 +1,67 @@
+---
+/**
+ * Isi halaman /kemitraan — Kemitraan & Pengadaan.
+ * Halaman induk yang menggelar seksi Kerja Sama, CSR, dan Lelang Pengadaan
+ * sebagai bagian yang bisa dituju langsung lewat anchor
+ * (`#kerjasama`, `#csr`, `#lelang-pengadaan`).
+ */
+import CTASection from '@/components/sections/CTASection.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = tFactory(lang);
+---
+
+<PageHero
+  eyebrow={t('pagehero.eyebrow.kemitraan')}
+  title={t('kemitraanPage.hero.title')}
+  lead={t('kemitraanPage.hero.lead')}
+/>
+
+<section id="kerjasama" class="section kemitraan__section">
+  <div class="container">
+    <h2 class="kemitraan__title">{t('kemitraanPage.section.kerjasama.title')}</h2>
+    <p class="kemitraan__body">{t('kemitraanPage.section.kerjasama.body')}</p>
+  </div>
+</section>
+
+<section id="csr" class="section kemitraan__section">
+  <div class="container">
+    <h2 class="kemitraan__title">{t('kemitraanPage.section.csr.title')}</h2>
+    <p class="kemitraan__body">{t('kemitraanPage.section.csr.body')}</p>
+  </div>
+</section>
+
+<section id="lelang-pengadaan" class="section kemitraan__section">
+  <div class="container">
+    <h2 class="kemitraan__title">{t('kemitraanPage.section.lelang.title')}</h2>
+    <p class="kemitraan__body">{t('kemitraanPage.section.lelang.body')}</p>
+  </div>
+</section>
+
+<CTASection lang={lang} />
+
+<style>
+  .kemitraan__section {
+    scroll-margin-top: var(--header-height, 5rem);
+  }
+
+  .kemitraan__section:nth-child(even) {
+    background: var(--color-surface);
+  }
+
+  .kemitraan__title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-3);
+  }
+
+  .kemitraan__body {
+    color: var(--color-muted);
+    max-width: 42rem;
+  }
+</style>

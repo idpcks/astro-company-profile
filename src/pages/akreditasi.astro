@@ -1,0 +1,19 @@
+---
+/**
+ * /akreditasi — locale default (id), tanpa prefix.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AkreditasiContent from '@/components/pages/AkreditasiContent.astro';
+import { tFactory, type Lang } from '@/i18n';
+
+const lang: Lang = 'id';
+const t = tFactory(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('page.title.akreditasi')}
+  description={t('page.description.akreditasi')}
+>
+  <AkreditasiContent lang={lang} />
+</BaseLayout>

@@ -70,10 +70,8 @@ const id = {
     'Jajaran manajemen dan direksi RS Krakatau Medika yang memimpin pelayanan dan operasional.',
   'page.description.tataKelolaPerusahaan':
     'Tata kelola perusahaan RS Krakatau Medika: GCG, etika, kebijakan, dan akuntabilitas.',
-  'page.description.penghargaan':
-    'Penghargaan dan sertifikasi yang diraih RS Krakatau Medika.',
-  'page.description.akreditasi':
-    'Status akreditasi dan mutu layanan RS Krakatau Medika.',
+  'page.description.penghargaan': 'Penghargaan dan sertifikasi yang diraih RS Krakatau Medika.',
+  'page.description.akreditasi': 'Status akreditasi dan mutu layanan RS Krakatau Medika.',
   'page.description.kemitraan':
     'Kemitraan RS Krakatau Medika: kerjasama, CSR, dan lelang pengadaan barang/jasa.',
   'page.title.privacy': 'Kebijakan Privasi',
@@ -372,6 +370,90 @@ const id = {
   'laporanKeuangan.empty.title': 'Belum ada laporan',
   'laporanKeuangan.empty.description': 'Belum ada laporan keuangan yang tersedia.',
   'laporanKeuangan.empty.action': 'Lihat semua laporan',
+
+  // PageHero eyebrows — halaman baru (submenu "Tentang Kami" & "Mitra & Transparansi")
+  'pagehero.eyebrow.sejarah': 'Sejarah',
+  'pagehero.eyebrow.strukturOrganisasi': 'Organisasi',
+  'pagehero.eyebrow.manajemen': 'Manajemen',
+  'pagehero.eyebrow.tataKelolaPerusahaan': 'Tata Kelola',
+  'pagehero.eyebrow.penghargaan': 'Penghargaan',
+  'pagehero.eyebrow.akreditasi': 'Akreditasi',
+  'pagehero.eyebrow.kemitraan': 'Kemitraan',
+
+  // Halaman /sejarah
+  'sejarahPage.hero.title': 'Sejarah Perusahaan',
+  'sejarahPage.hero.lead':
+    'Perjalanan RS Krakatau Medika: dari yang kecil menjadi mitra kesehatan keluarga Cilegon.',
+  'sejarahPage.body.heading': 'Dari awal berdiri hingga kini',
+  'sejarahPage.body.para1':
+    'RS Krakatau Medika berdiri pada tahun 2005 sebagai rumah sakit swasta di Cilegon, Banten. Berawal dari kebutuhan pelayanan kesehatan yang dekat dengan kawasan industri, rumah sakit hadir untuk melayani karyawan industri serta masyarakat luas.',
+  'sejarahPage.body.para2':
+    'Selama bertahun-tahun, kami terus menambah fasilitas dan layanan: poliklinik spesialis, rawat inap, bedah, laboratorium, hingga IGD yang beroperasi 24 jam.',
+  'sejarahPage.body.para3':
+    'Kami berkomitmen tumbuh bersama masyarakat, memperluas jangkauan layanan, dan menjaga mutu melalui akreditasi serta pengembangan sumber daya manusia secara berkelanjutan.',
+
+  // Halaman /struktur-organisasi
+  'strukturOrganisasiPage.hero.title': 'Struktur Organisasi',
+  'strukturOrganisasiPage.hero.lead':
+    'Susunan organisasi yang jelas memastikan setiap unit menjalankan peran dan tanggung jawabnya.',
+  'strukturOrganisasiPage.body.heading': 'Tata kelola unit kerja',
+  'strukturOrganisasiPage.body.para1':
+    'Struktur organisasi RS Krakatau Medika disusun agar keputusan dapat diambil cepat dan setiap unit memiliki fungsi yang jelas, mulai dari direksi, komite medis, hingga unit pelayanan.',
+  'strukturOrganisasiPage.body.para2':
+    'Bagan struktur organisasi yang resmi akan kami tampilkan di halaman ini.',
+
+  // Halaman /manajemen
+  'manajemenPage.hero.title': 'Manajemen',
+  'manajemenPage.hero.lead':
+    'Jajaran manajemen dan direksi yang memimpin pelayanan serta operasional rumah sakit.',
+  'manajemenPage.body.heading': 'Kepemimpinan kami',
+  'manajemenPage.body.para1':
+    'Manajemen RS Krakatau Medika dipimpin oleh direksi yang berfokus pada mutu pelayanan, keselamatan pasien, dan pengembangan berkelanjutan.',
+  'manajemenPage.body.para2':
+    'Daftar nama dan peran jajaran manajemen akan kami muat di halaman ini.',
+
+  // Halaman /tata-kelola-perusahaan
+  'tataKelolaPage.hero.title': 'Tata Kelola Perusahaan',
+  'tataKelolaPage.hero.lead':
+    'Kami menjalankan praktik tata kelola yang baik (Good Corporate Governance) di seluruh lini.',
+  'tataKelolaPage.body.heading': 'Komitmen pada GCG',
+  'tataKelolaPage.body.para1':
+    'RS Krakatau Medika menerapkan prinsip transparansi, akuntabilitas, tanggung jawab, independensi, dan kewajaran dalam seluruh pengambilan keputusan.',
+  'tataKelolaPage.body.para2':
+    'Kebijakan tata kelola, etika bisnis, dan pengendalian internal menjadi dasar hubungan kami dengan pasien, mitra, dan pemangku kepentingan.',
+
+  // Halaman /penghargaan
+  'penghargaanPage.hero.title': 'Penghargaan & Sertifikasi',
+  'penghargaanPage.hero.lead':
+    'Pengakuan atas komitmen mutu dan pelayanan yang kami raih dari berbagai lembaga.',
+  'penghargaanPage.body.heading': 'Pengakuan atas mutu',
+  'penghargaanPage.body.para1':
+    'Daftar penghargaan dan sertifikasi yang diraih RS Krakatau Medika akan kami tampilkan di halaman ini.',
+
+  // Halaman /akreditasi
+  'akreditasiPage.hero.title': 'Akreditasi & Mutu',
+  'akreditasiPage.hero.lead':
+    'Standar mutu nasional menjadi acuan utama pelayanan di RS Krakatau Medika.',
+  'akreditasiPage.body.heading': 'Standar mutu pelayanan',
+  'akreditasiPage.body.para1':
+    'RS Krakatau Medika berkomitmen memenuhi standar akreditasi rumah sakit nasional melalui audit internal berkala, pelaporan mutu, dan keselamatan pasien.',
+  'akreditasiPage.body.para2':
+    'Status dan sertifikat akreditasi terkini akan kami publikasikan di halaman ini.',
+
+  // Halaman /kemitraan
+  'kemitraanPage.hero.title': 'Kemitraan & Pengadaan',
+  'kemitraanPage.hero.lead':
+    'Wujud kolaborasi kami dengan mitra kerja, CSR, dan proses pengadaan barang/jasa yang transparan.',
+  'kemitraanPage.section.kerjasama.title': 'Kerja Sama',
+  'kemitraanPage.section.kerjasama.body':
+    'Kami terbuka untuk menjalin kerja sama pelayanan kesehatan dengan perusahaan, fasilitas layanan kesehatan lain, dan pihak terkait demi perluasan akses layanan.',
+  'kemitraanPage.section.csr.title': 'CSR & Tanggung Jawab Sosial',
+  'kemitraanPage.section.csr.body':
+    'Program tanggung jawab sosial RS Krakatau Medika diarahkan pada kesehatan masyarakat, pendidikan, dan pemberdayaan komunitas di sekitar Cilegon.',
+  'kemitraanPage.section.lelang.label': 'Lelang & Pengadaan',
+  'kemitraanPage.section.lelang.title': 'Lelang Pengadaan Barang/Jasa',
+  'kemitraanPage.section.lelang.body':
+    'Informasi pengadaan dan lelang barang/jasa di lingkungan RS Krakatau Medika disampaikan secara terbuka agar proses berjalan transparan dan akuntabel.',
 } as const;
 
 export type UiKeys = keyof typeof id;
@@ -424,8 +506,7 @@ const en: Record<UiKeys, string> = {
     'Corporate healthcare services: employee checkups, service contracts, and clinic partnerships.',
   'page.description.profil':
     'Profile of RS Krakatau Medika: our commitment, facilities, and services.',
-  'page.description.sejarah':
-    'The history of PT Krakatau Medika.',
+  'page.description.sejarah': 'The history of PT Krakatau Medika.',
   'page.description.visiMisi':
     'The vision, mission, and values that guide our care at RS Krakatau Medika.',
   'page.description.kmNews': 'Latest news and updates from RS Krakatau Medika.',
@@ -439,10 +520,8 @@ const en: Record<UiKeys, string> = {
     'Management and board of RS Krakatau Medika leading services and operations.',
   'page.description.tataKelolaPerusahaan':
     'Corporate governance at RS Krakatau Medika: GCG, ethics, policies, and accountability.',
-  'page.description.penghargaan':
-    'Awards and certifications achieved by RS Krakatau Medika.',
-  'page.description.akreditasi':
-    'Accreditation status and service quality at RS Krakatau Medika.',
+  'page.description.penghargaan': 'Awards and certifications achieved by RS Krakatau Medika.',
+  'page.description.akreditasi': 'Accreditation status and service quality at RS Krakatau Medika.',
   'page.description.kemitraan':
     'RS Krakatau Medika partnerships: collaboration, CSR, and goods/services procurement.',
   'page.title.privacy': 'Privacy Policy',
@@ -741,6 +820,90 @@ const en: Record<UiKeys, string> = {
   'laporanKeuangan.empty.title': 'No reports',
   'laporanKeuangan.empty.description': 'No financial reports are available yet.',
   'laporanKeuangan.empty.action': 'View all reports',
+
+  // PageHero eyebrows — new pages (submenu "Tentang Kami" & "Mitra & Transparansi")
+  'pagehero.eyebrow.sejarah': 'History',
+  'pagehero.eyebrow.strukturOrganisasi': 'Organization',
+  'pagehero.eyebrow.manajemen': 'Management',
+  'pagehero.eyebrow.tataKelolaPerusahaan': 'Governance',
+  'pagehero.eyebrow.penghargaan': 'Awards',
+  'pagehero.eyebrow.akreditasi': 'Accreditation',
+  'pagehero.eyebrow.kemitraan': 'Partnership',
+
+  // /sejarah
+  'sejarahPage.hero.title': 'Company History',
+  'sejarahPage.hero.lead':
+    'The journey of RS Krakatau Medika: from a modest start to Cilegon\u2019s family healthcare partner.',
+  'sejarahPage.body.heading': 'From our founding to today',
+  'sejarahPage.body.para1':
+    'RS Krakatau Medika was established in 2005 as a private hospital in Cilegon, Banten. Born from the need for healthcare close to the industrial area, the hospital was built to serve industrial workers as well as the broader community.',
+  'sejarahPage.body.para2':
+    'Over the years, we have kept expanding our facilities and services: specialist clinics, inpatient care, surgery, laboratory, and a 24/7 emergency unit.',
+  'sejarahPage.body.para3':
+    'We are committed to growing with the community, widening our reach, and maintaining quality through accreditation and ongoing human resource development.',
+
+  // /struktur-organisasi
+  'strukturOrganisasiPage.hero.title': 'Organizational Structure',
+  'strukturOrganisasiPage.hero.lead':
+    'A clear organizational structure ensures every unit carries out its role and responsibility.',
+  'strukturOrganisasiPage.body.heading': 'Work unit governance',
+  'strukturOrganisasiPage.body.para1':
+    'The organizational structure of RS Krakatau Medika is designed for fast decision-making, giving each unit a clear function from the board of directors and medical committees to service units.',
+  'strukturOrganisasiPage.body.para2':
+    'The official organizational chart will be displayed on this page.',
+
+  // /manajemen
+  'manajemenPage.hero.title': 'Management',
+  'manajemenPage.hero.lead':
+    'Our management and board of directors leading healthcare services and hospital operations.',
+  'manajemenPage.body.heading': 'Our leadership',
+  'manajemenPage.body.para1':
+    'The management of RS Krakatau Medika is led by a board focused on service quality, patient safety, and continuous development.',
+  'manajemenPage.body.para2':
+    'The names and roles of our management team will be published on this page.',
+
+  // /tata-kelola-perusahaan
+  'tataKelolaPage.hero.title': 'Corporate Governance',
+  'tataKelolaPage.hero.lead':
+    'We practice good corporate governance across every line of our operations.',
+  'tataKelolaPage.body.heading': 'GCG commitment',
+  'tataKelolaPage.body.para1':
+    'RS Krakatau Medika applies the principles of transparency, accountability, responsibility, independence, and fairness in all decision-making.',
+  'tataKelolaPage.body.para2':
+    'Governance policies, business ethics, and internal control underpin our relationship with patients, partners, and stakeholders.',
+
+  // /penghargaan
+  'penghargaanPage.hero.title': 'Awards & Certifications',
+  'penghargaanPage.hero.lead':
+    'Recognition of our commitment to quality and service, achieved from various institutions.',
+  'penghargaanPage.body.heading': 'Recognition of quality',
+  'penghargaanPage.body.para1':
+    'The list of awards and certifications achieved by RS Krakatau Medika will be displayed on this page.',
+
+  // /akreditasi
+  'akreditasiPage.hero.title': 'Accreditation & Quality',
+  'akreditasiPage.hero.lead':
+    'National quality standards are the main reference for services at RS Krakatau Medika.',
+  'akreditasiPage.body.heading': 'Service quality standards',
+  'akreditasiPage.body.para1':
+    'RS Krakatau Medika is committed to meeting national hospital accreditation standards through regular internal audits, quality reporting, and patient safety.',
+  'akreditasiPage.body.para2':
+    'Our current accreditation status and certificates will be published on this page.',
+
+  // /kemitraan
+  'kemitraanPage.hero.title': 'Partnership & Procurement',
+  'kemitraanPage.hero.lead':
+    'Our collaboration with partners, CSR programs, and a transparent goods/services procurement process.',
+  'kemitraanPage.section.kerjasama.title': 'Partnership',
+  'kemitraanPage.section.kerjasama.body':
+    'We welcome healthcare partnerships with companies, other healthcare facilities, and related parties to broaden access to care.',
+  'kemitraanPage.section.csr.title': 'CSR & Social Responsibility',
+  'kemitraanPage.section.csr.body':
+    'RS Krakatau Medika\u2019s social responsibility programs focus on community health, education, and empowerment around Cilegon.',
+  'kemitraanPage.section.lelang.label': 'Tender & Procurement',
+  'kemitraanPage.section.lelang.title': 'Goods/Services Tender',
+  'kemitraanPage.section.lelang.body':
+    'Procurement and tender announcements within RS Krakatau Medika are shared openly to ensure a transparent and accountable process.',
 };
 
 export const ui: Record<Lang, Record<UiKeys, string>> = { id, en };
