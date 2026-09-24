@@ -6,16 +6,13 @@
  * berubah, TypeScript langsung menunjukkan semua file yang terdampak.
  */
 
-/** Satu tautan dalam dropdown menu (anak dari NavItem). */
-export interface NavLink {
-  /** Teks yang tampil, per locale (id/en) */
-  label: { id: string; en: string };
-  /** Path TANPA prefix locale, dimulai "/" — di-locale-kan oleh localePath() */
-  href: string;
-}
+/** Tempat penampilan menu — 'header' dan/atau 'footer'. */
+export type NavPlacement = 'header' | 'footer';
 
 /** Item menu navigasi — dipakai Header & Footer.
- *  Item BER-children = dropdown (tanpa href); item tanpa children wajib punya href. */
+ *  Item BER-children = dropdown (href bisa tidak ada); item tanpa children
+ *  wajib punya href. children direkursif (bisa punya children/showIn lagi),
+ *  sehingga `getNavItems()` dapat memfilter semua level dengan satu aturan. */
 export interface NavItem {
   /** Teks yang tampil, per locale (id/en) */
   label: { id: string; en: string };
@@ -27,8 +24,10 @@ export interface NavItem {
    * bukan disimpan sebagai path/markup di data.
    */
   icon?: string;
-  /** Anak menu (dropdown) — opsional */
-  children?: NavLink[];
+  /** Anak menu (dropdown) — opsional, bisa bersarang */
+  children?: NavItem[];
+  /** Batasi tampil di 'header' dan/atau 'footer' (default: keduanya) */
+  showIn?: NavPlacement[];
 }
 
 /** Satu layanan rumah sakit — dipakai section Services & halaman /services. */

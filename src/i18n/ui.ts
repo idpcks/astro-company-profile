@@ -23,11 +23,18 @@ const id = {
   'page.title.klinik': 'Klinik',
   'page.title.layananBisnis': 'Layanan Bisnis',
   'page.title.profil': 'Profil',
+  'page.title.sejarah': 'Sejarah',
   'page.title.visiMisi': 'Visi & Misi',
   'page.title.kmNews': 'KM News',
   'page.title.lelangPengadaan': 'Lelang Pengadaan',
   'page.title.laporanKeuangan': 'Laporan Keuangan',
   'page.title.karir': 'Karir',
+  'page.title.strukturOrganisasi': 'Struktur Organisasi',
+  'page.title.manajemen': 'Manajemen',
+  'page.title.tataKelolaPerusahaan': 'Tata Kelola Perusahaan',
+  'page.title.penghargaan': 'Penghargaan',
+  'page.title.akreditasi': 'Akreditasi',
+  'page.title.kemitraan': 'Kemitraan & Pengadaan',
   'page.description.home':
     'Rumah sakit swasta di Cilegon dengan IGD 24 jam, dokter spesialis, dan fasilitas modern.',
   'page.description.about':
@@ -48,6 +55,7 @@ const id = {
   'page.description.layananBisnis':
     'Layanan kesehatan untuk perusahaan dan industri: medical checkup karyawan, kontrak pelayanan, dan kerja sama klinik.',
   'page.description.profil': 'Profil RS Krakatau Medika: komitmen, fasilitas, dan layanan kami.',
+  'page.description.sejarah': 'Sejarah Perusahaan.',
   'page.description.visiMisi':
     'Visi, misi, dan nilai yang menjadi arah serta fondasi pelayanan RS Krakatau Medika.',
   'page.description.kmNews': 'Kabar dan berita terbaru RS Krakatau Medika.',
@@ -56,6 +64,18 @@ const id = {
   'page.description.laporanKeuangan':
     'Laporan keuangan dan dokumen publik RS Krakatau Medika yang transparan dan akuntabel.',
   'page.description.karir': 'Lowongan kerja dan peluang berkarir di RS Krakatau Medika.',
+  'page.description.strukturOrganisasi':
+    'Struktur organisasi RS Krakatau Medika: hierarki, fungsi, dan tanggung jawab tiap unit.',
+  'page.description.manajemen':
+    'Jajaran manajemen dan direksi RS Krakatau Medika yang memimpin pelayanan dan operasional.',
+  'page.description.tataKelolaPerusahaan':
+    'Tata kelola perusahaan RS Krakatau Medika: GCG, etika, kebijakan, dan akuntabilitas.',
+  'page.description.penghargaan':
+    'Penghargaan dan sertifikasi yang diraih RS Krakatau Medika.',
+  'page.description.akreditasi':
+    'Status akreditasi dan mutu layanan RS Krakatau Medika.',
+  'page.description.kemitraan':
+    'Kemitraan RS Krakatau Medika: kerjasama, CSR, dan lelang pengadaan barang/jasa.',
   'page.title.privacy': 'Kebijakan Privasi',
   'page.description.privacy':
     'Kebijakan privasi RS Krakatau Medika: cara kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sesuai UU PDP.',
@@ -254,6 +274,10 @@ const id = {
   'contactPage.form.error':
     'Pesan gagal terkirim. Silakan coba lagi, atau hubungi kami langsung lewat telepon.',
   'contactPage.form.invalid': 'Mohon lengkapi isian yang wajib dengan benar.',
+  'contactPage.form.emailInvalid':
+    'Format email tidak valid. Contoh: nama@domain.com (pastikan ada titik di domain).',
+  'contactPage.form.phoneInvalid':
+    'Format nomor HP tidak valid. Gunakan format Indonesia, mis. 081234567890 atau +6281234567890.',
   'contactPage.form.consentError': 'Mohon berikan izin pemrosesan data Anda terlebih dahulu.',
   'contactPage.form.confirmTitle': 'Konfirmasi pengiriman',
   'contactPage.form.confirmSend': 'Ya, Kirim',
@@ -367,11 +391,18 @@ const en: Record<UiKeys, string> = {
   'page.title.klinik': 'Clinics',
   'page.title.layananBisnis': 'Business Services',
   'page.title.profil': 'Profile',
+  'page.title.sejarah': 'History',
   'page.title.visiMisi': 'Vision & Mission',
   'page.title.kmNews': 'KM News',
   'page.title.lelangPengadaan': 'Tender & Procurement',
   'page.title.laporanKeuangan': 'Financial Reports',
   'page.title.karir': 'Careers',
+  'page.title.strukturOrganisasi': 'Organizational Structure',
+  'page.title.manajemen': 'Management',
+  'page.title.tataKelolaPerusahaan': 'Corporate Governance',
+  'page.title.penghargaan': 'Awards',
+  'page.title.akreditasi': 'Accreditation',
+  'page.title.kemitraan': 'Partnership & Procurement',
   'page.description.home':
     'A private hospital in Cilegon with 24/7 emergency care, specialist doctors, and modern facilities.',
   'page.description.about':
@@ -393,6 +424,8 @@ const en: Record<UiKeys, string> = {
     'Corporate healthcare services: employee checkups, service contracts, and clinic partnerships.',
   'page.description.profil':
     'Profile of RS Krakatau Medika: our commitment, facilities, and services.',
+  'page.description.sejarah':
+    'The history of PT Krakatau Medika.',
   'page.description.visiMisi':
     'The vision, mission, and values that guide our care at RS Krakatau Medika.',
   'page.description.kmNews': 'Latest news and updates from RS Krakatau Medika.',
@@ -400,6 +433,18 @@ const en: Record<UiKeys, string> = {
   'page.description.laporanKeuangan':
     'Financial and public reports of RS Krakatau Medika, open to the public.',
   'page.description.karir': 'Job openings and career opportunities at RS Krakatau Medika.',
+  'page.description.strukturOrganisasi':
+    'Organizational structure of RS Krakatau Medika: hierarchy, functions, and responsibilities of each unit.',
+  'page.description.manajemen':
+    'Management and board of RS Krakatau Medika leading services and operations.',
+  'page.description.tataKelolaPerusahaan':
+    'Corporate governance at RS Krakatau Medika: GCG, ethics, policies, and accountability.',
+  'page.description.penghargaan':
+    'Awards and certifications achieved by RS Krakatau Medika.',
+  'page.description.akreditasi':
+    'Accreditation status and service quality at RS Krakatau Medika.',
+  'page.description.kemitraan':
+    'RS Krakatau Medika partnerships: collaboration, CSR, and goods/services procurement.',
   'page.title.privacy': 'Privacy Policy',
   'page.description.privacy':
     'RS Krakatau Medika privacy policy: how we collect, use, and protect your personal data in accordance with PDP Law.',
@@ -599,6 +644,10 @@ const en: Record<UiKeys, string> = {
   'contactPage.form.success': 'Your message has been sent. Our team will contact you shortly.',
   'contactPage.form.error': 'Failed to send your message. Please try again, or call us directly.',
   'contactPage.form.invalid': 'Please fill in the required fields correctly.',
+  'contactPage.form.emailInvalid':
+    'Invalid email format. Example: name@domain.com (a dot in the domain is required).',
+  'contactPage.form.phoneInvalid':
+    'Invalid phone number. Use an Indonesian format, e.g. 081234567890 or +6281234567890.',
   'contactPage.form.consentError': 'Please give your consent to data processing first.',
   'contactPage.form.confirmTitle': 'Confirm submission',
   'contactPage.form.confirmSend': 'Confirm & Send',

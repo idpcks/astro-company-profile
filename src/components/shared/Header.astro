@@ -67,7 +67,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
             // (mis. "Layanan" menyala saat hari /services).
             const isItemActive = item.href
               ? isActive(item.href)
-              : (item.children ?? []).some((child) => isActive(child.href));
+              : (item.children ?? []).some((child) => child.href && isActive(child.href));
             return (
               <li class="site-nav__item">
                 {hasChildren ? (
@@ -94,17 +94,20 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
                 )}
                 {item.children && (
                   <ul class="site-nav__dropdown">
-                    {item.children.map((child) => (
-                      <li>
-                        <a
-                          href={localePath(child.href, lang)}
-                          aria-current={isActive(child.href) ? 'page' : undefined}
-                          data-astro-prefetch="hover"
-                        >
-                          {localized(child.label, lang)}
-                        </a>
-                      </li>
-                    ))}
+                    {item.children.map((child) => {
+                      const href = child.href;
+                      return href ? (
+                        <li>
+                          <a
+                            href={localePath(href, lang)}
+                            aria-current={isActive(href) ? 'page' : undefined}
+                            data-astro-prefetch="hover"
+                          >
+                            {localized(child.label, lang)}
+                          </a>
+                        </li>
+                      ) : null;
+                    })}
                   </ul>
                 )}
               </li>
