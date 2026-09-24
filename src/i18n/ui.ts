@@ -1,4 +1,5 @@
 import type { Lang } from './index';
+import { SITE } from '@/data/site';
 
 /**
  * Kamus teks UI — key flat "domain.nama".
@@ -38,53 +39,50 @@ const id = {
   'page.description.home':
     'Rumah sakit swasta di Cilegon dengan IGD 24 jam, dokter spesialis, dan fasilitas modern.',
   'page.description.about':
-    'Mengenal RS Krakatau Medika: visi, misi, dan nilai yang kami pegang dalam melayani pasien dan keluarga.',
+    'Mengenal {brand}: visi, misi, dan nilai yang kami pegang dalam melayani pasien dan keluarga.',
   'page.description.services':
-    'Layanan RS Krakatau Medika: IGD 24 jam, poliklinik spesialis, rawat inap, bedah, laboratorium, dan medical checkup.',
-  'page.description.contact':
-    'Hubungi RS Krakatau Medika: alamat, telepon, email, dan jam layanan kami.',
+    'Layanan {brand}: IGD 24 jam, poliklinik spesialis, rawat inap, bedah, laboratorium, dan medical checkup.',
+  'page.description.contact': 'Hubungi {brand}: alamat, telepon, email, dan jam layanan kami.',
   'page.description.blog':
-    'Artikel edukasi kesehatan dari dokter RS Krakatau Medika: pencegahan penyakit, gaya hidup sehat, dan informasi layanan.',
+    'Artikel edukasi kesehatan dari dokter {brand}: pencegahan penyakit, gaya hidup sehat, dan informasi layanan.',
   'page.description.demo': 'Halaman demo pola loading skeleton.',
-  'page.description.galeri':
-    'Galeri foto fasilitas dan kegiatan RS Krakatau Medika (sedang dalam penyiapan).',
+  'page.description.galeri': 'Galeri foto fasilitas dan kegiatan {brand} (sedang dalam penyiapan).',
   'page.description.wbs':
-    'Sistem Pelaporan Pelanggaran (WBS) RS Krakatau Medika: kanal pengaduan resmi, rahasia, dan independen.',
+    'Sistem Pelaporan Pelanggaran (WBS) {brand}: kanal pengaduan resmi, rahasia, dan independen.',
   'page.description.klinik':
-    'Klinik RS Krakatau Medika di berbagai kota: alamat, telepon, jam layanan, dan layanan yang tersedia.',
+    'Klinik {brand} di berbagai kota: alamat, telepon, jam layanan, dan layanan yang tersedia.',
   'page.description.layananBisnis':
     'Layanan kesehatan untuk perusahaan dan industri: medical checkup karyawan, kontrak pelayanan, dan kerja sama klinik.',
-  'page.description.profil': 'Profil RS Krakatau Medika: komitmen, fasilitas, dan layanan kami.',
+  'page.description.profil': 'Profil {brand}: komitmen, fasilitas, dan layanan kami.',
   'page.description.sejarah': 'Sejarah Perusahaan.',
   'page.description.visiMisi':
-    'Visi, misi, dan nilai yang menjadi arah serta fondasi pelayanan RS Krakatau Medika.',
-  'page.description.kmNews': 'Kabar dan berita terbaru RS Krakatau Medika.',
+    'Visi, misi, dan nilai yang menjadi arah serta fondasi pelayanan {brand}.',
+  'page.description.kmNews': 'Kabar dan berita terbaru {brand}.',
   'page.description.lelangPengadaan':
-    'Informasi lelang dan pengadaan barang/jasa di lingkungan RS Krakatau Medika.',
+    'Informasi lelang dan pengadaan barang/jasa di lingkungan {brand}.',
   'page.description.laporanKeuangan':
-    'Laporan keuangan dan dokumen publik RS Krakatau Medika yang transparan dan akuntabel.',
-  'page.description.karir': 'Lowongan kerja dan peluang berkarir di RS Krakatau Medika.',
+    'Laporan keuangan dan dokumen publik {brand} yang transparan dan akuntabel.',
+  'page.description.karir': 'Lowongan kerja dan peluang berkarir di {brand}.',
   'page.description.strukturOrganisasi':
-    'Struktur organisasi RS Krakatau Medika: hierarki, fungsi, dan tanggung jawab tiap unit.',
+    'Struktur organisasi {brand}: hierarki, fungsi, dan tanggung jawab tiap unit.',
   'page.description.manajemen':
-    'Jajaran manajemen dan direksi RS Krakatau Medika yang memimpin pelayanan dan operasional.',
+    'Jajaran manajemen dan direksi {brand} yang memimpin pelayanan dan operasional.',
   'page.description.tataKelolaPerusahaan':
-    'Tata kelola perusahaan RS Krakatau Medika: GCG, etika, kebijakan, dan akuntabilitas.',
-  'page.description.penghargaan': 'Penghargaan dan sertifikasi yang diraih RS Krakatau Medika.',
-  'page.description.akreditasi': 'Status akreditasi dan mutu layanan RS Krakatau Medika.',
+    'Tata kelola perusahaan {brand}: GCG, etika, kebijakan, dan akuntabilitas.',
+  'page.description.penghargaan': 'Penghargaan dan sertifikasi yang diraih {brand}.',
+  'page.description.akreditasi': 'Status akreditasi dan mutu layanan {brand}.',
   'page.description.kemitraan':
-    'Kemitraan RS Krakatau Medika: kerjasama, CSR, dan lelang pengadaan barang/jasa.',
+    'Kemitraan {brand}: kerjasama, CSR, dan lelang pengadaan barang/jasa.',
   'page.title.privacy': 'Kebijakan Privasi',
   'page.description.privacy':
-    'Kebijakan privasi RS Krakatau Medika: cara kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sesuai UU PDP.',
+    'Kebijakan privasi {brand}: cara kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sesuai UU PDP.',
   'page.title.terms': 'Syarat & Ketentuan',
-  'page.description.terms': 'Syarat dan ketentuan penggunaan website RS Krakatau Medika.',
+  'page.description.terms': 'Syarat dan ketentuan penggunaan website {brand}.',
   'page.title.faq': 'Pertanyaan Sering Diajukan (FAQ)',
   'page.description.faq':
-    'Daftar pertanyaan dan jawaban umum seputar layanan, fasilitas, dan kebijakan RS Krakatau Medika.',
+    'Daftar pertanyaan dan jawaban umum seputar layanan, fasilitas, dan kebijakan {brand}.',
   'page.title.reviews': 'Ulasan & Testimoni Pasien',
-  'page.description.reviews':
-    'Ulasan dan testimoni pasien mengenai pengalaman berobat di RS Krakatau Medika.',
+  'page.description.reviews': 'Ulasan dan testimoni pasien mengenai pengalaman berobat di {brand}.',
   // Header
   'nav.ariaLabel': 'Navigasi utama',
   'nav.menu.open': 'Buka menu navigasi',
@@ -99,7 +97,7 @@ const id = {
 
   // Hero
   'hero.eyebrow': 'Mitra kesehatan keluarga Anda',
-  'hero.imageAlt': 'Foto gedung RS Krakatau Medika',
+  'hero.imageAlt': 'Foto gedung {brand}',
   'hero.title': 'IGD 24 jam, dokter spesialis, dan rawat inap dalam satu gedung',
   'hero.cta.services': 'Lihat Layanan',
   'hero.cta.contact': 'Hubungi Kami',
@@ -130,7 +128,7 @@ const id = {
   // Testimonials
   'testimonials.eyebrow': 'Testimoni',
   'testimonials.title': 'Apa kata pasien kami',
-  'testimonials.lead': 'Pengalaman pasien yang berobat di RS Krakatau Medika.',
+  'testimonials.lead': 'Pengalaman pasien yang berobat di {brand}.',
 
   // CTASection
   'cta.title': 'Butuh info layanan atau jadwal poliklinik?',
@@ -187,7 +185,7 @@ const id = {
 
   // Halaman Galeri
   'galeriPage.hero.title': 'Galeri Foto & Kegiatan',
-  'galeriPage.hero.lead': 'Dokumentasi fasilitas, layanan, dan kegiatan RS Krakatau Medika.',
+  'galeriPage.hero.lead': 'Dokumentasi fasilitas, layanan, dan kegiatan {brand}.',
   'galeriPage.note.title': 'Galeri sedang disiapkan',
   'galeriPage.note.body':
     'Kami sedang mengumpulkan dan mengkurasi foto fasilitas serta kegiatan rumah sakit. Konten galeri akan tersedia di halaman ini segera.',
@@ -207,8 +205,7 @@ const id = {
 
   // Halaman /klinik
   'klinikPage.hero.title': 'Klinik kami di berbagai kota',
-  'klinikPage.hero.lead':
-    'Alamat, telepon, dan jam layanan klinik RS Krakatau Medika di berbagai kota.',
+  'klinikPage.hero.lead': 'Alamat, telepon, dan jam layanan klinik {brand} di berbagai kota.',
   'klinikPage.address': 'Alamat',
   'klinikPage.phone': 'Telepon',
   'klinikPage.hours': 'Jam Layanan',
@@ -227,9 +224,9 @@ const id = {
   'bisnisPage.body.clinicsHeading': 'Klinik mitra korporat',
 
   // Halaman /profil
-  'profilPage.body.heading': 'Sekilas RS Krakatau Medika',
+  'profilPage.body.heading': 'Sekilas {brand}',
   'profilPage.body.para1':
-    'RS Krakatau Medika adalah rumah sakit swasta di Cilegon yang telah melayani masyarakat sejak 2005.',
+    '{brand} adalah rumah sakit swasta di Cilegon yang telah melayani masyarakat sejak 2005.',
   'profilPage.body.para2':
     'Kami menyediakan IGD 24 jam, dokter spesialis, dan fasilitas rawat inap, serta kerja sama dengan BPJS dan asuransi utama.',
 
@@ -238,7 +235,7 @@ const id = {
   'aboutPage.hero.lead':
     'Sejak 2005, kami melayani pasien dengan IGD 24 jam, dokter spesialis, dan rawat inap.',
   'profilPage.hero.title': 'Profil Perusahaan',
-  'profilPage.hero.lead': 'Identitas, komitmen, dan perjalanan RS Krakatau Medika sejak berdiri.',
+  'profilPage.hero.lead': 'Identitas, komitmen, dan perjalanan {brand} sejak berdiri.',
   'aboutPage.visionMisi.eyebrow': 'Visi & Misi',
   'aboutPage.visionMisi.title': 'Arah dan tujuan kami',
   'aboutPage.vision': 'Visi',
@@ -287,8 +284,7 @@ const id = {
 
   // Halaman /km-news
   'kmNewsPage.note.title': 'Berita & Pengumuman',
-  'kmNewsPage.note.body':
-    'Kabar dan pengumuman terbaru RS Krakatau Medika akan tayang di halaman ini.',
+  'kmNewsPage.note.body': 'Kabar dan pengumuman terbaru {brand} akan tayang di halaman ini.',
 
   // Halaman /lelang-pengadaan
   'lelangPengadaanPage.note.title': 'Pengumuman Lelang',
@@ -302,7 +298,7 @@ const id = {
 
   // Halaman /karir
   'karirPage.note.title': 'Lowongan Pekerjaan',
-  'karirPage.note.body': 'Lowongan kerja di RS Krakatau Medika akan kami unggah di halaman ini.',
+  'karirPage.note.body': 'Lowongan kerja di {brand} akan kami unggah di halaman ini.',
 
   // Blog komponen
   'post.updated': 'Diperbarui:',
@@ -355,7 +351,7 @@ const id = {
   'faq.search.clear': 'Reset pencarian',
   'faq.support.title': 'Masih Punya Pertanyaan?',
   'faq.support.body':
-    'Tim layanan pelanggan dan staf medis RS Krakatau Medika siap membantu menjawab kebutuhan Anda 24/7.',
+    'Tim layanan pelanggan dan staf medis {brand} siap membantu menjawab kebutuhan Anda 24/7.',
   'faq.support.contactBtn': 'Formulir Kontak',
   'faq.support.waBtn': 'WhatsApp RSKM',
   'karir.empty.title': 'Belum ada lowongan',
@@ -383,10 +379,10 @@ const id = {
   // Halaman /sejarah
   'sejarahPage.hero.title': 'Sejarah Perusahaan',
   'sejarahPage.hero.lead':
-    'Perjalanan RS Krakatau Medika: dari yang kecil menjadi mitra kesehatan keluarga Cilegon.',
+    'Perjalanan {brand}: dari yang kecil menjadi mitra kesehatan keluarga Cilegon.',
   'sejarahPage.body.heading': 'Dari awal berdiri hingga kini',
   'sejarahPage.body.para1':
-    'RS Krakatau Medika berdiri pada tahun 2005 sebagai rumah sakit swasta di Cilegon, Banten. Berawal dari kebutuhan pelayanan kesehatan yang dekat dengan kawasan industri, rumah sakit hadir untuk melayani karyawan industri serta masyarakat luas.',
+    '{brand} berdiri pada tahun 2005 sebagai rumah sakit swasta di Cilegon, Banten. Berawal dari kebutuhan pelayanan kesehatan yang dekat dengan kawasan industri, rumah sakit hadir untuk melayani karyawan industri serta masyarakat luas.',
   'sejarahPage.body.para2':
     'Selama bertahun-tahun, kami terus menambah fasilitas dan layanan: poliklinik spesialis, rawat inap, bedah, laboratorium, hingga IGD yang beroperasi 24 jam.',
   'sejarahPage.body.para3':
@@ -398,7 +394,7 @@ const id = {
     'Susunan organisasi yang jelas memastikan setiap unit menjalankan peran dan tanggung jawabnya.',
   'strukturOrganisasiPage.body.heading': 'Tata kelola unit kerja',
   'strukturOrganisasiPage.body.para1':
-    'Struktur organisasi RS Krakatau Medika disusun agar keputusan dapat diambil cepat dan setiap unit memiliki fungsi yang jelas, mulai dari direksi, komite medis, hingga unit pelayanan.',
+    'Struktur organisasi {brand} disusun agar keputusan dapat diambil cepat dan setiap unit memiliki fungsi yang jelas, mulai dari direksi, komite medis, hingga unit pelayanan.',
   'strukturOrganisasiPage.body.para2':
     'Bagan struktur organisasi yang resmi akan kami tampilkan di halaman ini.',
 
@@ -408,7 +404,7 @@ const id = {
     'Jajaran manajemen dan direksi yang memimpin pelayanan serta operasional rumah sakit.',
   'manajemenPage.body.heading': 'Kepemimpinan kami',
   'manajemenPage.body.para1':
-    'Manajemen RS Krakatau Medika dipimpin oleh direksi yang berfokus pada mutu pelayanan, keselamatan pasien, dan pengembangan berkelanjutan.',
+    'Manajemen {brand} dipimpin oleh direksi yang berfokus pada mutu pelayanan, keselamatan pasien, dan pengembangan berkelanjutan.',
   'manajemenPage.body.para2':
     'Daftar nama dan peran jajaran manajemen akan kami muat di halaman ini.',
 
@@ -418,7 +414,7 @@ const id = {
     'Kami menjalankan praktik tata kelola yang baik (Good Corporate Governance) di seluruh lini.',
   'tataKelolaPage.body.heading': 'Komitmen pada GCG',
   'tataKelolaPage.body.para1':
-    'RS Krakatau Medika menerapkan prinsip transparansi, akuntabilitas, tanggung jawab, independensi, dan kewajaran dalam seluruh pengambilan keputusan.',
+    '{brand} menerapkan prinsip transparansi, akuntabilitas, tanggung jawab, independensi, dan kewajaran dalam seluruh pengambilan keputusan.',
   'tataKelolaPage.body.para2':
     'Kebijakan tata kelola, etika bisnis, dan pengendalian internal menjadi dasar hubungan kami dengan pasien, mitra, dan pemangku kepentingan.',
 
@@ -428,15 +424,14 @@ const id = {
     'Pengakuan atas komitmen mutu dan pelayanan yang kami raih dari berbagai lembaga.',
   'penghargaanPage.body.heading': 'Pengakuan atas mutu',
   'penghargaanPage.body.para1':
-    'Daftar penghargaan dan sertifikasi yang diraih RS Krakatau Medika akan kami tampilkan di halaman ini.',
+    'Daftar penghargaan dan sertifikasi yang diraih {brand} akan kami tampilkan di halaman ini.',
 
   // Halaman /akreditasi
   'akreditasiPage.hero.title': 'Akreditasi & Mutu',
-  'akreditasiPage.hero.lead':
-    'Standar mutu nasional menjadi acuan utama pelayanan di RS Krakatau Medika.',
+  'akreditasiPage.hero.lead': 'Standar mutu nasional menjadi acuan utama pelayanan di {brand}.',
   'akreditasiPage.body.heading': 'Standar mutu pelayanan',
   'akreditasiPage.body.para1':
-    'RS Krakatau Medika berkomitmen memenuhi standar akreditasi rumah sakit nasional melalui audit internal berkala, pelaporan mutu, dan keselamatan pasien.',
+    '{brand} berkomitmen memenuhi standar akreditasi rumah sakit nasional melalui audit internal berkala, pelaporan mutu, dan keselamatan pasien.',
   'akreditasiPage.body.para2':
     'Status dan sertifikat akreditasi terkini akan kami publikasikan di halaman ini.',
 
@@ -449,11 +444,11 @@ const id = {
     'Kami terbuka untuk menjalin kerja sama pelayanan kesehatan dengan perusahaan, fasilitas layanan kesehatan lain, dan pihak terkait demi perluasan akses layanan.',
   'kemitraanPage.section.csr.title': 'CSR & Tanggung Jawab Sosial',
   'kemitraanPage.section.csr.body':
-    'Program tanggung jawab sosial RS Krakatau Medika diarahkan pada kesehatan masyarakat, pendidikan, dan pemberdayaan komunitas di sekitar Cilegon.',
+    'Program tanggung jawab sosial {brand} diarahkan pada kesehatan masyarakat, pendidikan, dan pemberdayaan komunitas di sekitar Cilegon.',
   'kemitraanPage.section.lelang.label': 'Lelang & Pengadaan',
   'kemitraanPage.section.lelang.title': 'Lelang Pengadaan Barang/Jasa',
   'kemitraanPage.section.lelang.body':
-    'Informasi pengadaan dan lelang barang/jasa di lingkungan RS Krakatau Medika disampaikan secara terbuka agar proses berjalan transparan dan akuntabel.',
+    'Informasi pengadaan dan lelang barang/jasa di lingkungan {brand} disampaikan secara terbuka agar proses berjalan transparan dan akuntabel.',
 } as const;
 
 export type UiKeys = keyof typeof id;
@@ -488,53 +483,47 @@ const en: Record<UiKeys, string> = {
   'page.description.home':
     'A private hospital in Cilegon with 24/7 emergency care, specialist doctors, and modern facilities.',
   'page.description.about':
-    'Get to know RS Krakatau Medika: the vision, mission, and values behind our care for patients and families.',
+    'Get to know {brand}: the vision, mission, and values behind our care for patients and families.',
   'page.description.services':
-    'Services at RS Krakatau Medika: 24/7 emergency, specialist clinics, inpatient care, surgery, laboratory, and checkups.',
-  'page.description.contact':
-    'Contact RS Krakatau Medika: address, phone, email, and service hours.',
+    'Services at {brand}: 24/7 emergency, specialist clinics, inpatient care, surgery, laboratory, and checkups.',
+  'page.description.contact': 'Contact {brand}: address, phone, email, and service hours.',
   'page.description.blog':
-    'Health education articles from RS Krakatau Medika doctors: prevention, healthy living, and service information.',
+    'Health education articles from {brand} doctors: prevention, healthy living, and service information.',
   'page.description.demo': 'Skeleton loading pattern demo page.',
-  'page.description.galeri':
-    'Photo gallery of RS Krakatau Medika facilities and activities (in preparation).',
+  'page.description.galeri': 'Photo gallery of {brand} facilities and activities (in preparation).',
   'page.description.wbs':
-    'Whistleblowing System (WBS) of RS Krakatau Medika: an official, confidential, and independent reporting channel.',
+    'Whistleblowing System (WBS) of {brand}: an official, confidential, and independent reporting channel.',
   'page.description.klinik':
-    'RS Krakatau Medika clinics across multiple cities: address, phone, service hours, and available services.',
+    '{brand} clinics across multiple cities: address, phone, service hours, and available services.',
   'page.description.layananBisnis':
     'Corporate healthcare services: employee checkups, service contracts, and clinic partnerships.',
-  'page.description.profil':
-    'Profile of RS Krakatau Medika: our commitment, facilities, and services.',
+  'page.description.profil': 'Profile of {brand}: our commitment, facilities, and services.',
   'page.description.sejarah': 'The history of PT Krakatau Medika.',
-  'page.description.visiMisi':
-    'The vision, mission, and values that guide our care at RS Krakatau Medika.',
-  'page.description.kmNews': 'Latest news and updates from RS Krakatau Medika.',
-  'page.description.lelangPengadaan': 'Tender and procurement announcements at RS Krakatau Medika.',
+  'page.description.visiMisi': 'The vision, mission, and values that guide our care at {brand}.',
+  'page.description.kmNews': 'Latest news and updates from {brand}.',
+  'page.description.lelangPengadaan': 'Tender and procurement announcements at {brand}.',
   'page.description.laporanKeuangan':
-    'Financial and public reports of RS Krakatau Medika, open to the public.',
-  'page.description.karir': 'Job openings and career opportunities at RS Krakatau Medika.',
+    'Financial and public reports of {brand}, open to the public.',
+  'page.description.karir': 'Job openings and career opportunities at {brand}.',
   'page.description.strukturOrganisasi':
-    'Organizational structure of RS Krakatau Medika: hierarchy, functions, and responsibilities of each unit.',
-  'page.description.manajemen':
-    'Management and board of RS Krakatau Medika leading services and operations.',
+    'Organizational structure of {brand}: hierarchy, functions, and responsibilities of each unit.',
+  'page.description.manajemen': 'Management and board of {brand} leading services and operations.',
   'page.description.tataKelolaPerusahaan':
-    'Corporate governance at RS Krakatau Medika: GCG, ethics, policies, and accountability.',
-  'page.description.penghargaan': 'Awards and certifications achieved by RS Krakatau Medika.',
-  'page.description.akreditasi': 'Accreditation status and service quality at RS Krakatau Medika.',
+    'Corporate governance at {brand}: GCG, ethics, policies, and accountability.',
+  'page.description.penghargaan': 'Awards and certifications achieved by {brand}.',
+  'page.description.akreditasi': 'Accreditation status and service quality at {brand}.',
   'page.description.kemitraan':
-    'RS Krakatau Medika partnerships: collaboration, CSR, and goods/services procurement.',
+    '{brand} partnerships: collaboration, CSR, and goods/services procurement.',
   'page.title.privacy': 'Privacy Policy',
   'page.description.privacy':
-    'RS Krakatau Medika privacy policy: how we collect, use, and protect your personal data in accordance with PDP Law.',
+    '{brand} privacy policy: how we collect, use, and protect your personal data in accordance with PDP Law.',
   'page.title.terms': 'Terms of Service',
-  'page.description.terms': 'Terms and conditions for using the RS Krakatau Medika website.',
+  'page.description.terms': 'Terms and conditions for using the {brand} website.',
   'page.title.faq': 'Frequently Asked Questions (FAQ)',
   'page.description.faq':
-    'Frequently asked questions about RS Krakatau Medika services, facilities, and policies.',
+    'Frequently asked questions about {brand} services, facilities, and policies.',
   'page.title.reviews': 'Patient Reviews & Testimonials',
-  'page.description.reviews':
-    'Patient reviews and testimonials about their experience at RS Krakatau Medika.',
+  'page.description.reviews': 'Patient reviews and testimonials about their experience at {brand}.',
 
   // Header
   'nav.ariaLabel': 'Main navigation',
@@ -550,7 +539,7 @@ const en: Record<UiKeys, string> = {
 
   // Hero
   'hero.eyebrow': 'Your family\u2019s healthcare partner',
-  'hero.imageAlt': 'Krakatau Medika hospital building',
+  'hero.imageAlt': '{brand} hospital building',
   'hero.title': '24/7 emergency care, specialist doctors, and inpatient wards under one roof',
   'hero.cta.services': 'Our Services',
   'hero.cta.contact': 'Contact Us',
@@ -581,7 +570,7 @@ const en: Record<UiKeys, string> = {
   // Testimonials
   'testimonials.eyebrow': 'Testimonials',
   'testimonials.title': 'What our patients say',
-  'testimonials.lead': 'What patients say about their care at RS Krakatau Medika.',
+  'testimonials.lead': 'What patients say about their care at {brand}.',
 
   // CTASection
   'cta.title': 'Need service info or clinic hours?',
@@ -638,8 +627,7 @@ const en: Record<UiKeys, string> = {
 
   // Gallery page
   'galeriPage.hero.title': 'Gallery & Activities',
-  'galeriPage.hero.lead':
-    'Documentation of RS Krakatau Medika facilities, services, and activities.',
+  'galeriPage.hero.lead': 'Documentation of {brand} facilities, services, and activities.',
   'galeriPage.note.title': 'Gallery coming soon',
   'galeriPage.note.body':
     'We are gathering and curating photos of our facilities and hospital activities. Gallery content will be available on this page soon.',
@@ -659,8 +647,7 @@ const en: Record<UiKeys, string> = {
 
   // /klinik
   'klinikPage.hero.title': 'Our clinics across multiple cities',
-  'klinikPage.hero.lead':
-    'Address, phone, and service hours for RS Krakatau Medika clinics in each city.',
+  'klinikPage.hero.lead': 'Address, phone, and service hours for {brand} clinics in each city.',
   'klinikPage.address': 'Address',
   'klinikPage.phone': 'Phone',
   'klinikPage.hours': 'Service Hours',
@@ -679,9 +666,9 @@ const en: Record<UiKeys, string> = {
   'bisnisPage.body.clinicsHeading': 'Corporate partner clinics',
 
   // /profil
-  'profilPage.body.heading': 'About RS Krakatau Medika',
+  'profilPage.body.heading': 'About {brand}',
   'profilPage.body.para1':
-    'RS Krakatau Medika is a private hospital in Cilegon that has served the community since 2005.',
+    '{brand} is a private hospital in Cilegon that has served the community since 2005.',
   'profilPage.body.para2':
     'We provide 24/7 emergency care, specialist doctors, and inpatient facilities, with partnerships covering BPJS and major insurers.',
 
@@ -739,7 +726,7 @@ const en: Record<UiKeys, string> = {
   // /km-news
   'kmNewsPage.note.title': 'News & Announcements',
   'kmNewsPage.note.body':
-    'The latest news and announcements from RS Krakatau Medika will be posted on this page.',
+    'The latest news and announcements from {brand} will be posted on this page.',
 
   // /lelang-pengadaan
   'lelangPengadaanPage.note.title': 'Tender Notices',
@@ -752,7 +739,7 @@ const en: Record<UiKeys, string> = {
 
   // /karir
   'karirPage.note.title': 'Job Openings',
-  'karirPage.note.body': 'Job openings at RS Krakatau Medika will be posted on this page.',
+  'karirPage.note.body': 'Job openings at {brand} will be posted on this page.',
 
   // Blog
   'post.updated': 'Updated:',
@@ -805,7 +792,7 @@ const en: Record<UiKeys, string> = {
   'faq.search.clear': 'Reset search',
   'faq.support.title': 'Still Have Questions?',
   'faq.support.body':
-    'RS Krakatau Medika customer support team and medical staff are ready to assist you 24/7.',
+    '{brand} customer support team and medical staff are ready to assist you 24/7.',
   'faq.support.contactBtn': 'Contact Form',
   'faq.support.waBtn': 'WhatsApp RSKM',
   'karir.empty.title': 'No job openings',
@@ -833,10 +820,10 @@ const en: Record<UiKeys, string> = {
   // /sejarah
   'sejarahPage.hero.title': 'Company History',
   'sejarahPage.hero.lead':
-    'The journey of RS Krakatau Medika: from a modest start to Cilegon\u2019s family healthcare partner.',
+    'The journey of {brand}: from a modest start to Cilegon\u2019s family healthcare partner.',
   'sejarahPage.body.heading': 'From our founding to today',
   'sejarahPage.body.para1':
-    'RS Krakatau Medika was established in 2005 as a private hospital in Cilegon, Banten. Born from the need for healthcare close to the industrial area, the hospital was built to serve industrial workers as well as the broader community.',
+    '{brand} was established in 2005 as a private hospital in Cilegon, Banten. Born from the need for healthcare close to the industrial area, the hospital was built to serve industrial workers as well as the broader community.',
   'sejarahPage.body.para2':
     'Over the years, we have kept expanding our facilities and services: specialist clinics, inpatient care, surgery, laboratory, and a 24/7 emergency unit.',
   'sejarahPage.body.para3':
@@ -848,7 +835,7 @@ const en: Record<UiKeys, string> = {
     'A clear organizational structure ensures every unit carries out its role and responsibility.',
   'strukturOrganisasiPage.body.heading': 'Work unit governance',
   'strukturOrganisasiPage.body.para1':
-    'The organizational structure of RS Krakatau Medika is designed for fast decision-making, giving each unit a clear function from the board of directors and medical committees to service units.',
+    'The organizational structure of {brand} is designed for fast decision-making, giving each unit a clear function from the board of directors and medical committees to service units.',
   'strukturOrganisasiPage.body.para2':
     'The official organizational chart will be displayed on this page.',
 
@@ -858,7 +845,7 @@ const en: Record<UiKeys, string> = {
     'Our management and board of directors leading healthcare services and hospital operations.',
   'manajemenPage.body.heading': 'Our leadership',
   'manajemenPage.body.para1':
-    'The management of RS Krakatau Medika is led by a board focused on service quality, patient safety, and continuous development.',
+    'The management of {brand} is led by a board focused on service quality, patient safety, and continuous development.',
   'manajemenPage.body.para2':
     'The names and roles of our management team will be published on this page.',
 
@@ -868,7 +855,7 @@ const en: Record<UiKeys, string> = {
     'We practice good corporate governance across every line of our operations.',
   'tataKelolaPage.body.heading': 'GCG commitment',
   'tataKelolaPage.body.para1':
-    'RS Krakatau Medika applies the principles of transparency, accountability, responsibility, independence, and fairness in all decision-making.',
+    '{brand} applies the principles of transparency, accountability, responsibility, independence, and fairness in all decision-making.',
   'tataKelolaPage.body.para2':
     'Governance policies, business ethics, and internal control underpin our relationship with patients, partners, and stakeholders.',
 
@@ -878,15 +865,15 @@ const en: Record<UiKeys, string> = {
     'Recognition of our commitment to quality and service, achieved from various institutions.',
   'penghargaanPage.body.heading': 'Recognition of quality',
   'penghargaanPage.body.para1':
-    'The list of awards and certifications achieved by RS Krakatau Medika will be displayed on this page.',
+    'The list of awards and certifications achieved by {brand} will be displayed on this page.',
 
   // /akreditasi
   'akreditasiPage.hero.title': 'Accreditation & Quality',
   'akreditasiPage.hero.lead':
-    'National quality standards are the main reference for services at RS Krakatau Medika.',
+    'National quality standards are the main reference for services at {brand}.',
   'akreditasiPage.body.heading': 'Service quality standards',
   'akreditasiPage.body.para1':
-    'RS Krakatau Medika is committed to meeting national hospital accreditation standards through regular internal audits, quality reporting, and patient safety.',
+    '{brand} is committed to meeting national hospital accreditation standards through regular internal audits, quality reporting, and patient safety.',
   'akreditasiPage.body.para2':
     'Our current accreditation status and certificates will be published on this page.',
 
@@ -899,11 +886,25 @@ const en: Record<UiKeys, string> = {
     'We welcome healthcare partnerships with companies, other healthcare facilities, and related parties to broaden access to care.',
   'kemitraanPage.section.csr.title': 'CSR & Social Responsibility',
   'kemitraanPage.section.csr.body':
-    'RS Krakatau Medika\u2019s social responsibility programs focus on community health, education, and empowerment around Cilegon.',
+    '{brand}\u2019s social responsibility programs focus on community health, education, and empowerment around Cilegon.',
   'kemitraanPage.section.lelang.label': 'Tender & Procurement',
   'kemitraanPage.section.lelang.title': 'Goods/Services Tender',
   'kemitraanPage.section.lelang.body':
-    'Procurement and tender announcements within RS Krakatau Medika are shared openly to ensure a transparent and accountable process.',
+    'Procurement and tender announcements within {brand} are shared openly to ensure a transparent and accountable process.',
 };
 
-export const ui: Record<Lang, Record<UiKeys, string>> = { id, en };
+/**
+ * Nama brand ditulis sebagai token `{brand}` di banyak teks kamus.
+ * Token diganti `SITE.name` saat export — rename nama perusahaan cukup di
+ * satu tempat (src/data/site.ts), tanpa menyentuh Kamus ini.
+ */
+function applyBrand(dict: Readonly<Record<UiKeys, string>>): Record<UiKeys, string> {
+  return Object.fromEntries(
+    Object.entries(dict).map(([key, value]) => [key, value.replaceAll('{brand}', SITE.name)])
+  ) as Record<UiKeys, string>;
+}
+
+export const ui: Record<Lang, Record<UiKeys, string>> = {
+  id: applyBrand(id),
+  en: applyBrand(en),
+};

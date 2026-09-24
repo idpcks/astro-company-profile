@@ -11,6 +11,8 @@ import type { SocialLink } from '@/types';
 export const SITE = {
   /** Nama brand — tampil di Header, Footer, <title>, meta Open Graph */
   name: 'RS Krakatau Medika',
+  /** Akronim brand — dipakai masthead dekoratif di Footer (dekoratif, aria-hidden) */
+  initials: 'RSKM',
   /** Kalimat singkat di bawah logo */
   tagline: 'Mitra kesehatan keluarga Anda',
   /** Deskripsi untuk meta description & Hero — per locale */

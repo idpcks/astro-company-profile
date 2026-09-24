@@ -1,4 +1,8 @@
 import type { FaqItem } from '@/types';
+import { SITE } from '@/data/site';
+
+/** Nama brand — interpolasi dari SITE supaya rename cukup di satu tempat. */
+const brand = SITE.name;
 
 /**
  * Item FAQ — Single Source of Truth.
@@ -12,12 +16,12 @@ import type { FaqItem } from '@/types';
 export const FAQ_ITEMS: FaqItem[] = [
   {
     question: {
-      id: 'Apa saja layanan yang tersedia di RS Krakatau Medika?',
-      en: 'What services are available at RS Krakatau Medika?',
+      id: `Apa saja layanan yang tersedia di ${brand}?`,
+      en: `What services are available at ${brand}?`,
     },
     answer: {
-      id: 'RS Krakatau Medika menyediakan layanan IGD 24 jam, poliklinik spesialis, rawat inap, bedah sentral, laboratorium & radiologi, dan medical checkup.',
-      en: 'RS Krakatau Medika provides 24/7 emergency care, specialist clinics, inpatient care, central surgery, laboratory & radiology, and medical checkups.',
+      id: `${brand} menyediakan layanan IGD 24 jam, poliklinik spesialis, rawat inap, bedah sentral, laboratorium & radiologi, dan medical checkup.`,
+      en: `${brand} provides 24/7 emergency care, specialist clinics, inpatient care, central surgery, laboratory & radiology, and medical checkups.`,
     },
   },
   {
@@ -42,12 +46,12 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: {
-      id: 'Apakah RS Krakatau Medika menerima BPJS Kesehatan?',
-      en: 'Does RS Krakatau Medika accept BPJS Health Insurance?',
+      id: `Apakah ${brand} menerima BPJS Kesehatan?`,
+      en: `Does ${brand} accept BPJS Health Insurance?`,
     },
     answer: {
-      id: 'Ya, RS Krakatau Medika merupakan mitra BPJS Kesehatan. Silakan bawa kartu BPJS Anda saat kunjungan.',
-      en: 'Yes, RS Krakatau Medika is a BPJS Health Insurance partner. Please bring your BPJS card during your visit.',
+      id: `Ya, ${brand} merupakan mitra BPJS Kesehatan. Silakan bawa kartu BPJS Anda saat kunjungan.`,
+      en: `Yes, ${brand} is a BPJS Health Insurance partner. Please bring your BPJS card during your visit.`,
     },
   },
   {
@@ -62,8 +66,8 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: {
-      id: 'Bagaimana cara menghubungi RS Krakatau Medika untuk keadaan darurat?',
-      en: 'How do I contact RS Krakatau Medika for emergencies?',
+      id: `Bagaimana cara menghubungi ${brand} untuk keadaan darurat?`,
+      en: `How do I contact ${brand} for emergencies?`,
     },
     answer: {
       id: 'Untuk keadaan darurat, hubungi IGD di (0254) 396333 atau langsung datang ke rumah sakit.',
