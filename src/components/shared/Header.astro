@@ -362,7 +362,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
     background-color: var(--color-ink);
   }
 
-  /* ── Mobile ── */
+  /* ── Layar kecil (≤768px): hemat ruang di topbar ── */
   @media (max-width: 768px) {
     .topbar__hours {
       display: none; /* hemat ruang di layar kecil */
@@ -378,7 +378,14 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
       gap: var(--space-2);
       margin-left: var(--space-2);
     }
+  }
 
+  /* ── Mobile/tablet (≤960px): nav jadi panel hamburger.
+	     Breakpoint 960px (bukan 768px) karena nav baru (6 item level-atas
+	     + ikon + brand + klaster aksi) butuh ~944px natural width; bila
+	     hamburger baru aktif di 768px, brand menekuk dua baris di
+	     769–940px. Di bawah 960px menu full-width ditutup. */
+  @media (max-width: 960px) {
     .menu-toggle {
       display: inline-flex;
     }
@@ -475,11 +482,19 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
         return;
       }
 
-      // Parent dropdown (Layanan ▾ / Informasi ▾): toggle panel.
+      // Parent dropdown (Tentang Kami ▾ / Klinik ▾ / dll.): toggle panel.
+      // Perilaku accordion: membuka satu submenu menutup submenu lain yang
+      // sedang terbuka (kecuali item yang diklik — biarkan tertutup sendiri).
       const parent = target.closest('[data-nav-parent]');
       if (parent) {
         const item = parent.closest('.site-nav__item');
         if (!item) return;
+        if (!item.classList.contains('is-open')) {
+          document.querySelectorAll('.site-nav__item.is-open').forEach((other) => {
+            other.classList.remove('is-open');
+            other.querySelector('[data-nav-parent]')?.setAttribute('aria-expanded', 'false');
+          });
+        }
         const isOpen = item.classList.toggle('is-open');
         parent.setAttribute('aria-expanded', String(isOpen));
       }
