@@ -24,7 +24,7 @@ import SectionHeading from '@/components/ui/SectionHeading.astro';
 import ShareButtons from '@/components/ui/ShareButtons.astro';
 import SiteImage from '@/components/ui/SiteImage.astro';
 import { getOtherAvailableLocales, type NormalizedPost } from '@/lib/blog';
-import { languages, localePath, tFactory, type Lang } from '@/i18n';
+import { basePath, languages, localePath, tFactory, type Lang } from '@/i18n';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
 interface Props {
@@ -60,7 +60,7 @@ const breadcrumb = {
       '@type': 'ListItem',
       position: 1,
       name: lang === 'en' ? 'Home' : 'Beranda',
-      item: new URL('/', Astro.site).href,
+      item: new URL(basePath, Astro.site).href,
     },
     {
       '@type': 'ListItem',

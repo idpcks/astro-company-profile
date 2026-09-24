@@ -9,7 +9,7 @@
 import LangSwitcher from '@/components/ui/LangSwitcher.astro';
 import ThemeToggle from '@/components/ui/ThemeToggle.astro';
 import { Icon } from 'astro-icon/components';
-import { languages, localePath, localized, tFactory, type Lang } from '@/i18n';
+import { basePath, languages, localePath, localized, stripBase, tFactory, type Lang } from '@/i18n';
 import { getNavItems } from '@/data/nav';
 import { SITE } from '@/data/site';
 
@@ -21,7 +21,7 @@ const { lang } = Astro.props;
 const t = tFactory(lang);
 const navItems = getNavItems('header');
 
-const pathname = Astro.url.pathname;
+const pathname = stripBase(Astro.url.pathname);
 
 /**
  * Link aktif: bandingkan path TANPA prefix locale, jadi "/en/about"
@@ -52,7 +52,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
     <a href={localePath('/', lang)} class="brand">
       <img
         class="brand__logo"
-        src="/favicon.svg"
+        src={`${basePath}/favicon.svg`}
         alt=""
         height="32"
         transition:persist="brand-logo"

@@ -17,7 +17,7 @@ import LoadingIndicator from 'astro-loading-indicator/component';
 import WebVitals from '@/components/ui/WebVitals.astro';
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { alternatePath, languages, localePath, tFactory, type Lang } from '@/i18n';
+import { alternatePath, basePath, languages, localePath, tFactory, type Lang } from '@/i18n';
 import { SITE, SOCIAL_LINKS } from '@/data/site';
 import imgCompanyBuilding from '@/assets/images/img_companybuilding.webp';
 import '@/styles/global.css';
@@ -108,7 +108,7 @@ if (typeof source === 'string') {
 }
 
 // URL dasar organisasi untuk JSON-LD LocalBusiness
-const orgURL = new URL('/', Astro.site);
+const orgURL = new URL(basePath, Astro.site);
 const phoneIntl = `+62${SITE.phone.replace(/\D/g, '').replace(/^0/, '')}`;
 
 // Structured Data (Schema.org) — LocalBusiness untuk RSKM.
@@ -183,10 +183,10 @@ const localBusiness: Record<string, unknown> = {
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={`${basePath}/favicon.svg`} />
+    <link rel="icon" href={`${basePath}/favicon.ico`} sizes="32x32" />
+    <link rel="apple-touch-icon" href={`${basePath}/icons/icon-180.png`} />
+    <link rel="manifest" href={`${basePath}/manifest.webmanifest`} />
     <meta name="theme-color" content="#0f766e" />
 
     <!-- hreflang: padanan halaman ini di locale lain (SEO multibahasa).
