@@ -1,6 +1,9 @@
 ---
 /**
  * Isi halaman /sejarah — Sejarah Perusahaan (submenu "Tentang Kami").
+ * Layout: timeline vertikal (tahun → judul milestone → deskripsi) —
+ * variasi dari pola paragraf agar tidak monoton.
+ * Konten placeholder; ganti dengan data asli perusahaan.
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
@@ -13,6 +16,48 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+interface Milestone {
+  year: string;
+  title: { id: string; en: string };
+  body: { id: string; en: string };
+}
+
+// TODO: ganti dengan tonggak sejarah asli RSKM.
+const MILESTONES: Milestone[] = [
+  {
+    year: '2005',
+    title: { id: 'Berdiri di Cilegon', en: 'Founded in Cilegon' },
+    body: {
+      id: 'Berdiri sebagai rumah sakit swasta dekat kawasan industri, melayani karyawan industri dan masyarakat luas.',
+      en: 'Established as a private hospital near the industrial area, serving industrial workers and the wider community.',
+    },
+  },
+  {
+    year: '2012',
+    title: { id: 'Ekspansi layanan', en: 'Service expansion' },
+    body: {
+      id: 'Penambahan poliklinik spesialis, rawat inap, bedah, dan laboratorium.',
+      en: 'Added specialist clinics, inpatient care, surgery, and laboratory services.',
+    },
+  },
+  {
+    year: '2018',
+    title: { id: 'IGD & layanan darurat', en: 'Emergency & ER services' },
+    body: {
+      id: 'Operasional IGD 24 jam untuk melayani kondisi gawat darurat kapan pun.',
+      en: '24/7 emergency unit operations to serve critical conditions anytime.',
+    },
+  },
+  {
+    year: '2024',
+    title: { id: 'Mutu berkelanjutan', en: 'Continuous quality' },
+    body: {
+      id: 'Penguatan mutu melalui akreditasi, digitalisasi rekam medis, dan pengembangan SDM.',
+      en: 'Quality strengthening through accreditation, digital medical records, and human resource development.',
+    },
+  },
+];
 ---
 
 <PageHero
@@ -24,20 +69,119 @@ const t = tFactory(lang);
 <section class="section">
   <div class="container">
     <SectionHeading title={t('sejarahPage.body.heading')} align="start" />
-    <div class="sejarah__body">
-      <p>{t('sejarahPage.body.para1')}</p>
-      <p>{t('sejarahPage.body.para2')}</p>
-      <p>{t('sejarahPage.body.para3')}</p>
-    </div>
+
+    <ol class="timeline" role="list" data-reveal>
+      {
+        MILESTONES.map((milestone, index) => (
+          <li class="timeline__item">
+            <div class="timeline__marker" aria-hidden="true">
+              <span class="timeline__year">{milestone.year}</span>
+            </div>
+            <div class="timeline__card">
+              <h3 class="timeline__title">{milestone.title[lang]}</h3>
+              <p class="timeline__body">{milestone.body[lang]}</p>
+            </div>
+            {index < MILESTONES.length - 1 && (
+              <span class="timeline__connector" aria-hidden="true" />
+            )}
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
 
-<CTASection lang={lang} />
+<CTASection lang={lang} variant="surface" />
 
 <style>
-  .sejarah__body {
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 46rem;
+  }
+
+  .timeline__item {
+    position: relative;
     display: grid;
-    gap: var(--space-4);
-    max-width: 42rem;
+    grid-template-columns: 6.5rem 1fr;
+    gap: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .timeline__item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline__marker {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .timeline__year {
+    display: inline-flex;
+    align-items: center;
+    height: 2rem;
+    padding: 0 0.75rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent-light);
+    color: var(--color-accent-text);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .timeline__card {
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-6);
+  }
+
+  .timeline__card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .timeline__title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .timeline__body {
+    color: var(--color-muted);
+  }
+
+  .timeline__connector {
+    position: absolute;
+    left: calc(3.25rem - 1px);
+    top: 1rem;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-primary-light);
+    z-index: 0;
+  }
+
+  @media (max-width: 640px) {
+    .timeline__item {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .timeline__connector {
+      left: 0;
+      top: 2rem;
+      bottom: auto;
+      width: 100%;
+      height: 2px;
+    }
   }
 </style>

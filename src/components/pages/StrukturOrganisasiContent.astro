@@ -1,10 +1,14 @@
 ---
 /**
  * Isi halaman /struktur-organisasi — Struktur Organisasi (submenu "Tentang Kami").
+ * Layout: bagan bertingkat (puncak → inti → pelaksana) tanpa gambar —
+ * variasi dari pola paragraf agar tidak monoton.
+ * Konten placeholder; ganti dengan struktur organisasi asli RSKM.
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { Icon } from 'astro-icon/components';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
@@ -13,6 +17,39 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+interface Layer {
+  title: { id: string; en: string };
+  units: { id: string; en: string }[];
+}
+
+// TODO: ganti dengan bagan struktur asli RSKM.
+const LAYERS: Layer[] = [
+  {
+    title: { id: 'Pucuk Pimpinan', en: 'Top Management' },
+    units: [
+      { id: 'Dewan Direksi', en: 'Board of Directors' },
+      { id: 'Dewan Pengawas', en: 'Supervisory Board' },
+    ],
+  },
+  {
+    title: { id: 'Fungsi Inti', en: 'Core Functions' },
+    units: [
+      { id: 'Komite Medis & Etik', en: 'Medical & Ethics Committee' },
+      { id: 'Pelayanan Medis', en: 'Medical Services' },
+      { id: 'Keperawatan', en: 'Nursing' },
+    ],
+  },
+  {
+    title: { id: 'Penunjang', en: 'Supporting Units' },
+    units: [
+      { id: 'Keuangan & SDM', en: 'Finance & HR' },
+      { id: 'Teknologi Informasi', en: 'Information Technology' },
+      { id: 'Fasilitas & Logistik', en: 'Facilities & Logistics' },
+      { id: 'Marketing & Humas', en: 'Marketing & PR' },
+    ],
+  },
+];
 ---
 
 <PageHero
@@ -24,19 +61,95 @@ const t = tFactory(lang);
 <section class="section">
   <div class="container">
     <SectionHeading title={t('strukturOrganisasiPage.body.heading')} align="start" />
-    <div class="struktur-organisasi__body">
-      <p>{t('strukturOrganisasiPage.body.para1')}</p>
-      <p>{t('strukturOrganisasiPage.body.para2')}</p>
+
+    <div class="structure" data-reveal>
+      {
+        LAYERS.map((layer, index) => (
+          <div class="structure__row">
+            <div class="structure__level">
+              <Icon name="lucide:layers" aria-hidden="true" />
+              <span>{layer.title[lang]}</span>
+            </div>
+            <ul class="structure__units" role="list">
+              {layer.units.map((unit) => (
+                <li class="structure__unit">{unit[lang]}</li>
+              ))}
+            </ul>
+            {index < LAYERS.length - 1 && <span class="structure__connector" aria-hidden="true" />}
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
 
-<CTASection lang={lang} />
+<CTASection lang={lang} variant="surface" />
 
 <style>
-  .struktur-organisasi__body {
+  .structure {
     display: grid;
-    gap: var(--space-4);
-    max-width: 42rem;
+    gap: var(--space-8);
+    max-width: 52rem;
+  }
+
+  .structure__row {
+    position: relative;
+  }
+
+  .structure__level {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .structure__level :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .structure__units {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-3);
+  }
+
+  .structure__unit {
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-body);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .structure__unit:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .structure__connector {
+    display: block;
+    width: 2px;
+    height: var(--space-8);
+    background-color: var(--color-primary-light);
+    margin-inline: auto;
+  }
+
+  @media (max-width: 640px) {
+    .structure__level {
+      padding: var(--space-1) var(--space-3);
+    }
   }
 </style>

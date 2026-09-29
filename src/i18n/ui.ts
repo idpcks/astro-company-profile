@@ -430,6 +430,8 @@ const id = {
   'akreditasiPage.hero.title': 'Akreditasi & Mutu',
   'akreditasiPage.hero.lead': 'Standar mutu nasional menjadi acuan utama pelayanan di {brand}.',
   'akreditasiPage.body.heading': 'Standar mutu pelayanan',
+  'akreditasiPage.status.label': 'Status akreditasi saat ini',
+  'akreditasiPage.status.value': 'Terakreditasi',
   'akreditasiPage.body.para1':
     '{brand} berkomitmen memenuhi standar akreditasi rumah sakit nasional melalui audit internal berkala, pelaporan mutu, dan keselamatan pasien.',
   'akreditasiPage.body.para2':
@@ -872,6 +874,8 @@ const en: Record<UiKeys, string> = {
   'akreditasiPage.hero.lead':
     'National quality standards are the main reference for services at {brand}.',
   'akreditasiPage.body.heading': 'Service quality standards',
+  'akreditasiPage.status.label': 'Current accreditation status',
+  'akreditasiPage.status.value': 'Accredited',
   'akreditasiPage.body.para1':
     '{brand} is committed to meeting national hospital accreditation standards through regular internal audits, quality reporting, and patient safety.',
   'akreditasiPage.body.para2':

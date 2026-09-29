@@ -1,10 +1,15 @@
 ---
 /**
  * Isi halaman /akreditasi — Akreditasi (submenu "Tentang Kami").
+ * Layout: status akreditasi sebagai kartu + daftar standar yang dipenuhi —
+ * variasi dari pola paragraf agar tidak monoton.
+ * Konten placeholder; ganti dengan status akreditasi asli RSKM.
  */
+import Badge from '@/components/ui/Badge.astro';
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { Icon } from 'astro-icon/components';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
@@ -13,6 +18,17 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+interface Standard {
+  name: { id: string; en: string };
+}
+
+// TODO: ganti dengan status & standar akreditasi asli RSKM.
+const STANDARDS: Standard[] = [
+  { name: { id: 'Keselamatan Pasien', en: 'Patient Safety' } },
+  { name: { id: 'Pelayanan & Asuhan Medis', en: 'Medical Services & Care' } },
+  { name: { id: 'Manajemen Fasilitas & Mutu', en: 'Facility & Quality Management' } },
+];
 ---
 
 <PageHero
@@ -24,19 +40,107 @@ const t = tFactory(lang);
 <section class="section">
   <div class="container">
     <SectionHeading title={t('akreditasiPage.body.heading')} align="start" />
-    <div class="akreditasi__body">
-      <p>{t('akreditasiPage.body.para1')}</p>
-      <p>{t('akreditasiPage.body.para2')}</p>
+
+    <div class="accreditation" data-reveal>
+      <div class="accreditation__status">
+        <span class="accreditation__icon" aria-hidden="true">
+          <Icon name="lucide:award" />
+        </span>
+        <div>
+          <p class="accreditation__label">{t('akreditasiPage.status.label')}</p>
+          <Badge variant="accent">{t('akreditasiPage.status.value')}</Badge>
+        </div>
+      </div>
+
+      <ul class="accreditation__standards" role="list">
+        {
+          STANDARDS.map((standard) => (
+            <li class="accreditation__standard">
+              <Icon name="lucide:check" aria-hidden="true" />
+              {standard.name[lang]}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
 </section>
 
-<CTASection lang={lang} />
+<CTASection lang={lang} variant="surface" />
 
 <style>
-  .akreditasi__body {
+  .accreditation {
+    max-width: 46rem;
     display: grid;
-    gap: var(--space-4);
-    max-width: 42rem;
+    gap: var(--space-8);
+  }
+
+  .accreditation__status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-8);
+    border-radius: var(--radius-2xl);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    color: #ffffff;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .accreditation__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    background-color: rgb(255 255 255 / 0.15);
+    color: #ffffff;
+  }
+
+  .accreditation__icon :global(svg) {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .accreditation__label {
+    color: rgb(255 255 255 / 0.85);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .accreditation__standards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .accreditation__standard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-body);
+  }
+
+  .accreditation__standard :global(svg) {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    color: var(--color-primary-text);
+  }
+
+  @media (max-width: 640px) {
+    .accreditation__status {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--space-6);
+    }
   }
 </style>

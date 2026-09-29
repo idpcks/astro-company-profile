@@ -118,3 +118,35 @@ svg {
 .section--alt {
   background-color: var(--color-surface-alt);
 }
+
+/* ── Reveal on scroll (progressive enhancement) ──
+   Saat JS aktif (html.js), elemen ber-data-reveal mulai transparan &
+   bergeser; script global menambah .is-revealed saat masuk viewport,
+   lalu transisinya berjalan. Tanpa JS elemen tampil normal (rule di
+   bawah hanya aktif dengan html.js) — tidak ada konten yang hilang.
+   Hanya transform+opacity (GPU-safe). */
+html.js [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(1.25rem);
+}
+
+html.js [data-reveal] {
+  transition:
+    opacity var(--transition-slow),
+    transform var(--transition-slow);
+  /* Data-urutan opsional untuk stagger antar elemen */
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal]:not(.is-revealed) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

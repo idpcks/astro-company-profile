@@ -1,7 +1,11 @@
 ---
 /**
  * CTASection — band penutup dengan ajakan utama (hubungi kami).
- * I18N: teks dari kamus; tombol light/ghost untuk background gelap.
+ *
+ * Variasi agar tidak semua halaman ditutup identik:
+ *  - "gradient" (default) — band teal pekat, tombol light/ghost.
+ *  - "surface"           — panel ringan berbatas, tombol primary/outline.
+ * I18N: teks dari kamus.
  */
 import Button from '@/components/ui/Button.astro';
 import { localePath, tFactory, type Lang } from '@/i18n';
@@ -10,9 +14,11 @@ import { Icon } from 'astro-icon/components';
 
 interface Props {
   lang: Lang;
+  /** Gaya penutup — "gradient" (default) atau "surface" */
+  variant?: 'gradient' | 'surface';
 }
 
-const { lang } = Astro.props;
+const { lang, variant = 'gradient' } = Astro.props;
 const t = tFactory(lang);
 
 const phoneTel = SITE.phone.replace(/\s/g, '');
@@ -20,19 +26,37 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 
 <section class="section">
   <div class="container">
-    <div class="cta">
+    <div class:list={[`cta`, `cta--${variant}`]}>
       <h2 class="cta__title">{t('cta.title')}</h2>
       <p class="cta__lead">{t('cta.lead')}</p>
       <div class="cta__actions">
-        <Button href={localePath('/contact', lang)} variant="light" size="lg">
-          <Icon name="lucide:contact" class="cta__icon" aria-hidden="true" />
-          {t('cta.contact')}
-        </Button>
-        <Button href={`tel:${phoneTel}`} variant="ghost" size="lg">
-          <Icon name="lucide:phone" class="cta__icon" aria-hidden="true" />
-          {t('cta.phone')}
-          {SITE.phone}
-        </Button>
+        {
+          variant === 'gradient' ? (
+            <>
+              <Button href={localePath('/contact', lang)} variant="light" size="lg">
+                <Icon name="lucide:contact" class="cta__icon" aria-hidden="true" />
+                {t('cta.contact')}
+              </Button>
+              <Button href={`tel:${phoneTel}`} variant="ghost" size="lg">
+                <Icon name="lucide:phone" class="cta__icon" aria-hidden="true" />
+                {t('cta.phone')}
+                {SITE.phone}
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button href={localePath('/contact', lang)} variant="primary" size="lg">
+                <Icon name="lucide:contact" class="cta__icon" aria-hidden="true" />
+                {t('cta.contact')}
+              </Button>
+              <Button href={`tel:${phoneTel}`} variant="outline" size="lg">
+                <Icon name="lucide:phone" class="cta__icon" aria-hidden="true" />
+                {t('cta.phone')}
+                {SITE.phone}
+              </Button>
+            </>
+          )
+        }
       </div>
     </div>
   </div>
@@ -43,18 +67,41 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
 	   atasnya selalu putih, jadi tidak butuh token tema. */
   .cta {
     padding: var(--space-12) var(--space-8);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    border-radius: var(--radius-xl);
     text-align: center;
   }
 
-  .cta__title {
+  .cta--gradient {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  }
+
+  .cta--gradient .cta__title {
     color: #ffffff;
+  }
+
+  .cta--gradient .cta__lead {
+    color: rgb(255 255 255 / 0.85);
+  }
+
+  .cta--surface {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-alt);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cta--surface .cta__title {
+    color: var(--color-heading);
+  }
+
+  .cta--surface .cta__lead {
+    color: var(--color-muted);
+  }
+
+  .cta__title {
     font-size: var(--text-3xl);
   }
 
   .cta__lead {
-    color: rgb(255 255 255 / 0.85);
     max-width: 36rem;
     margin-inline: auto;
     margin-top: var(--space-3);

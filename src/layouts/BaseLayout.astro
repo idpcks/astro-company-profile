@@ -229,6 +229,46 @@ const localBusiness: Record<string, unknown> = {
     <ClientRouter />
     <LoadingIndicator color="var(--color-primary)" height="3px" threshold={false} />
 
+    <!-- Reveal on scroll: aktifkan class html.js (menghidupkan CSS reveal),
+		     lalu amati elemen [data-reveal] setiap navigasi (SPA-safe via
+		     astro:page-load). GPU-safe, hanya transform+opacity. -->
+    <script>
+      document.documentElement.classList.add('js');
+
+      const revealed = new WeakSet<Element>();
+      let observer: IntersectionObserver | null = null;
+
+      function observe(root: Document) {
+        if (!('IntersectionObserver' in window)) {
+          root.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
+            el.classList.add('is-revealed');
+          });
+          return;
+        }
+        observer ??= new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target as HTMLElement;
+                el.classList.add('is-revealed');
+                observer?.unobserve(el);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -48px 0px' },
+        );
+        root.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
+          if (!revealed.has(el)) {
+            revealed.add(el);
+            observer!.observe(el);
+          }
+        });
+      }
+
+      document.addEventListener('astro:page-load', () => observe(document));
+      observe(document);
+    </script>
+
     <!-- Open Graph: preview saat link dibagikan ke sosial media / chat -->
     <meta property="og:type" content={pageType} />
     <meta property="og:site_name" content={SITE.name} />

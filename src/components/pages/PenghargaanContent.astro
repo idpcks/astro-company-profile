@@ -1,10 +1,14 @@
 ---
 /**
  * Isi halaman /penghargaan — Penghargaan (submenu "Tentang Kami").
+ * Layout: daftar penghargaan/sertifikasi (tahun + nama + pemberi) —
+ * variasi dari pola paragraf agar tidak monoton.
+ * Konten placeholder; ganti dengan daftar penghargaan asli RSKM.
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { Icon } from 'astro-icon/components';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
@@ -13,6 +17,31 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+interface Award {
+  year: string;
+  name: { id: string; en: string };
+  issuer: { id: string; en: string };
+}
+
+// TODO: ganti dengan penghargaan asli RSKM.
+const AWARDS: Award[] = [
+  {
+    year: '2023',
+    name: { id: 'RS Terbaik Pelayanan Publik', en: 'Best Public Service Hospital' },
+    issuer: { id: 'Pemerintah Kota Cilegon', en: 'Cilegon Municipal Government' },
+  },
+  {
+    year: '2022',
+    name: { id: 'Sertifikasi Manajemen Mutu', en: 'Quality Management Certification' },
+    issuer: { id: 'Lembaga sertifikasi nasional', en: 'National certification body' },
+  },
+  {
+    year: '2020',
+    name: { id: 'Keselamatan Pasien Terbaik', en: 'Best Patient Safety' },
+    issuer: { id: 'Dinas Kesehatan Provinsi Banten', en: 'Banten Provincial Health Office' },
+  },
+];
 ---
 
 <PageHero
@@ -24,18 +53,103 @@ const t = tFactory(lang);
 <section class="section">
   <div class="container">
     <SectionHeading title={t('penghargaanPage.body.heading')} align="start" />
-    <div class="penghargaan__body">
-      <p>{t('penghargaanPage.body.para1')}</p>
-    </div>
+
+    <ul class="awards" role="list" data-reveal>
+      {
+        AWARDS.map((award) => (
+          <li class="awards__item">
+            <span class="awards__year" aria-hidden="true">{award.year}</span>
+            <div class="awards__content">
+              <h3 class="awards__name">{award.name[lang]}</h3>
+              <p class="awards__issuer">{award.issuer[lang]}</p>
+            </div>
+            <span class="awards__trophy" aria-hidden="true">
+              <Icon name="lucide:trophy" />
+            </span>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
-<CTASection lang={lang} />
+<CTASection lang={lang} variant="surface" />
 
 <style>
-  .penghargaan__body {
+  .awards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 46rem;
     display: grid;
     gap: var(--space-4);
-    max-width: 42rem;
+  }
+
+  .awards__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .awards__item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .awards__year {
+    color: var(--color-accent-text);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .awards__content {
+    flex: 1;
+  }
+
+  .awards__name {
+    font-size: var(--text-xl);
+  }
+
+  .awards__issuer {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    margin-top: var(--space-1);
+  }
+
+  .awards__trophy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent-light);
+    color: var(--color-accent-text);
+    flex-shrink: 0;
+  }
+
+  .awards__trophy :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .awards__item {
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .awards__trophy {
+      margin-left: auto;
+    }
   }
 </style>

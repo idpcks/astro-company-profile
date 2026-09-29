@@ -6,7 +6,7 @@
  * Murni presentasi: teks datang dari <slot />, warna dari prop variant.
  */
 interface Props {
-  variant?: 'primary' | 'emergency' | 'neutral';
+  variant?: 'primary' | 'emergency' | 'neutral' | 'accent';
   class?: string;
 }
 
@@ -42,5 +42,10 @@ const { variant = 'primary', class: className } = Astro.props;
   .badge--neutral {
     background-color: var(--color-surface-alt);
     color: var(--color-body);
+  }
+
+  .badge--accent {
+    background-color: var(--color-accent-light);
+    color: var(--color-accent-text);
   }
 </style>

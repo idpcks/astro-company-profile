@@ -1,10 +1,14 @@
 ---
 /**
  * Isi halaman /tata-kelola-perusahaan — Tata Kelola Perusahaan (submenu "Tentang Kami").
+ * Layout: lima prinsip GCG sebagai kartu ikon — variasi dari pola
+ * paragraf agar tidak monoton.
+ * Konten placeholder; ganti dengan kebijakan tata kelola asli RSKM.
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { Icon } from 'astro-icon/components';
 import { tFactory, type Lang } from '@/i18n';
 
 interface Props {
@@ -13,6 +17,56 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+interface Principle {
+  icon: string;
+  name: { id: string; en: string };
+  body: { id: string; en: string };
+}
+
+// TODO: ganti atau sesuaikan dengan kebijakan GCG asli RSKM.
+const PRINCIPLES: Principle[] = [
+  {
+    icon: 'eye',
+    name: { id: 'Transparansi', en: 'Transparency' },
+    body: {
+      id: 'Menyampaikan informasi secara terbuka dan akurat kepada pemangku kepentingan.',
+      en: 'Sharing information openly and accurately with stakeholders.',
+    },
+  },
+  {
+    icon: 'clipboard-check',
+    name: { id: 'Akuntabilitas', en: 'Accountability' },
+    body: {
+      id: 'Kejelasan fungsi dan pertanggungjawaban setiap unit dan jabatan.',
+      en: 'Clear functions and accountability for every unit and position.',
+    },
+  },
+  {
+    icon: 'shield-check',
+    name: { id: 'Tanggung Jawab', en: 'Responsibility' },
+    body: {
+      id: 'Menjunjung kepatuhan pada regulasi dan tanggung jawab sosial.',
+      en: 'Upholding regulatory compliance and social responsibility.',
+    },
+  },
+  {
+    icon: 'scale',
+    name: { id: 'Independensi', en: 'Independence' },
+    body: {
+      id: 'Mengelola organisasi secara profesional tanpa benturan kepentingan.',
+      en: 'Managing the organization professionally, free from conflict of interest.',
+    },
+  },
+  {
+    icon: 'handshake',
+    name: { id: 'Kewajaran', en: 'Fairness' },
+    body: {
+      id: 'Memperlakukan seluruh pemangku kepentingan secara adil dan setara.',
+      en: 'Treating all stakeholders fairly and equally.',
+    },
+  },
+];
 ---
 
 <PageHero
@@ -24,19 +78,80 @@ const t = tFactory(lang);
 <section class="section">
   <div class="container">
     <SectionHeading title={t('tataKelolaPage.body.heading')} align="start" />
-    <div class="tata-kelola__body">
-      <p>{t('tataKelolaPage.body.para1')}</p>
-      <p>{t('tataKelolaPage.body.para2')}</p>
-    </div>
+
+    <ul class="gcg" role="list" data-reveal>
+      {
+        PRINCIPLES.map((principle) => (
+          <li class="gcg__item">
+            <div class="gcg__card">
+              <span class="gcg__icon" aria-hidden="true">
+                <Icon name={`lucide:${principle.icon}`} />
+              </span>
+              <h3 class="gcg__name">{principle.name[lang]}</h3>
+              <p class="gcg__body">{principle.body[lang]}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
-<CTASection lang={lang} />
+<CTASection lang={lang} variant="surface" />
 
 <style>
-  .tata-kelola__body {
+  .gcg {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-6);
+  }
+
+  .gcg__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-4);
-    max-width: 42rem;
+    height: 100%;
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .gcg__card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .gcg__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+  }
+
+  .gcg__icon :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .gcg__name {
+    font-size: var(--text-xl);
+  }
+
+  .gcg__body {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
   }
 </style>

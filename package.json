@@ -30,6 +30,11 @@
   "allowScripts": {
     "esbuild": true
   },
+  "overrides": {
+    "deepmerge-ts": "8.0.2",
+    "sharp": "0.35.5",
+    "svgo": "4.1.0"
+  },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@playform/compress": "^0.2.5",

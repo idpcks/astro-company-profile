@@ -1,6 +1,9 @@
 ---
 /**
  * Isi halaman /manajemen — Manajemen (submenu "Tentang Kami").
+ * Layout: kartu jajaran manajemen (inisial avatar + nama + peran) —
+ * variasi dari pola paragraf agar tidak monoton.
+ * Konten placeholder; ganti dengan data asli direksi & manajemen.
  */
 import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
@@ -13,6 +16,41 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+/** Ambil huruf awal tiap kata (maks 2), mis. "Direktur Utama" → "DU". */
+function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter((word) => !/^&+$/.test(word))
+    .map((word) => word[0])
+    .join('')
+    .slice(0, 2);
+}
+
+interface Leader {
+  name: string;
+  role: { id: string; en: string };
+}
+
+// TODO: ganti dengan jajaran manajemen asli RSKM.
+const LEADERS: Leader[] = [
+  {
+    name: 'Direktur Utama',
+    role: { id: 'Kepemimpinan strategis & representasi RSKM', en: 'Strategic leadership & RSKM representation' },
+  },
+  {
+    name: 'Direktur Pelayanan',
+    role: { id: 'Mutu layanan medis & keselamatan pasien', en: 'Medical service quality & patient safety' },
+  },
+  {
+    name: 'Direktur Keuangan & SDM',
+    role: { id: 'Operasional, SDM, dan pengelolaan keuangan', en: 'Operations, HR, and financial management' },
+  },
+  {
+    name: 'Kepala Komite Medis',
+    role: { id: 'Klinis, etika, dan mutu profesi medis', en: 'Clinical, ethics, and medical profession quality' },
+  },
+];
 ---
 
 <PageHero
@@ -24,19 +62,102 @@ const t = tFactory(lang);
 <section class="section">
   <div class="container">
     <SectionHeading title={t('manajemenPage.body.heading')} align="start" />
-    <div class="manajemen__body">
-      <p>{t('manajemenPage.body.para1')}</p>
-      <p>{t('manajemenPage.body.para2')}</p>
-    </div>
+
+    <ul class="leaders" role="list" data-reveal>
+      {
+        LEADERS.map((leader, index) => (
+          <li class="leaders__item">
+            <div class="leader-card">
+              <span class="leader-card__avatar" aria-hidden="true">
+                {initials(leader.name)}
+              </span>
+              <h3 class="leader-card__name">{leader.name}</h3>
+              <p class="leader-card__role">{leader.role[lang]}</p>
+            </div>
+            {index < LEADERS.length - 1 && <span class="leaders__line" aria-hidden="true" />}
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
-<CTASection lang={lang} />
+<CTASection lang={lang} variant="surface" />
 
 <style>
-  .manajemen__body {
+  .leaders {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
-    gap: var(--space-4);
-    max-width: 42rem;
+    gap: var(--space-6);
+    max-width: 46rem;
+  }
+
+  .leaders__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .leaders__line {
+    display: none;
+  }
+
+  .leader-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    width: 100%;
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .leader-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .leader-card__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: var(--text-lg);
+  }
+
+  .leader-card__name {
+    font-size: var(--text-xl);
+  }
+
+  .leader-card__role {
+    color: var(--color-muted);
+    margin-top: var(--space-1);
+  }
+
+  @media (max-width: 640px) {
+    .leader-card {
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-5);
+    }
+
+    .leader-card__avatar {
+      width: 3rem;
+      height: 3rem;
+      font-size: var(--text-base);
+    }
   }
 </style>
