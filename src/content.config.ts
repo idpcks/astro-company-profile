@@ -1,41 +1,23 @@
 import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
 // Catatan: `z` dari 'astro:content' sudah deprecated di Astro 7 (akan
 // dihapus di Astro 8) — sumber resmi tetap 'astro/zod'.
 import { z } from 'astro/zod';
+import { blogLoader } from '@/loaders/blog';
 
 /**
  * Koleksi blog — Content Layer API (Astro 5+), BILINGUAL.
  *
- * KONVENSI FILE (per-locale, bukan per-folder locale):
- *   artikel.md        → locale 'id' (default)
- *   artikel.en.md     → locale 'en', slug harus sama dengan versi id
+ * SUMBER artikel & logika id di src/loaders/blog.ts (blogLoader()).
+ * Di sini content.config.ts hanya memasang loader + schema — jadi kalau
+ * sumber pindah dari file lokal ke backend, cukup ganti isi blogLoader()
+ * di src/loaders/blog.ts; koleksi, halaman, dan src/lib/blog.ts tak tersentuh.
  *
- * Kenapa per-locale-file, bukan folder content/blog/id|en?
- *   - Pasangan terjemahan berdampingan — jelas mana yang belum
- *     diterjemahkan (file tanpa kembaran .en.md).
- *   - Slug URL disamakan antar locale (SEO: slug id tidak di-anglicize);
- *     pembedanya hanya prefix /en.
- *
- * generateId mengekstrak locale dari akhiran ".en.md" (default 'id')
- * dan menyimpannya di entry.id dengan pemisah "::", lalu diuraikan
- * jadi { slug, locale } oleh src/lib/blog.ts. customRequestLocale juga
- * disediakan agar <Content /> di halaman en pakai lokal Markdown yang tepat.
+ * Konvensi id: `{slug}::{locale}` ("artikel::id", "artikel::en") diurai
+ * jadi { slug, locale } oleh parseEntryId di src/lib/blog.ts. Format ini
+ * WAJIB dipertahankan oleh loader mana pun.
  */
 const blog = defineCollection({
-  loader: glob({
-    pattern: ['*.md', '*.en.md'],
-    base: './src/content/blog',
-    generateId: ({ entry }) => {
-      // Konteks loader versi ini: { entry, base, data } — entry adalah
-      // path relatif dari base (mis. "artikel.en.md").
-      const fileName = String(entry).split('/').pop() ?? '';
-      const isEn = /\.en\.md$/.test(fileName);
-      const locale = isEn ? 'en' : 'id';
-      const baseSlug = fileName.replace(/\.en\.md$|\.md$/, '');
-      return `${baseSlug}::${locale}`;
-    },
-  }),
+  loader: blogLoader(),
   schema: z.object({
     title: z.string(),
     description: z.string(),

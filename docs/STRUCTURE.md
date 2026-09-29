@@ -135,6 +135,9 @@ const services = await getServices();
 - Data **config** (`site.ts`, `nav.ts`) → boleh di-import langsung dari `@/data/` (jarang berubah, bukan kandidat backend).
 - `data/nav.ts` boleh memakai `data/clinics.ts` (sesama lapisan data).
 - Blog tetap eksklusif via `src/lib/blog.ts`; form via `src/lib/form.ts`.
+- Semua `fetch()` ke backend wajib lewat `src/lib/api.ts` (`API_ENDPOINTS` + `apiFetch`) - dilarang menulis endpoint string atau `fetch()` langsung di file lain. URL API TIDAK boleh diprefix `basePath`/`ASTRO_BASE` (base path milik frontend). Client-side cukup path relatif; fetch build-time di Node wajib absolute via `resolveApiUrl()` + `PUBLIC_API_URL`.
+- **Deploy-agnostic**: `site` & `base` didrive env (`ASTRO_SITE`, `ASTRO_BASE`) - root / subdomain / subfolder / kombinasi semua didukung. `basePath()` mem-prefix hanya URL frontend (aset, route, canonical, robots, sitemap), TIDAK pernah API.
+- **Backend-agnostic**: kontrak wire JSON didokumentasikan di `src/lib/api.ts` (`ApiPost`, `ApiPostsResponse`) tanpa kode backend - bahasa apa pun (PHP, Node, Go, dsb.) cukup menjawab sesuai bentuk JSON itu. `submitContact` menganggap status 2xx = sukses, jadi provider/backend mana pun bisa dipasang tanpa mengubah komponen.
 
 ### `src/lib/`
 Helper & fungsi bisnis murni (tidak menghasilkan markup, murni TypeScript).
@@ -142,8 +145,9 @@ Helper & fungsi bisnis murni (tidak menghasilkan markup, murni TypeScript).
 | File | Isi |
 |---|---|
 | `routes.ts` | **SOT path semua halaman internal** - `ROUTES` (const path statis), `ANCHORS` (anchor dalam halaman), `blogPath(slug)`, `routeWithAnchor(path, anchor)`, `clinicCardPath(slug)` |
+| `api.ts` | **SOT endpoint backend** - `API_ENDPOINTS` (path endpoint, ditulis sekali; versi via `API_VERSION`) + `apiFetch<T>()` (wrapper fetch tunggal: header, timeout, error) + `resolveApiUrl()` (relatif utk client / absolute utk Node via `PUBLIC_API_URL`). Dilarang menulis URL endpoint atau `fetch()` langsung di komponen/fasad |
 | `blog.ts` | Seluruh query koleksi blog (`getPostsForListing`, `getPostBySlug`, `getAllSlugs`, `getRelatedPosts`) - dilarang `getCollection('blog')` langsung di halaman |
-| `form.ts` | Abstraksi pengiriman form |
+| `form.ts` | Abstraksi pengiriman form - payload khusus FormSubmit; alamat endpoint di `api.ts` |
 
 **Aturan (SOT path internal):**
 
@@ -151,6 +155,9 @@ Helper & fungsi bisnis murni (tidak menghasilkan markup, murni TypeScript).
 - `ROUTES.x` adalah path **tanpa prefix locale dan base path** - karena itu link internal yang menerima `lang` tetap wajib lewat `localePath(ROUTES.x, lang)`.
 - Path detail blog memakai `blogPath(slug)`; path + anchor memakai `routeWithAnchor(ROUTES.kemitraan, ANCHORS.kemitraanCsr)`; anchor kartu klinik memakai `clinicCardPath(slug)`.
 - `data/nav.ts` dan `lib/blog.ts` juga memakai `routes.ts` (path menu & URL detail) - jangan melewatinya.
+
+### `src/loaders/`
+Loader Content Layer - sumber koleksi content. `blog.ts` sekarang membungkus `glob()` (artikel Markdown lokal di `src/content/blog/`), dengan `generateId` membentuk id `{slug}::{locale}`. Saat backend ada, cukup ganti isi `blogLoader()` memakai `apiFetch(resolveApiUrl(API_ENDPOINTS.posts))` dari `src/lib/api.ts` (build time di Node, jadi absolute via `PUBLIC_API_URL`) - format id dipertahankan sehingga `src/lib/blog.ts`, halaman, dan koleksi tidak tersentuh.
 
 ### `src/styles/`
 - `global.css` — reset CSS, font, style dasar yang berlaku global.
