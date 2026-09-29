@@ -9,6 +9,7 @@
  */
 import Button from '@/components/ui/Button.astro';
 import { localePath, tFactory, type Lang } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 import { SITE } from '@/data/site';
 import { Icon } from 'astro-icon/components';
 
@@ -33,7 +34,7 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
         {
           variant === 'gradient' ? (
             <>
-              <Button href={localePath('/contact', lang)} variant="light" size="lg">
+              <Button href={localePath(ROUTES.contact, lang)} variant="light" size="lg">
                 <Icon name="lucide:contact" class="cta__icon" aria-hidden="true" />
                 {t('cta.contact')}
               </Button>
@@ -45,7 +46,7 @@ const phoneTel = SITE.phone.replace(/\s/g, '');
             </>
           ) : (
             <>
-              <Button href={localePath('/contact', lang)} variant="primary" size="lg">
+              <Button href={localePath(ROUTES.contact, lang)} variant="primary" size="lg">
                 <Icon name="lucide:contact" class="cta__icon" aria-hidden="true" />
                 {t('cta.contact')}
               </Button>

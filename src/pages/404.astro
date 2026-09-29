@@ -9,7 +9,8 @@
  */
 import Button from '@/components/ui/Button.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { basePath } from '@/i18n';
+import { localePath } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 ---
 
 <BaseLayout
@@ -28,8 +29,8 @@ import { basePath } from '@/i18n';
         Sorry, the page you are looking for is not available.
       </p>
       <div class="notfound__actions">
-        <Button href={`${basePath}/`}>← Beranda</Button>
-        <Button href={`${basePath}/en`} variant="outline">← Home (EN)</Button>
+        <Button href={localePath(ROUTES.home, 'id')}>← Beranda</Button>
+        <Button href={localePath(ROUTES.home, 'en')} variant="outline">← Home (EN)</Button>
       </div>
     </div>
   </section>

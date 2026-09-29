@@ -10,6 +10,7 @@ import LangSwitcher from '@/components/ui/LangSwitcher.astro';
 import ThemeToggle from '@/components/ui/ThemeToggle.astro';
 import { Icon } from 'astro-icon/components';
 import { basePath, languages, localePath, localized, stripBase, tFactory, type Lang } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 import { getNavItems } from '@/data/nav';
 import { SITE } from '@/data/site';
 
@@ -49,7 +50,7 @@ const emergencyTel = SITE.emergencyPhone.replace(/\s/g, '');
 
 <header class="header">
   <div class="container header__inner">
-    <a href={localePath('/', lang)} class="brand">
+    <a href={localePath(ROUTES.home, lang)} class="brand">
       <img
         class="brand__logo"
         src={`${basePath}/favicon.svg`}

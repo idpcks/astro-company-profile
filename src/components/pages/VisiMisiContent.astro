@@ -9,7 +9,7 @@ import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { tFactory, type Lang } from '@/i18n';
-import { ABOUT_DATA } from '@/data/about';
+import { getAboutData } from '@/services/content';
 
 interface Props {
   lang: Lang;
@@ -18,7 +18,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = tFactory(lang);
 
-const { vision, misi, values } = ABOUT_DATA[lang];
+const { vision, misi, values } = (await getAboutData())[lang];
 ---
 
 <PageHero

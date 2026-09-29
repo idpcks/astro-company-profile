@@ -19,6 +19,7 @@
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { languages, defaultLang, type Lang } from '@/i18n';
+import { blogPath } from '@/lib/routes';
 
 /** Locale yang tersedia untuk satu slug (diurutkan: id, en). */
 export type AvailableLocales = Lang[];
@@ -112,7 +113,7 @@ export async function getPostBySlug(slug: string, lang: Lang): Promise<Normalize
   // URL detail TIDAK dibuat untuk fallback di locale prefix — kalau
   // tidak ada versi en, /en/blog/<slug> tidak boleh ter-generate.
   if (!chosen.isFallback) {
-    chosen.url = lang === defaultLang ? `/blog/${slug}` : `/${lang}/blog/${slug}`;
+    chosen.url = lang === defaultLang ? blogPath(slug) : `/${lang}${blogPath(slug)}`;
   }
   return chosen;
 }
@@ -147,10 +148,10 @@ export async function getPostsForListing(lang: Lang): Promise<NormalizedPost[]> 
     chosen.isFallback = chosen.locale !== lang;
     chosen.url =
       lang === defaultLang
-        ? `/blog/${slug}`
+        ? blogPath(slug)
         : chosen.isFallback
-          ? `/blog/${slug}` // fallback → tunjuk halaman versi id
-          : `/${lang}/blog/${slug}`;
+          ? blogPath(slug) // fallback → tunjuk halaman versi id
+          : `/${lang}${blogPath(slug)}`;
     listing.push(chosen);
   }
 

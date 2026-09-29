@@ -7,7 +7,8 @@ import CTASection from '@/components/sections/CTASection.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { localePath, localized, tFactory, type Lang } from '@/i18n';
-import { CLINICS } from '@/data/clinics';
+import { clinicCardPath } from '@/lib/routes';
+import { getClinics } from '@/services/content';
 
 interface Props {
   lang: Lang;
@@ -17,7 +18,7 @@ const { lang } = Astro.props;
 const t = tFactory(lang);
 
 // Klinik yang melayani segmen korporat, untuk daftar "klinik mitra".
-const corporateClinics = CLINICS.filter((clinic) => clinic.corporate);
+const corporateClinics = (await getClinics()).filter((clinic) => clinic.corporate);
 ---
 
 <PageHero
@@ -40,7 +41,7 @@ const corporateClinics = CLINICS.filter((clinic) => clinic.corporate);
       {
         corporateClinics.map((clinic) => (
           <li>
-            <a href={localePath(`/klinik#${clinic.slug}`, lang)}>
+            <a href={localePath(clinicCardPath(clinic.slug), lang)}>
               {localized(clinic.name, lang)}
               <span class="bisnis__city">— {localized(clinic.city, lang)}</span>
             </a>

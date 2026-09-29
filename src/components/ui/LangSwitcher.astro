@@ -17,6 +17,7 @@
  */
 import { alternatePath, languages, tFactory, type Lang } from '@/i18n';
 import { getPostBySlug } from '@/lib/blog';
+import { ROUTES } from '@/lib/routes';
 
 interface Props {
   class?: string;
@@ -45,7 +46,7 @@ let href = alternatePath(pathname, targetLang);
 if (postSlug) {
   const target = await getPostBySlug(postSlug, targetLang);
   if (!target || target.isFallback) {
-    href = alternatePath('/blog', targetLang);
+    href = alternatePath(ROUTES.blog, targetLang);
   }
 }
 ---

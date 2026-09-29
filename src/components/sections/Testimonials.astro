@@ -9,7 +9,7 @@ import Badge from '@/components/ui/Badge.astro';
 import Card from '@/components/ui/Card.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { localized, tFactory, type Lang } from '@/i18n';
-import { TESTIMONIALS } from '@/data/testimonials';
+import { getTestimonials } from '@/services/content';
 
 interface Props {
   lang: Lang;
@@ -17,6 +17,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+const testimonials = await getTestimonials();
 ---
 
 <section class="section section--alt" id="testimoni">
@@ -29,7 +30,7 @@ const t = tFactory(lang);
 
     <div class="testimonials__grid">
       {
-        TESTIMONIALS.map((testimonial) => (
+        testimonials.map((testimonial) => (
           <Card class="testimonial-card">
             <Icon name="lucide:quote" class="testimonial-card__quote" aria-hidden="true" />
             <blockquote class="testimonial-card__quote-text">

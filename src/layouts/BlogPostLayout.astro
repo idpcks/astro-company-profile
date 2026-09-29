@@ -24,6 +24,7 @@ import SectionHeading from '@/components/ui/SectionHeading.astro';
 import ShareButtons from '@/components/ui/ShareButtons.astro';
 import SiteImage from '@/components/ui/SiteImage.astro';
 import { getOtherAvailableLocales, type NormalizedPost } from '@/lib/blog';
+import { ROUTES, blogPath } from '@/lib/routes';
 import { basePath, languages, localePath, tFactory, type Lang } from '@/i18n';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
@@ -66,13 +67,13 @@ const breadcrumb = {
       '@type': 'ListItem',
       position: 2,
       name: lang === 'en' ? 'Blog' : 'Blog',
-      item: new URL(localePath('/blog', lang), Astro.site).href,
+      item: new URL(localePath(ROUTES.blog, lang), Astro.site).href,
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: title,
-      item: new URL(localePath(`/blog/${post.slug}`, lang), Astro.site).href,
+      item: new URL(localePath(blogPath(post.slug), lang), Astro.site).href,
     },
   ],
 };
@@ -91,7 +92,7 @@ const breadcrumb = {
   }}
   jsonLd={breadcrumb}
   alternates={post.availableLocales.map((loc) => ({
-    path: `/blog/${post.slug}`,
+    path: blogPath(post.slug),
     lang: loc,
   }))}
 >
@@ -161,7 +162,7 @@ const breadcrumb = {
             {otherLocales.map((loc, i) => (
               <>
                 {i > 0 && ', '}
-                <a href={localePath(`/blog/${post.slug}`, loc)} hreflang={loc}>
+                <a href={localePath(blogPath(post.slug), loc)} hreflang={loc}>
                   {languages[loc]}
                 </a>
               </>
@@ -173,9 +174,9 @@ const breadcrumb = {
       <ShareButtons
         lang={lang}
         title={title}
-        url={new URL(localePath(`/blog/${post.slug}`, lang), Astro.site).href}
+        url={new URL(localePath(blogPath(post.slug), lang), Astro.site).href}
       />
-      <Button href={localePath('/blog', lang)} variant="outline">{t('post.back')}</Button>
+      <Button href={localePath(ROUTES.blog, lang)} variant="outline">{t('post.back')}</Button>
     </footer>
   </article>
 

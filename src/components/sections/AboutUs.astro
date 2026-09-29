@@ -8,6 +8,7 @@ import { Icon } from 'astro-icon/components';
 import Button from '@/components/ui/Button.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { localePath, tFactory, type Lang } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 import { SITE } from '@/data/site';
 
 interface Props {
@@ -45,7 +46,7 @@ const highlights = [
           ))
         }
       </ul>
-      <Button href={localePath('/about', lang)} variant="outline">{t('about.cta')}</Button>
+      <Button href={localePath(ROUTES.about, lang)} variant="outline">{t('about.cta')}</Button>
     </div>
 
     <div class="about__visual" aria-hidden="true">

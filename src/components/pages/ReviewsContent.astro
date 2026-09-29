@@ -3,7 +3,8 @@
  * Konten halaman Ulasan & Testimoni — dipakai bersama oleh root (id) & [lang] (en).
  */
 import { localized, localePath, tFactory, type Lang } from '@/i18n';
-import { TESTIMONIALS } from '@/data/testimonials';
+import { ROUTES } from '@/lib/routes';
+import { getTestimonials } from '@/services/content';
 
 interface Props {
   lang: Lang;
@@ -11,6 +12,8 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = tFactory(lang);
+
+const testimonials = await getTestimonials();
 ---
 
 <section class="section">
@@ -19,7 +22,7 @@ const t = tFactory(lang);
 
     <div class="reviews__list">
       {
-        TESTIMONIALS.map((review) => (
+        testimonials.map((review) => (
           <div class="reviews__item">
             <h3 class="reviews__name">{review.name}</h3>
             <p class="reviews__context">{localized(review.context, lang)}</p>
@@ -37,7 +40,7 @@ const t = tFactory(lang);
           ? 'If you would like to share your experience, please send your testimonial through our '
           : 'Jika Anda ingin berbagi pengalaman, silakan kirimkan testimoni Anda melalui '
       }
-      <a href={localePath('/contact', lang)}>
+      <a href={localePath(ROUTES.contact, lang)}>
         {lang === 'en' ? 'contact page' : 'halaman kontak'}
       </a>.
     </p>

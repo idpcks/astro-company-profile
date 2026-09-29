@@ -10,6 +10,7 @@ import PageHero from '@/components/ui/PageHero.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getPostsForListing } from '@/lib/blog';
 import { localePath, tFactory, type Lang } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 
 const lang: Lang = 'id';
 const t = tFactory(lang);
@@ -39,7 +40,7 @@ const posts = await getPostsForListing(lang);
             title={t('blog.empty.title')}
             description={t('blog.empty.description')}
             actionText={t('blog.empty.action')}
-            actionHref={localePath('/', lang)}
+            actionHref={localePath(ROUTES.home, lang)}
           />
         )
       }

@@ -6,6 +6,7 @@ import CTASection from '@/components/sections/CTASection.astro';
 import EmptyState from '@/components/ui/EmptyState.astro';
 import PageHero from '@/components/ui/PageHero.astro';
 import { localePath, tFactory, type Lang } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 
 interface Props {
   lang: Lang;
@@ -28,7 +29,7 @@ const t = tFactory(lang);
       title={t('karir.empty.title')}
       description={t('karir.empty.description')}
       actionText={t('karir.empty.action')}
-      actionHref={localePath('/contact', lang)}
+      actionHref={localePath(ROUTES.contact, lang)}
     />
   </div>
 </section>

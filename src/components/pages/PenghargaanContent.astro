@@ -58,7 +58,9 @@ const AWARDS: Award[] = [
       {
         AWARDS.map((award) => (
           <li class="awards__item">
-            <span class="awards__year" aria-hidden="true">{award.year}</span>
+            <span class="awards__year" aria-hidden="true">
+              {award.year}
+            </span>
             <div class="awards__content">
               <h3 class="awards__name">{award.name[lang]}</h3>
               <p class="awards__issuer">{award.issuer[lang]}</p>

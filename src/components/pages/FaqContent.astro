@@ -8,9 +8,10 @@ import CTASection from '@/components/sections/CTASection.astro';
 import Button from '@/components/ui/Button.astro';
 import EmptyState from '@/components/ui/EmptyState.astro';
 import PageHero from '@/components/ui/PageHero.astro';
-import { FAQ_ITEMS } from '@/data/faq';
+import { getFaqItems } from '@/services/content';
 import { SOCIAL_LINKS } from '@/data/site';
 import { localized, localePath, tFactory, type Lang } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 
 interface Props {
   lang: Lang;
@@ -19,9 +20,9 @@ interface Props {
 const { lang } = Astro.props;
 const t = tFactory(lang);
 
-// SOT di src/data/faq.ts — teks yang dirender IDENTIK dengan JSON-LD
-// FAQPage di halaman (syarat kebijakan structured data Google).
-const faqItems = FAQ_ITEMS.map((item) => ({
+// SOT lewat services/content.ts — teks yang dirender IDENTIK dengan
+// JSON-LD FAQPage di halaman (syarat kebijakan structured data Google).
+const faqItems = (await getFaqItems()).map((item) => ({
   question: localized(item.question, lang),
   answer: localized(item.answer, lang),
 }));
@@ -45,7 +46,7 @@ const whatsappLink = SOCIAL_LINKS.find((link) => link.label === 'WhatsApp');
           title={t('faq.empty.title')}
           description={t('faq.empty.description')}
           actionText={t('faq.empty.action')}
-          actionHref={localePath('/contact', lang)}
+          actionHref={localePath(ROUTES.contact, lang)}
         />
       ) : (
         <>
@@ -110,7 +111,7 @@ const whatsappLink = SOCIAL_LINKS.find((link) => link.label === 'WhatsApp');
               <p class="faq__support-body">{t('faq.support.body')}</p>
             </div>
             <div class="faq__support-actions">
-              <Button href={localePath('/contact', lang)} variant="primary">
+              <Button href={localePath(ROUTES.contact, lang)} variant="primary">
                 {t('faq.support.contactBtn')}
               </Button>
               {whatsappLink && (

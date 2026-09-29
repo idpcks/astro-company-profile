@@ -8,7 +8,7 @@ import PageHero from '@/components/ui/PageHero.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import CTASection from '@/components/sections/CTASection.astro';
 import { localized, tFactory, type Lang } from '@/i18n';
-import { CLINICS } from '@/data/clinics';
+import { getClinics } from '@/services/content';
 import type { Clinic } from '@/types';
 
 interface Props {
@@ -18,9 +18,11 @@ interface Props {
 const { lang } = Astro.props;
 const t = tFactory(lang);
 
+const clinics = await getClinics();
+
 // Kelompokkan klinik per kota (urutan = urutan data, bukan alfabetis).
 const groups = new Map<string, Clinic[]>();
-for (const clinic of CLINICS) {
+for (const clinic of clinics) {
   const key = clinic.city[lang];
   const list = groups.get(key) ?? [];
   list.push(clinic);

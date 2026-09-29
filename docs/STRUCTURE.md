@@ -28,6 +28,7 @@ project-root/
 │   │   └── blog/
 │   ├── content.config.ts
 │   ├── data/
+│   ├── services/
 │   ├── lib/
 │   ├── styles/
 │   ├── types/
@@ -121,6 +122,36 @@ export const SITE = {
 
 **Aturan (Single Source of Truth):** kalau sebuah data (nama perusahaan, nomor telepon, daftar menu, dll) dipakai di **lebih dari satu komponen**, data itu **wajib** ditarik ke sini — tidak boleh hardcode ulang di tiap komponen yang memakainya.
 
+### `src/services/`
+**Lapisan akses data konten — SATU-SATUNYA pintu masuk dari komponen/halaman.** Berisi getter async (`getServices()`, `getClinics()`, `getFaqItems()`, `getTestimonials()`, `getAboutData()`) di `content.ts` yang **berbentuk `Promise<T>` persis seperti panggilan API**. Sekarang implementasinya membaca data statis dari `src/data/*`; saat backend ada, cukup ganti *isi* fungsi dengan `fetch('/api/...')` — signature tidak berubah, komponen tidak tersentuh sama sekali.
+
+```ts
+// contoh — komponen WAJIB lewat sini, dilarang import '@/data' langsung.
+const services = await getServices();
+```
+
+**Aturan pemisahan lapisan:**
+- Data **konten dinamis** (layanan, klinik, FAQ, testimoni, tentang) → komponen membaca **hanya** dari `@/services/content`.
+- Data **config** (`site.ts`, `nav.ts`) → boleh di-import langsung dari `@/data/` (jarang berubah, bukan kandidat backend).
+- `data/nav.ts` boleh memakai `data/clinics.ts` (sesama lapisan data).
+- Blog tetap eksklusif via `src/lib/blog.ts`; form via `src/lib/form.ts`.
+
+### `src/lib/`
+Helper & fungsi bisnis murni (tidak menghasilkan markup, murni TypeScript).
+
+| File | Isi |
+|---|---|
+| `routes.ts` | **SOT path semua halaman internal** - `ROUTES` (const path statis), `ANCHORS` (anchor dalam halaman), `blogPath(slug)`, `routeWithAnchor(path, anchor)`, `clinicCardPath(slug)` |
+| `blog.ts` | Seluruh query koleksi blog (`getPostsForListing`, `getPostBySlug`, `getAllSlugs`, `getRelatedPosts`) - dilarang `getCollection('blog')` langsung di halaman |
+| `form.ts` | Abstraksi pengiriman form |
+
+**Aturan (SOT path internal):**
+
+- Dilarang menulis path literal (`"/about"`, `"/blog/nama-artikel"`) di komponen, pages, atau lib lain - selalu via `ROUTES.x` dari `@/lib/routes`.
+- `ROUTES.x` adalah path **tanpa prefix locale dan base path** - karena itu link internal yang menerima `lang` tetap wajib lewat `localePath(ROUTES.x, lang)`.
+- Path detail blog memakai `blogPath(slug)`; path + anchor memakai `routeWithAnchor(ROUTES.kemitraan, ANCHORS.kemitraanCsr)`; anchor kartu klinik memakai `clinicCardPath(slug)`.
+- `data/nav.ts` dan `lib/blog.ts` juga memakai `routes.ts` (path menu & URL detail) - jangan melewatinya.
+
 ### `src/styles/`
 - `global.css` — reset CSS, font, style dasar yang berlaku global.
 - `tokens.css` — CSS variables (warna, spacing, font-size) yang dipakai konsisten di semua komponen lewat `var(--nama-token)`, termasuk override tema gelap di blok `[data-theme='dark']` (lihat bagian **Tema Gelap/Terang** di bawah).
@@ -208,6 +239,7 @@ Aturan cepat: **"dipakai lebih dari sekali → tarik keluar, jangan copy-paste."
 1. Buat `src/pages/portfolio.astro`
 2. Bungkus dengan `<BaseLayout title="..." description="...">`
 3. Susun dari komponen di `components/sections/`, tambahkan section baru kalau perlu
+4. Daftarkan path-nya (`'/portfolio'`) sebagai key baru di `ROUTES` (`src/lib/routes.ts`) agar semua link bisa pakai `ROUTES.portfolio`
 
 **Menambah artikel blog baru**
 1. Buat file `.md` baru di `src/content/blog/`
@@ -286,7 +318,7 @@ Kalau menambah aksi baru di header (mis. pemilih bahasa), masukkan ke klaster ya
 **Aturan menulis teks (wajib):**
 
 1. **Teks UI statis** → key di `ui.ts`, WAJIB diisi di kedua locale. `t()` mem-fallback ke `id` kalau key `en` kurang, tapi jangan andalkan itu — TypeScript menandai key tak-dikenal lewat type `UiKeys`.
-2. **Semua link internal** di komponen yang menerima `lang` wajib lewat `localePath('/about', lang)` — dilarang hardcode `href="/..."`. Pelanggaran paling umum: link di `sections/` lupa prefix `/en`.
+2. **Semua link internal** di komponen yang menerima `lang` wajib lewat `localePath(ROUTES.about, lang)` — dilarang hardcode `href="/..."`. Pelanggaran paling umum: link di `sections/` lupa prefix `/en`.
 3. **Teks data-driven** (layanan, testimoni, jam buka) → field bertipe `{ id: T; en: T }` di `src/data/*.ts`, dipilih komponen via `localized(value, lang)`. Data tanpa dimensi bahasa (alamat, telepon, sosmed) tetap langsung dari data file.
 4. **Blog bilingual**: artikel boleh punya versi EN — simpan sebagai file kembar `nama-artikel.en.md` di `content/blog/` (slug = nama file, sama persis dengan versi id). Semua query blog lewat `src/lib/blog.ts` (`getPostsForListing`, `getPostBySlug`, `getAllSlugs`) — dilarang `getCollection('blog')` langsung di halaman. Artikel yang belum diterjemahkan: listing `/en/blog` menampilkan konten id (fallback, tanpa duplikat URL), detail `/en/blog/<slug>` tidak di-generate, dan `LangSwitcher` di halaman id jatuh ke listing `/en/blog`. Layout artikel menampilkan link "juga tersedia dalam …" sesuai `availableLocales`, dan hreflang per-artikel hanya menunjuk terjemahan yang benar-benar ada.
 

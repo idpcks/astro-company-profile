@@ -14,6 +14,7 @@
 import { SITE, SOCIAL_LINKS } from '@/data/site';
 import type { Lang } from '@/i18n';
 import { localePath, tFactory } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 import { Icon } from 'astro-icon/components';
 
 interface Props {
@@ -47,7 +48,7 @@ const phoneHref = `tel:${SITE.phone.replace(/\s/g, '')}`;
       {t('sidebar.cta.call')}
     </a>
     <span class="cta-card__dot" aria-hidden="true">·</span>
-    <a class="cta-card__link" href={localePath('/contact', lang)}>
+    <a class="cta-card__link" href={localePath(ROUTES.contact, lang)}>
       <Icon name="lucide:contact" class="cta__icon" aria-hidden="true" />
       {t('sidebar.cta.contact')}
     </a>

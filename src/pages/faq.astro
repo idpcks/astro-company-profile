@@ -2,17 +2,17 @@
 import FaqContent from '@/components/pages/FaqContent.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { localized, tFactory, type Lang } from '@/i18n';
-import { FAQ_ITEMS } from '@/data/faq';
+import { getFaqItems } from '@/services/content';
 
 const lang: Lang = 'id';
 const t = tFactory(lang);
 
-// FAQPage schema untuk SEO — teks diambil dari SOT src/data/faq.ts agar
-// IDENTIK dengan konten terlihat (syarat kebijakan structured data Google).
+// FAQPage schema untuk SEO — teks diambil dari SOT services/content.ts
+// agar IDENTIK dengan konten terlihat (syarat kebijakan structured data Google).
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: FAQ_ITEMS.map((item) => ({
+  mainEntity: (await getFaqItems()).map((item) => ({
     '@type': 'Question',
     name: localized(item.question, lang),
     acceptedAnswer: {

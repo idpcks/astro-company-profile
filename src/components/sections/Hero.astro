@@ -8,6 +8,7 @@ import { Icon } from 'astro-icon/components';
 import Button from '@/components/ui/Button.astro';
 import SiteImage from '@/components/ui/SiteImage.astro';
 import { localePath, tFactory, type Lang } from '@/i18n';
+import { ROUTES } from '@/lib/routes';
 import { SITE } from '@/data/site';
 import imgCompanyBuilding from '@/assets/images/img_companybuilding.webp';
 
@@ -44,10 +45,10 @@ const trustItems = [t('hero.trust.doctors'), t('hero.trust.facilities'), t('hero
     <p class="hero__lead">{lead ?? SITE.description[lang]}</p>
 
     <div class="hero__actions">
-      <Button href={localePath('/services', lang)} size="lg">
+      <Button href={localePath(ROUTES.services, lang)} size="lg">
         {t('hero.cta.services')}
       </Button>
-      <Button href={localePath('/contact', lang)} variant="ghost" size="lg">
+      <Button href={localePath(ROUTES.contact, lang)} variant="ghost" size="lg">
         {t('hero.cta.contact')}
       </Button>
     </div>
