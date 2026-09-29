@@ -75,4 +75,4 @@ untuk fetch build-time).
 
 Proprietary — **All Rights Reserved**. Tidak ada lisensi untuk menyalin,
 mendistribusikan, atau memodifikasi tanpa izin tertulis. Lihat berkas
-`LICENSE`. Permintaan izin: info@krakataumedika.co.id
+`LICENSE`. Permintaan izin: dev@korag.web.id
